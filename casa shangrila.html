@@ -1,0 +1,124 @@
+import Image from "next/image";
+
+export default function CasaShangrila() {
+  return (
+    <main className="min-h-screen bg-[#F3E7D3] text-gray-800">
+
+
+      {/* ENCABEZADO */}
+
+      <section className="bg-[#1B4965] text-white py-10 px-6">
+
+        <div className="max-w-5xl mx-auto">
+
+          <h1 className="text-5xl font-bold">
+            Casa en Shangrilá
+          </h1>
+
+          <p className="mt-4 text-xl">
+            Ciudad de la Costa · Montevideo
+          </p>
+
+        </div>
+
+      </section>
+
+
+
+      {/* FOTO PRINCIPAL */}
+
+      <section className="max-w-5xl mx-auto py-10 px-6">
+
+        <img
+          src="/images/propiedades/casa1.jpg"
+          className="w-full h-[500px] object-cover rounded-2xl shadow-xl"
+        />
+
+
+        <div className="bg-white rounded-2xl shadow-lg p-8 mt-10">
+
+
+          <h2 className="text-3xl font-bold text-[#1B4965]">
+            Descripción
+          </h2>
+
+
+          <p className="mt-5 text-lg leading-relaxed">
+
+            Hermosa propiedad ubicada en Shangrilá,
+            Ciudad de la Costa.
+
+            Ideal para quienes buscan tranquilidad,
+            cercanía al mar y comodidad.
+
+          </p>
+
+
+
+          <div className="grid md:grid-cols-3 gap-6 mt-8">
+
+
+            <div className="bg-[#F3E7D3] rounded-xl p-5 text-center">
+
+              <h3 className="font-bold text-[#1B4965]">
+                Dormitorios
+              </h3>
+
+              <p className="mt-2">
+                3
+              </p>
+
+            </div>
+
+
+
+            <div className="bg-[#F3E7D3] rounded-xl p-5 text-center">
+
+              <h3 className="font-bold text-[#1B4965]">
+                Garage
+              </h3>
+
+              <p className="mt-2">
+                Sí
+              </p>
+
+            </div>
+
+
+
+            <div className="bg-[#F3E7D3] rounded-xl p-5 text-center">
+
+              <h3 className="font-bold text-[#1B4965]">
+                Jardín
+              </h3>
+
+              <p className="mt-2">
+                Sí
+              </p>
+
+            </div>
+
+
+          </div>
+
+
+
+          <a
+            href="https://wa.me/59894239220"
+            target="_blank"
+            className="inline-block mt-10 bg-green-500 text-white px-10 py-4 rounded-lg font-bold hover:bg-green-600 transition"
+          >
+            Consultar por WhatsApp
+          </a>
+
+
+        </div>
+
+
+      </section>
+
+
+
+    </main>
+  );
+}
