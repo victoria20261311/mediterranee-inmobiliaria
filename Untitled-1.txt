@@ -1,0 +1,41 @@
+"use client";
+
+import { useState } from "react";
+
+type Props = {
+  imagenes: string[];
+  titulo: string;
+};
+
+export default function PropertyGallery({ imagenes, titulo }: Props) {
+
+  const [imagenPrincipal, setImagenPrincipal] = useState(imagenes[0]);
+
+  return (
+    <div>
+
+      <img
+        src={`/propiedades/${imagenPrincipal}`}
+        alt={titulo}
+        className="w-full h-[500px] object-cover"
+      />
+
+      <div className="max-w-6xl mx-auto flex gap-3 p-6 overflow-x-auto">
+
+        {imagenes.map((imagen, index) => (
+
+          <img
+            key={index}
+            src={`/propiedades/${imagen}`}
+            alt={`${titulo} ${index + 1}`}
+            onClick={() => setImagenPrincipal(imagen)}
+            className="w-24 h-20 object-cover rounded-lg cursor-pointer hover:opacity-70 transition"
+          />
+
+        ))}
+
+      </div>
+
+    </div>
+  );
+}
