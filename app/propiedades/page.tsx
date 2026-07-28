@@ -13,7 +13,9 @@ type Props = {
 
 
 
-export default async function PropiedadesPage({ searchParams }: Props) {
+export default async function PropiedadesPage({
+  searchParams,
+}: Props) {
 
 
   const filtros = await searchParams;
@@ -30,16 +32,14 @@ export default async function PropiedadesPage({ searchParams }: Props) {
 
 
 
-
   const resultados = propiedades.filter((p) => {
 
 
 
     const coincideOperacion =
       !filtros.operacion ||
-      normalizar(p.tipo).includes(
-        normalizar(filtros.operacion)
-      );
+      normalizar(p.tipo) ===
+      normalizar(filtros.operacion);
 
 
 
@@ -77,7 +77,6 @@ export default async function PropiedadesPage({ searchParams }: Props) {
 
 
 
-
     return (
       coincideOperacion &&
       coincideTipo &&
@@ -94,21 +93,30 @@ export default async function PropiedadesPage({ searchParams }: Props) {
 
 
 
-
-
   return (
+
 
     <main
       className="
         min-h-screen
-        bg-[#F3E7D3]
+        bg-gradient-to-b
+        from-[#FAF8F5]
+        to-[#F3E7D3]
         px-6
-        py-20
+        py-24
       "
     >
 
 
-      <div className="max-w-7xl mx-auto">
+
+      <div
+        className="
+          max-w-7xl
+          mx-auto
+        "
+      >
+
+
 
 
 
@@ -118,11 +126,42 @@ export default async function PropiedadesPage({ searchParams }: Props) {
             md:text-6xl
             font-bold
             text-center
-            text-[#1B4965]
+            text-[#303C95]
           "
         >
-          Propiedades disponibles
+
+          {
+            filtros.operacion
+              ? filtros.operacion === "VENTA"
+                ? "Propiedades en venta"
+                : "Propiedades en alquiler"
+
+              : filtros.tipo
+                ? `${filtros.tipo}s disponibles`
+
+                : "Propiedades disponibles"
+          }
+
         </h1>
+
+
+
+
+
+
+
+        <div
+          className="
+            w-24
+            h-1
+            bg-[#D8B384]
+            mx-auto
+            mt-6
+            rounded-full
+          "
+        />
+
+
 
 
 
@@ -131,8 +170,8 @@ export default async function PropiedadesPage({ searchParams }: Props) {
         <p
           className="
             text-center
+            mt-6
             text-gray-600
-            mt-4
             text-lg
           "
         >
@@ -146,40 +185,47 @@ export default async function PropiedadesPage({ searchParams }: Props) {
 
 
 
-        {resultados.length === 0 && (
 
-          <div
-            className="
-              mt-12
-              bg-white/80
-              backdrop-blur-md
-              rounded-3xl
-              p-10
-              text-center
-              shadow-xl
-            "
-          >
+        {
+          resultados.length === 0 && (
 
-            <h2
+            <div
               className="
-                text-2xl
-                font-bold
-                text-[#1B4965]
+                mt-12
+                bg-white/80
+                backdrop-blur-xl
+                rounded-3xl
+                p-10
+                text-center
+                shadow-xl
               "
             >
-              No encontramos propiedades
-            </h2>
+
+              <h2
+                className="
+                  text-2xl
+                  font-bold
+                  text-[#303C95]
+                "
+              >
+                No encontramos propiedades
+              </h2>
 
 
-            <p className="mt-3 text-gray-600">
-              Probá cambiar los filtros de búsqueda.
-            </p>
+              <p
+                className="
+                  mt-3
+                  text-gray-600
+                "
+              >
+                Probá cambiando los filtros de búsqueda.
+              </p>
 
 
-          </div>
+            </div>
 
-        )}
-
+          )
+        }
 
 
 
@@ -201,157 +247,70 @@ export default async function PropiedadesPage({ searchParams }: Props) {
 
 
 
-          {resultados.map((p) => (
+
+          {
+            resultados.map((p)=>(
 
 
-            <article
-              key={p.id}
-              className="
-                bg-white/80
-                backdrop-blur-md
-                rounded-3xl
-                overflow-hidden
-                shadow-xl
-                hover:-translate-y-2
-                transition
-                duration-300
-                border
-                border-white/60
-              "
-            >
+              <article
+                key={p.id}
+                className="
+                  bg-white/80
+                  backdrop-blur-xl
+                  rounded-3xl
+                  overflow-hidden
+                  shadow-xl
+                  border
+                  border-white
+                  hover:-translate-y-2
+                  transition
+                  duration-300
+                "
+              >
 
 
 
 
-              <div className="relative overflow-hidden">
 
-
-                <img
-                  src={`/propiedades/${p.imagenes[0]}`}
-                  alt={p.titulo}
+                <div
                   className="
-                    w-full
-                    h-72
-                    object-cover
-                  "
-                />
-
-
-
-                <span
-                  className="
-                    absolute
-                    top-5
-                    left-5
-                    bg-white/80
-                    backdrop-blur-md
-                    text-[#1B4965]
-                    px-4
-                    py-2
-                    rounded-full
-                    text-xs
-                    font-bold
+                    relative
+                    overflow-hidden
                   "
                 >
-                  {p.tipo}
-                </span>
 
 
-              </div>
-
-
-
-
-
-
-
-
-
-              <div className="p-7">
-
-
-
-                <h2
-                  className="
-                    text-2xl
-                    font-bold
-                    text-[#1B4965]
-                  "
-                >
-                  {p.titulo}
-                </h2>
+                  <img
+                    src={`/propiedades/${p.imagenes[0]}`}
+                    alt={p.titulo}
+                    className="
+                      w-full
+                      h-72
+                      object-cover
+                    "
+                  />
 
 
 
 
-                <p className="mt-3 text-gray-500">
-                  📍 {p.ubicacion}
-                </p>
+                  <span
+                    className="
+                      absolute
+                      top-5
+                      left-5
+                      bg-white/90
+                      backdrop-blur
+                      text-[#303C95]
+                      px-5
+                      py-2
+                      rounded-full
+                      text-xs
+                      font-bold
+                    "
+                  >
+                    {p.tipo}
+                  </span>
 
-
-
-
-
-
-
-                <div className="grid grid-cols-3 gap-3 mt-7">
-
-
-                  <div className="bg-[#F3E7D3] rounded-2xl p-3 text-center">
-
-                    <div>
-                      🛏
-                    </div>
-
-                    <strong className="text-[#1B4965]">
-                      {p.dormitorios}
-                    </strong>
-
-                    <p className="text-xs text-gray-500">
-                      Dorm.
-                    </p>
-
-                  </div>
-
-
-
-
-
-                  <div className="bg-[#F3E7D3] rounded-2xl p-3 text-center">
-
-                    <div>
-                      🚿
-                    </div>
-
-                    <strong className="text-[#1B4965]">
-                      {p.banos}
-                    </strong>
-
-                    <p className="text-xs text-gray-500">
-                      Baños
-                    </p>
-
-                  </div>
-
-
-
-
-
-                  <div className="bg-[#F3E7D3] rounded-2xl p-3 text-center">
-
-                    <div>
-                      📐
-                    </div>
-
-                    <strong className="text-[#1B4965]">
-                      {p.metros}
-                    </strong>
-
-                    <p className="text-xs text-gray-500">
-                      m²
-                    </p>
-
-                  </div>
 
 
                 </div>
@@ -362,17 +321,37 @@ export default async function PropiedadesPage({ searchParams }: Props) {
 
 
 
-
-                <p
+                <div
                   className="
-                    mt-7
-                    text-2xl
-                    font-bold
-                    text-[#D8B384]
+                    p-7
                   "
                 >
-                  {p.precio}
-                </p>
+
+
+
+                  <h2
+                    className="
+                      text-2xl
+                      font-bold
+                      text-[#303C95]
+                    "
+                  >
+                    {p.titulo}
+                  </h2>
+
+
+
+
+
+
+                  <p
+                    className="
+                      mt-3
+                      text-gray-500
+                    "
+                  >
+                    📍 {p.ubicacion}
+                  </p>
 
 
 
@@ -380,38 +359,129 @@ export default async function PropiedadesPage({ searchParams }: Props) {
 
 
 
-                <Link
-                  href={`/propiedades/${p.slug}`}
-                  className="
-                    block
-                    mt-7
-                    text-center
-                    rounded-full
-                    py-4
-                    border-2
-                    border-[#D8B384]
-                    text-[#1B4965]
-                    font-semibold
-                    hover:bg-[#D8B384]
-                    hover:text-white
-                    transition
-                  "
-                >
-                  Ver propiedad
-                </Link>
+
+                  <div
+                    className="
+                      grid
+                      grid-cols-3
+                      gap-3
+                      mt-6
+                    "
+                  >
+
+
+
+                    <div
+                      className="
+                        bg-[#F3E7D3]
+                        rounded-2xl
+                        p-3
+                        text-center
+                      "
+                    >
+                      🛏
+                      <p className="font-bold text-[#303C95]">
+                        {p.dormitorios}
+                      </p>
+                    </div>
 
 
 
 
 
-              </div>
+                    <div
+                      className="
+                        bg-[#F3E7D3]
+                        rounded-2xl
+                        p-3
+                        text-center
+                      "
+                    >
+                      🚿
+                      <p className="font-bold text-[#303C95]">
+                        {p.banos}
+                      </p>
+                    </div>
 
 
-            </article>
 
 
-          ))}
 
+                    <div
+                      className="
+                        bg-[#F3E7D3]
+                        rounded-2xl
+                        p-3
+                        text-center
+                      "
+                    >
+                      📐
+                      <p className="font-bold text-[#303C95]">
+                        {p.metros}
+                      </p>
+                    </div>
+
+
+
+                  </div>
+
+
+
+
+
+
+
+
+                  <p
+                    className="
+                      mt-7
+                      text-2xl
+                      font-bold
+                      text-[#D8B384]
+                    "
+                  >
+                    {p.precio}
+                  </p>
+
+
+
+
+
+
+
+                  <Link
+                    href={`/propiedades/${p.slug}`}
+                    className="
+                      block
+                      mt-7
+                      text-center
+                      border-2
+                      border-[#D8B384]
+                      text-[#303C95]
+                      py-4
+                      rounded-full
+                      font-bold
+                      hover:bg-[#D8B384]
+                      hover:text-white
+                      transition
+                    "
+                  >
+                    Ver propiedad
+                  </Link>
+
+
+
+
+                </div>
+
+
+
+
+              </article>
+
+
+            ))
+          }
 
 
 
@@ -419,10 +489,15 @@ export default async function PropiedadesPage({ searchParams }: Props) {
         </div>
 
 
+
+
       </div>
 
 
+
+
     </main>
+
 
   );
 
