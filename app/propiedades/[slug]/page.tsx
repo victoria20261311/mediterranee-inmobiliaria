@@ -1,4 +1,4 @@
-import { propiedades } from "../../data/propiedades";
+import { supabase } from "../../lib/supabase";
 import Link from "next/link";
 import PropertyGallery from "../../components/PropertyGallery";
 import ShareButton from "../../components/ShareButton";
@@ -20,9 +20,11 @@ export default async function PropertyPage({ params }: Props) {
   const { slug } = await params;
 
 
-  const propiedad = propiedades.find(
-    (p) => p.slug === slug
-  );
+  const { data: propiedad } = await supabase
+  .from("propiedades")
+  .select("*")
+  .eq("slug", slug)
+  .single();
 
 
   if (!propiedad) {
@@ -36,6 +38,8 @@ export default async function PropertyPage({ params }: Props) {
   }
 
 
+  console.log(propiedad.imagenes);
+
 
   return (
 
@@ -43,12 +47,9 @@ export default async function PropertyPage({ params }: Props) {
 
 
 
-      <PropertyGallery
-        imagenes={propiedad.imagenes}
-        titulo={propiedad.titulo}
-      />
-
-
+      <pre className="p-4 bg-white text-black overflow-auto">
+  {JSON.stringify(propiedad.imagenes, null, 2)}
+</pre>
 
 
 

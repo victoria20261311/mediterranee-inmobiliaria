@@ -2,44 +2,56 @@
 
 import { useState } from "react";
 
-
 type Props = {
   imagenes: string[];
   titulo: string;
 };
 
-
-
 export default function PropertyGallery({ imagenes, titulo }: Props) {
-
 
   const [indice, setIndice] = useState(0);
 
 
+  if (!imagenes || imagenes.length === 0) {
+    return null;
+  }
+
 
   function anterior() {
 
-    setIndice((actual) =>
-      actual === 0
-        ? imagenes.length - 1
-        : actual - 1
-    );
+    setIndice((actual) => {
+
+      const nuevoIndice =
+        actual === 0
+          ? imagenes.length - 1
+          : actual - 1;
+
+      console.log("Índice anterior:", nuevoIndice);
+
+      return nuevoIndice;
+
+    });
 
   }
-
 
 
 
   function siguiente() {
 
-    setIndice((actual) =>
-      actual === imagenes.length - 1
-        ? 0
-        : actual + 1
-    );
+    setIndice((actual) => {
+
+      const nuevoIndice =
+        actual === imagenes.length - 1
+          ? 0
+          : actual + 1;
+
+      console.log("Índice siguiente:", nuevoIndice);
+
+      return nuevoIndice;
+
+    });
 
   }
-
 
 
 
@@ -47,37 +59,13 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
 
 
 
-
-
   return (
-
 
     <section className="bg-[#F3E7D3] py-12">
 
-
-
-
-
       <div className="max-w-5xl mx-auto px-6">
 
-
-
-
-
-
-        <div
-          className="
-            bg-white
-            rounded-3xl
-            shadow-2xl
-            p-5
-          "
-        >
-
-
-
-
-
+        <div className="bg-white rounded-3xl shadow-2xl p-5">
 
 
           <div
@@ -95,32 +83,23 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
           >
 
 
-
-
-
             <img
-              src={`/propiedades/${imagenPrincipal}`}
+              key={indice}
+              src={imagenPrincipal}
               alt={titulo}
-              className="
-                max-h-full
-                max-w-full
-                object-contain
-              "
+              className="max-h-full max-w-full object-contain"
             />
 
 
-
-
-
+            <p className="absolute bottom-2 left-2 text-xs bg-white/80 p-2 rounded">
+              {imagenPrincipal}
+            </p>
 
 
 
             {imagenes.length > 1 && (
 
               <>
-
-
-
 
 
                 <button
@@ -146,11 +125,6 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
 
 
 
-
-
-
-
-
                 <button
                   onClick={siguiente}
                   className="
@@ -173,16 +147,9 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
                 </button>
 
 
-
-
-
               </>
 
             )}
-
-
-
-
 
 
 
@@ -210,16 +177,7 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
 
 
 
-
-
-
-
-
           </div>
-
-
-
-
 
 
 
@@ -235,23 +193,18 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
             "
           >
 
-
-
-
-
-
-
             {imagenes.map((imagen, index) => (
-
-
-
-
 
               <button
                 key={index}
-                onClick={() => setIndice(index)}
-                className={`
+                onClick={() => {
 
+                  console.log("Miniatura índice:", index);
+
+                  setIndice(index);
+
+                }}
+                className={`
                   flex-shrink-0
                   rounded-xl
                   overflow-hidden
@@ -263,16 +216,11 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
                       ? "border-[#D8B384]"
                       : "border-transparent"
                   }
-
                 `}
               >
 
-
-
-
-
                 <img
-                  src={`/propiedades/${imagen}`}
+                  src={imagen}
                   alt={`${titulo} ${index + 1}`}
                   className="
                     w-28
@@ -281,48 +229,18 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
                   "
                 />
 
-
-
-
-
               </button>
 
-
-
-
-
             ))}
-
-
-
-
-
-
 
           </div>
 
 
-
-
-
-
         </div>
-
-
-
-
-
-
 
       </div>
 
-
-
-
-
-
     </section>
-
 
   );
 
