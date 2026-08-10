@@ -1,5 +1,6 @@
 import { supabase } from "../../lib/supabase";
 import Link from "next/link";
+
 import PropertyGallery from "../../components/PropertyGallery";
 import ShareButton from "../../components/ShareButton";
 import PropertyContact from "../../components/PropertyContact";
@@ -16,29 +17,31 @@ type Props = {
 
 export default async function PropertyPage({ params }: Props) {
 
-
   const { slug } = await params;
 
 
   const { data: propiedad } = await supabase
-  .from("propiedades")
-  .select("*")
-  .eq("slug", slug)
-  .single();
+    .from("propiedades")
+    .select("*")
+    .eq("slug", slug)
+    .single();
 
 
   if (!propiedad) {
+
     return (
+
       <main className="min-h-screen flex items-center justify-center bg-[#F3E7D3]">
+
         <h1 className="text-3xl font-bold text-[#303C95]">
           Propiedad no encontrada
         </h1>
+
       </main>
+
     );
+
   }
-
-
-  console.log(propiedad.imagenes);
 
 
   return (
@@ -46,26 +49,17 @@ export default async function PropertyPage({ params }: Props) {
     <main className="bg-[#F3E7D3] min-h-screen">
 
 
-
-      <pre className="p-4 bg-white text-black overflow-auto">
-  {JSON.stringify(propiedad.imagenes, null, 2)}
-</pre>
-
-
-
       <div className="max-w-6xl mx-auto px-6 py-16">
 
 
-
-
+        {/* TIPO DE PROPIEDAD */}
 
         <p className="text-[#D8B384] font-bold uppercase tracking-wider">
           {propiedad.tipo}
         </p>
 
 
-
-
+        {/* TÍTULO */}
 
         <h1
           className="
@@ -80,40 +74,39 @@ export default async function PropertyPage({ params }: Props) {
         </h1>
 
 
-
-
+        {/* UBICACIÓN */}
 
         <p className="text-xl text-gray-600 mt-4">
           📍 {propiedad.ubicacion}
         </p>
 
 
+        {/* PRECIO */}
 
-
-
-        <p className="
-          text-4xl
-          font-bold
-          text-[#D8B384]
-          mt-8
-        ">
+        <p
+          className="
+            text-4xl
+            font-bold
+            text-[#D8B384]
+            mt-8
+          "
+        >
           {propiedad.precio}
         </p>
 
 
-
-
-
-
-
+        {/* DATOS PRINCIPALES */}
 
         <div className="grid md:grid-cols-3 gap-6 mt-10">
 
 
+          {/* DORMITORIOS */}
 
           <div className="bg-white rounded-3xl p-6 shadow-xl text-center">
 
-            🛏
+            <div className="text-3xl">
+              🛏
+            </div>
 
             <p className="text-3xl font-bold text-[#303C95] mt-3">
               {propiedad.dormitorios}
@@ -126,13 +119,13 @@ export default async function PropertyPage({ params }: Props) {
           </div>
 
 
-
-
-
+          {/* BAÑOS */}
 
           <div className="bg-white rounded-3xl p-6 shadow-xl text-center">
 
-            🚿
+            <div className="text-3xl">
+              🚿
+            </div>
 
             <p className="text-3xl font-bold text-[#303C95] mt-3">
               {propiedad.banos}
@@ -145,13 +138,13 @@ export default async function PropertyPage({ params }: Props) {
           </div>
 
 
-
-
-
+          {/* METROS */}
 
           <div className="bg-white rounded-3xl p-6 shadow-xl text-center">
 
-            📐
+            <div className="text-3xl">
+              📐
+            </div>
 
             <p className="text-3xl font-bold text-[#303C95] mt-3">
               {propiedad.metros}
@@ -164,92 +157,91 @@ export default async function PropertyPage({ params }: Props) {
           </div>
 
 
-
         </div>
 
 
-
-
-
-
-
-
+        {/* CARACTERÍSTICAS */}
 
         <div className="mt-8 flex flex-wrap gap-3">
 
+          {propiedad.caracteristicas?.map(
+            (item: string, index: number) => (
 
-          {propiedad.caracteristicas?.map((item, index) => (
+              <span
+                key={index}
+                className="
+                  bg-white
+                  shadow
+                  px-5
+                  py-3
+                  rounded-full
+                  text-[#303C95]
+                  font-semibold
+                "
+              >
+                ✓ {item}
+              </span>
 
-            <span
-              key={index}
-              className="
-                bg-white
-                shadow
-                px-5
-                py-3
-                rounded-full
-                text-[#303C95]
-                font-semibold
-              "
-            >
-              ✓ {item}
-            </span>
-
-          ))}
-
+            )
+          )}
 
         </div>
 
 
+        {/* DESCRIPCIÓN */}
 
-
-
-
-
-
-
-        <p className="
-          mt-12
-          text-lg
-          leading-8
-          text-gray-700
-        ">
+        <p
+          className="
+            mt-12
+            text-lg
+            leading-8
+            text-gray-700
+          "
+        >
           {propiedad.descripcion}
         </p>
 
 
+        {/* GALERÍA */}
+
+        <PropertyGallery
+          imagenes={propiedad.imagenes}
+          titulo={propiedad.titulo}
+        />
 
 
+        {/* CONTACTO */}
+
+        <PropertyContact
+          propiedad={propiedad.titulo}
+        />
 
 
+        {/* MAPA */}
 
-        <PropertyContact propiedad={propiedad.titulo} />
-
-        <PropertyMap ubicacion={propiedad.mapa} />
-
-
-
+        <PropertyMap
+          ubicacion={propiedad.mapa}
+        />
 
 
+        {/* PROPIEDADES SIMILARES */}
+
+        <SimilarProperties
+          actual={propiedad.slug}
+        />
 
 
-        <SimilarProperties actual={propiedad.slug} />
-
-
-
-
-
-
-
+        {/* BOTONES */}
 
         <div className="mt-12 flex flex-wrap gap-4">
 
 
-
-
+          {/* WHATSAPP */}
 
           <a
-            href={`https://wa.me/59894239220?text=Hola,%20me%20interesa%20la%20propiedad:%20${encodeURIComponent(propiedad.titulo)}`}
+            href={`https://wa.me/59894239220?text=Hola,%20me%20interesa%20la%20propiedad:%20${encodeURIComponent(
+              propiedad.titulo
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
             className="
@@ -268,18 +260,14 @@ export default async function PropertyPage({ params }: Props) {
           </a>
 
 
+          {/* COMPARTIR */}
+
+          <ShareButton
+            titulo={propiedad.titulo}
+          />
 
 
-
-
-
-          <ShareButton titulo={propiedad.titulo} />
-
-
-
-
-
-
+          {/* VOLVER */}
 
           <Link
             href="/"
@@ -300,14 +288,7 @@ export default async function PropertyPage({ params }: Props) {
           </Link>
 
 
-
-
-
         </div>
-
-
-
-
 
 
       </div>
@@ -316,4 +297,5 @@ export default async function PropertyPage({ params }: Props) {
     </main>
 
   );
+
 }

@@ -7,20 +7,19 @@ type Props = {
   titulo: string;
 };
 
-export default function PropertyGallery({ imagenes, titulo }: Props) {
+export default function PropertyGallery({
+  imagenes,
+  titulo,
+}: Props) {
 
   const [indice, setIndice] = useState(0);
-
 
   if (!imagenes || imagenes.length === 0) {
     return null;
   }
 
-
   function anterior() {
-
     setIndice((actual) => {
-
       const nuevoIndice =
         actual === 0
           ? imagenes.length - 1
@@ -29,17 +28,11 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
       console.log("Índice anterior:", nuevoIndice);
 
       return nuevoIndice;
-
     });
-
   }
 
-
-
   function siguiente() {
-
     setIndice((actual) => {
-
       const nuevoIndice =
         actual === imagenes.length - 1
           ? 0
@@ -48,25 +41,19 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
       console.log("Índice siguiente:", nuevoIndice);
 
       return nuevoIndice;
-
     });
-
   }
-
-
 
   const imagenPrincipal = imagenes[indice];
 
-
-
   return (
-
     <section className="bg-[#F3E7D3] py-12">
 
       <div className="max-w-5xl mx-auto px-6">
 
         <div className="bg-white rounded-3xl shadow-2xl p-5">
 
+          {/* IMAGEN PRINCIPAL */}
 
           <div
             className="
@@ -82,7 +69,6 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
             "
           >
 
-
             <img
               key={indice}
               src={imagenPrincipal}
@@ -90,69 +76,61 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
               className="max-h-full max-w-full object-contain"
             />
 
-
-            <p className="absolute bottom-2 left-2 text-xs bg-white/80 p-2 rounded">
-              {imagenPrincipal}
-            </p>
-
-
+            {/* BOTÓN ANTERIOR */}
 
             {imagenes.length > 1 && (
-
-              <>
-
-
-                <button
-                  onClick={anterior}
-                  className="
-                    absolute
-                    left-5
-                    top-1/2
-                    -translate-y-1/2
-                    bg-white/90
-                    text-[#303C95]
-                    w-12
-                    h-12
-                    rounded-full
-                    text-3xl
-                    shadow-lg
-                    hover:scale-110
-                    transition
-                  "
-                >
-                  ‹
-                </button>
-
-
-
-                <button
-                  onClick={siguiente}
-                  className="
-                    absolute
-                    right-5
-                    top-1/2
-                    -translate-y-1/2
-                    bg-white/90
-                    text-[#303C95]
-                    w-12
-                    h-12
-                    rounded-full
-                    text-3xl
-                    shadow-lg
-                    hover:scale-110
-                    transition
-                  "
-                >
-                  ›
-                </button>
-
-
-              </>
-
+              <button
+                type="button"
+                onClick={anterior}
+                className="
+                  absolute
+                  left-5
+                  top-1/2
+                  -translate-y-1/2
+                  bg-white/90
+                  text-[#303C95]
+                  w-12
+                  h-12
+                  rounded-full
+                  text-3xl
+                  shadow-lg
+                  hover:scale-110
+                  transition
+                  z-10
+                "
+              >
+                ‹
+              </button>
             )}
 
+            {/* BOTÓN SIGUIENTE */}
 
+            {imagenes.length > 1 && (
+              <button
+                type="button"
+                onClick={siguiente}
+                className="
+                  absolute
+                  right-5
+                  top-1/2
+                  -translate-y-1/2
+                  bg-white/90
+                  text-[#303C95]
+                  w-12
+                  h-12
+                  rounded-full
+                  text-3xl
+                  shadow-lg
+                  hover:scale-110
+                  transition
+                  z-10
+                "
+              >
+                ›
+              </button>
+            )}
 
+            {/* CONTADOR */}
 
             <div
               className="
@@ -170,18 +148,12 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
                 backdrop-blur
               "
             >
-
               {indice + 1} / {imagenes.length}
-
             </div>
-
-
 
           </div>
 
-
-
-
+          {/* MINIATURAS */}
 
           <div
             className="
@@ -196,13 +168,11 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
             {imagenes.map((imagen, index) => (
 
               <button
+                type="button"
                 key={index}
                 onClick={() => {
-
                   console.log("Miniatura índice:", index);
-
                   setIndice(index);
-
                 }}
                 className={`
                   flex-shrink-0
@@ -235,13 +205,10 @@ export default function PropertyGallery({ imagenes, titulo }: Props) {
 
           </div>
 
-
         </div>
 
       </div>
 
     </section>
-
   );
-
 }
