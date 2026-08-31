@@ -7,78 +7,37 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Whatsapp from "./components/Whatsapp";
 
-
 export default function Home() {
-
-
   return (
+    <main className="min-h-screen bg-[#FAF8F5] text-gray-800">
 
-
-    <main
-      className="
-        min-h-screen
-        bg-[#FAF8F5]
-        text-gray-800
-      "
-    >
-
-
-
+      {/* HEADER */}
       <Header />
 
-
-
       {/* HERO */}
-
       <section
         id="inicio"
-        className="
-          relative
-          h-screen
-          overflow-hidden
-        "
+        className="relative h-screen overflow-hidden"
       >
 
-
-
+        {/* VIDEO */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="
-            absolute
-            inset-0
-            w-full
-            h-full
-            object-cover
-          "
+          className="absolute inset-0 w-full h-full object-cover"
         >
-
           <source
             src="/images/portada.mp4"
             type="video/mp4"
           />
-
         </video>
 
-
-
-
-
         {/* OSCURECER VIDEO */}
+        <div className="absolute inset-0 bg-black/35" />
 
-        <div
-          className="
-            absolute
-            inset-0
-            bg-black/35
-          "
-        />
-
-
-
-
+        {/* DEGRADADO */}
         <div
           className="
             absolute
@@ -90,11 +49,7 @@ export default function Home() {
           "
         />
 
-
-
-
-
-
+        {/* CONTENIDO HERO */}
         <div
           className="
             relative
@@ -106,21 +61,7 @@ export default function Home() {
             px-6
           "
         >
-
-
-
-
-          <div
-            className="
-              text-center
-              mt-16
-            "
-          >
-
-
-
-
-
+          <div className="text-center mt-16">
 
             <h1
               className="
@@ -135,12 +76,6 @@ export default function Home() {
               MEDITERRANÉE
             </h1>
 
-
-
-
-
-
-
             <p
               className="
                 mt-4
@@ -154,13 +89,6 @@ export default function Home() {
               Servicios Inmobiliarios
             </p>
 
-
-
-
-
-
-
-
             <div
               className="
                 w-28
@@ -170,12 +98,6 @@ export default function Home() {
                 mt-8
               "
             />
-
-
-
-
-
-
 
             <p
               className="
@@ -190,14 +112,7 @@ export default function Home() {
               Ventas · Alquileres · Administraciones · Tasaciones
             </p>
 
-
-
-
-
-
-
-
-
+            {/* BOTONES */}
             <div
               className="
                 mt-12
@@ -208,11 +123,6 @@ export default function Home() {
                 justify-center
               "
             >
-
-
-
-
-
               <a
                 href="#propiedades"
                 className="
@@ -233,11 +143,6 @@ export default function Home() {
                 Ver propiedades
               </a>
 
-
-
-
-
-
               <a
                 href="#contacto"
                 className="
@@ -254,82 +159,39 @@ export default function Home() {
               >
                 Contactanos
               </a>
-
-
-
-
-
             </div>
 
-
-
-
-
           </div>
-
-
-
-
-
         </div>
-
-
-
-
-
       </section>
 
-
-
-
-
       {/* BUSCADOR */}
-
       <SearchBox />
 
-
-
       {/* SERVICIOS */}
-
-      <Services />
-
-
+      <section id="servicios">
+        <Services />
+      </section>
 
       {/* NOSOTROS */}
-
       <About />
 
-
-
       {/* PROPIEDADES */}
-
-      <Properties />
-
-
+      <section id="propiedades">
+        <Properties />
+      </section>
 
       {/* CONTACTO */}
-
-      <Contact />
-
-
+      <section id="contacto">
+        <Contact />
+      </section>
 
       {/* FOOTER */}
-
       <Footer />
 
-
-
-      {/* BOTON FLOTANTE */}
-
+      {/* WHATSAPP */}
       <Whatsapp />
 
-
-
-
-
     </main>
-
-
   );
-
 }

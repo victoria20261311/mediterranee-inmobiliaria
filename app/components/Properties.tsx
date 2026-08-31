@@ -1,12 +1,8 @@
 import Link from "next/link";
 import { propiedades } from "../data/propiedades";
 
-
 export default function Properties() {
-
-
   return (
-
     <section
       id="propiedades"
       className="
@@ -16,17 +12,13 @@ export default function Properties() {
         px-6
       "
     >
-
-
-
       <div
         className="
           max-w-7xl
           mx-auto
         "
       >
-
-
+        {/* TÍTULO */}
 
         <div
           className="
@@ -34,9 +26,6 @@ export default function Properties() {
             mb-14
           "
         >
-
-
-
           <h2
             className="
               text-4xl
@@ -47,8 +36,6 @@ export default function Properties() {
           >
             Propiedades destacadas
           </h2>
-
-
 
           <div
             className="
@@ -61,8 +48,6 @@ export default function Properties() {
             "
           />
 
-
-
           <p
             className="
               mt-6
@@ -72,14 +57,9 @@ export default function Properties() {
           >
             Encontrá tu próximo hogar o inversión.
           </p>
-
-
-
         </div>
 
-
-
-
+        {/* PROPIEDADES */}
 
         <div
           className="
@@ -88,12 +68,7 @@ export default function Properties() {
             gap-10
           "
         >
-
-
-
-          {propiedades.map((p)=>(
-
-
+          {propiedades.map((p) => (
             <article
               key={p.id}
               className="
@@ -104,44 +79,58 @@ export default function Properties() {
                 shadow-xl
                 hover:-translate-y-2
                 transition
+                duration-300
               "
             >
+              {/* IMAGEN */}
 
+              <div className="relative">
+                <img
+                  src={`/propiedades/${p.imagenes[0]}`}
+                  alt={p.titulo}
+                  className="
+                    w-full
+                    h-72
+                    object-cover
+                  "
+                />
+              </div>
 
-
-              <img
-                src={`/propiedades/${p.imagenes[0]}`}
-                alt={p.titulo}
-                className="
-                  w-full
-                  h-72
-                  object-cover
-                "
-              />
-
-
-
-
+              {/* INFORMACIÓN */}
 
               <div
                 className="
                   p-7
                 "
               >
+                {/* OPERACIÓN */}
 
+                <p
+                  className="
+                    text-sm
+                    uppercase
+                    tracking-widest
+                    font-bold
+                    text-[#D8B384]
+                  "
+                >
+                  {p.tipo || "Propiedad"}
+                </p>
 
+                {/* TÍTULO */}
 
                 <h3
                   className="
                     text-2xl
                     font-bold
                     text-[#303C95]
+                    mt-2
                   "
                 >
                   {p.titulo}
                 </h3>
 
-
+                {/* UBICACIÓN */}
 
                 <p
                   className="
@@ -152,7 +141,7 @@ export default function Properties() {
                   📍 {p.ubicacion}
                 </p>
 
-
+                {/* PRECIO */}
 
                 <p
                   className="
@@ -165,8 +154,7 @@ export default function Properties() {
                   {p.precio}
                 </p>
 
-
-
+                {/* BOTÓN */}
 
                 <Link
                   href={`/propiedades/${p.slug}`}
@@ -187,30 +175,11 @@ export default function Properties() {
                 >
                   Ver propiedad
                 </Link>
-
-
-
               </div>
-
-
-
             </article>
-
-
           ))}
-
-
-
         </div>
-
-
-
       </div>
-
-
-
     </section>
-
   );
-
 }

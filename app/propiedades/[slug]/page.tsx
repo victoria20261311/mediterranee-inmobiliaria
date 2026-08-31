@@ -1,12 +1,6 @@
-import { supabase } from "../../lib/supabase";
 import Link from "next/link";
-
+import { supabase } from "../../../lib/supabase";
 import PropertyGallery from "../../components/PropertyGallery";
-import ShareButton from "../../components/ShareButton";
-import PropertyContact from "../../components/PropertyContact";
-import SimilarProperties from "../../components/SimilarProperties";
-import PropertyMap from "../../components/PropertyMap";
-
 
 type Props = {
   params: Promise<{
@@ -14,288 +8,262 @@ type Props = {
   }>;
 };
 
-
-export default async function PropertyPage({ params }: Props) {
-
+export default async function PropiedadPage({ params }: Props) {
   const { slug } = await params;
 
-
-  const { data: propiedad } = await supabase
+  const { data: propiedad, error } = await supabase
     .from("propiedades")
     .select("*")
     .eq("slug", slug)
-    .single();
+    .maybeSingle();
 
-
-  if (!propiedad) {
-
+  if (error || !propiedad) {
     return (
-
-      <main className="min-h-screen flex items-center justify-center bg-[#F3E7D3]">
-
-        <h1 className="text-3xl font-bold text-[#303C95]">
-          Propiedad no encontrada
-        </h1>
-
-      </main>
-
-    );
-
-  }
-
-
-  return (
-
-    <main className="bg-[#F3E7D3] min-h-screen">
-
-
-      <div className="max-w-6xl mx-auto px-6 py-16">
-
-
-        {/* TIPO DE PROPIEDAD */}
-
-        <p className="text-[#D8B384] font-bold uppercase tracking-wider">
-          {propiedad.tipo}
-        </p>
-
-
-        {/* TÍTULO */}
-
-        <h1
-          className="
-            text-4xl
-            md:text-5xl
-            font-bold
-            text-[#303C95]
-            mt-3
-          "
-        >
-          {propiedad.titulo}
-        </h1>
-
-
-        {/* UBICACIÓN */}
-
-        <p className="text-xl text-gray-600 mt-4">
-          📍 {propiedad.ubicacion}
-        </p>
-
-
-        {/* PRECIO */}
-
-        <p
-          className="
-            text-4xl
-            font-bold
-            text-[#D8B384]
-            mt-8
-          "
-        >
-          {propiedad.precio}
-        </p>
-
-
-        {/* DATOS PRINCIPALES */}
-
-        <div className="grid md:grid-cols-3 gap-6 mt-10">
-
-
-          {/* DORMITORIOS */}
-
-          <div className="bg-white rounded-3xl p-6 shadow-xl text-center">
-
-            <div className="text-3xl">
-              🛏
-            </div>
-
-            <p className="text-3xl font-bold text-[#303C95] mt-3">
-              {propiedad.dormitorios}
-            </p>
-
-            <p className="text-gray-500">
-              Dormitorios
-            </p>
-
-          </div>
-
-
-          {/* BAÑOS */}
-
-          <div className="bg-white rounded-3xl p-6 shadow-xl text-center">
-
-            <div className="text-3xl">
-              🚿
-            </div>
-
-            <p className="text-3xl font-bold text-[#303C95] mt-3">
-              {propiedad.banos}
-            </p>
-
-            <p className="text-gray-500">
-              Baños
-            </p>
-
-          </div>
-
-
-          {/* METROS */}
-
-          <div className="bg-white rounded-3xl p-6 shadow-xl text-center">
-
-            <div className="text-3xl">
-              📐
-            </div>
-
-            <p className="text-3xl font-bold text-[#303C95] mt-3">
-              {propiedad.metros}
-            </p>
-
-            <p className="text-gray-500">
-              Metros cuadrados
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-        {/* CARACTERÍSTICAS */}
-
-        <div className="mt-8 flex flex-wrap gap-3">
-
-          {propiedad.caracteristicas?.map(
-            (item: string, index: number) => (
-
-              <span
-                key={index}
-                className="
-                  bg-white
-                  shadow
-                  px-5
-                  py-3
-                  rounded-full
-                  text-[#303C95]
-                  font-semibold
-                "
-              >
-                ✓ {item}
-              </span>
-
-            )
-          )}
-
-        </div>
-
-
-        {/* DESCRIPCIÓN */}
-
-        <p
-          className="
-            mt-12
-            text-lg
-            leading-8
-            text-gray-700
-          "
-        >
-          {propiedad.descripcion}
-        </p>
-
-
-        {/* GALERÍA */}
-
-        <PropertyGallery
-          imagenes={propiedad.imagenes}
-          titulo={propiedad.titulo}
-        />
-
-
-        {/* CONTACTO */}
-
-        <PropertyContact
-          propiedad={propiedad.titulo}
-        />
-
-
-        {/* MAPA */}
-
-        <PropertyMap
-          ubicacion={propiedad.mapa}
-        />
-
-
-        {/* PROPIEDADES SIMILARES */}
-
-        <SimilarProperties
-          actual={propiedad.slug}
-        />
-
-
-        {/* BOTONES */}
-
-        <div className="mt-12 flex flex-wrap gap-4">
-
-
-          {/* WHATSAPP */}
-
-          <a
-            href={`https://wa.me/59894239220?text=Hola,%20me%20interesa%20la%20propiedad:%20${encodeURIComponent(
-              propiedad.titulo
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              bg-green-500
-              hover:bg-green-600
-              text-white
-              px-8
-              py-4
-              rounded-full
-              font-bold
-              transition
-              shadow-lg
-            "
-          >
-            📲 Consultar por WhatsApp
-          </a>
-
-
-          {/* COMPARTIR */}
-
-          <ShareButton
-            titulo={propiedad.titulo}
-          />
-
-
-          {/* VOLVER */}
+      <main className="min-h-screen bg-[#F3E7D3] px-6 py-24">
+        <div className="max-w-6xl mx-auto">
 
           <Link
-            href="/"
-            className="
-              border-2
-              border-[#303C95]
-              px-8
-              py-4
-              rounded-full
-              font-bold
-              text-[#303C95]
-              hover:bg-[#303C95]
-              hover:text-white
-              transition
-            "
+            href="/propiedades"
+            className="text-[#303C95] font-semibold hover:text-[#D8B384] transition"
           >
-            Volver
+            &larr; Volver a propiedades
           </Link>
 
+          <div className="mt-10 bg-white rounded-3xl shadow-xl p-10">
+            <h1 className="text-3xl font-bold text-red-600">
+              No se pudo cargar la propiedad
+            </h1>
+
+            <p className="mt-4 text-gray-600">
+              Propiedad buscada: {slug}
+            </p>
+          </div>
+
+        </div>
+      </main>
+    );
+  }
+
+  let imagenes: string[] = [];
+
+  /*
+    Supabase puede devolver "imagenes" como:
+    - un array real
+    - un texto que contiene un JSON array
+  */
+
+  if (Array.isArray(propiedad.imagenes)) {
+    imagenes = propiedad.imagenes.filter(
+      (imagen: unknown): imagen is string =>
+        typeof imagen === "string" &&
+        imagen.trim() !== "" &&
+        imagen.startsWith("http")
+    );
+  } else if (typeof propiedad.imagenes === "string") {
+    try {
+      const imagenesParseadas = JSON.parse(propiedad.imagenes);
+
+      if (Array.isArray(imagenesParseadas)) {
+        imagenes = imagenesParseadas.filter(
+          (imagen: unknown): imagen is string =>
+            typeof imagen === "string" &&
+            imagen.trim() !== "" &&
+            imagen.startsWith("http")
+        );
+      }
+    } catch {
+      imagenes = [];
+    }
+  }
+
+  /*
+    Si no hay galería, usamos la imagen principal.
+  */
+
+  if (
+    imagenes.length === 0 &&
+    typeof propiedad.imagen === "string" &&
+    propiedad.imagen.startsWith("http")
+  ) {
+    imagenes = [propiedad.imagen];
+  }
+
+  return (
+    <main className="min-h-screen bg-[#F3E7D3] px-6 py-24">
+
+      <div className="max-w-6xl mx-auto">
+
+        {/* VOLVER */}
+        <Link
+          href="/propiedades"
+          className="text-[#303C95] font-semibold hover:text-[#D8B384] transition"
+        >
+          &larr; Volver a propiedades
+        </Link>
+
+        {/* PROPIEDAD */}
+        <div className="mt-8 bg-white rounded-3xl shadow-xl overflow-hidden">
+
+          {/* GALERÍA */}
+          <div className="px-4 md:px-8 pt-4 md:pt-8">
+
+            <PropertyGallery
+              imagenes={imagenes}
+              titulo={propiedad.titulo || "Propiedad"}
+            />
+
+          </div>
+
+          {/* INFORMACIÓN */}
+          <div className="p-8 md:p-12">
+
+            <p className="text-sm uppercase tracking-widest font-bold text-[#D8B384]">
+              {propiedad.operacion || propiedad.tipo || "Propiedad"}
+            </p>
+
+            <h1 className="text-4xl md:text-5xl font-bold text-[#303C95] mt-3">
+              {propiedad.titulo || "Propiedad"}
+            </h1>
+
+            <p className="text-lg text-gray-600 mt-4">
+              📍 {propiedad.zona || propiedad.ubicacion || "Ubicación"}
+            </p>
+
+            <p className="text-3xl font-bold text-[#D8B384] mt-6">
+              {propiedad.precio || "Consultar"}
+            </p>
+
+            {/* CARACTERÍSTICAS */}
+            <div className="grid grid-cols-3 gap-4 mt-8 border-t pt-8">
+
+              <div>
+                <p className="text-2xl">🛏</p>
+
+                <p className="font-semibold mt-1">
+                  {propiedad.dormitorios ?? "-"}
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  Dormitorios
+                </p>
+              </div>
+
+              <div>
+                <p className="text-2xl">🚿</p>
+
+                <p className="font-semibold mt-1">
+                  {propiedad.banos ?? "-"}
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  Baños
+                </p>
+              </div>
+
+              <div>
+                <p className="text-2xl">📐</p>
+
+                <p className="font-semibold mt-1">
+                  {propiedad.metros ?? "-"} m²
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  Superficie
+                </p>
+              </div>
+
+            </div>
+
+            {/* DESCRIPCIÓN */}
+            {propiedad.descripcion && (
+              <div className="mt-10">
+
+                <h2 className="text-2xl font-bold text-[#303C95]">
+                  Descripción
+                </h2>
+
+                <p className="mt-4 text-gray-600 leading-relaxed whitespace-pre-line">
+                  {propiedad.descripcion}
+                </p>
+
+              </div>
+            )}
+
+            {/* BOTÓN */}
+            <div className="mt-10">
+
+              <a
+                href="#contacto"
+                className="inline-block bg-[#303C95] hover:bg-[#252f78] text-white px-8 py-4 rounded-full font-bold transition shadow-lg"
+              >
+                Solicitar información
+              </a>
+
+            </div>
+
+          </div>
 
         </div>
 
+        {/* CONTACTO */}
+        <div
+          id="contacto"
+          className="mt-10 bg-white rounded-3xl shadow-xl p-8 md:p-10"
+        >
+
+          <h2 className="text-3xl font-bold text-[#303C95]">
+            📝 Solicitar información
+          </h2>
+
+          <p className="mt-3 text-gray-600">
+            Completá tus datos y enviá tu consulta por WhatsApp.
+          </p>
+
+          <form
+            action="https://wa.me/59894239220"
+            method="get"
+            target="_blank"
+            className="mt-6 space-y-4"
+          >
+
+            <input
+              type="text"
+              name="text"
+              placeholder="Nombre"
+              required
+              className="w-full border border-gray-200 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-[#D8B384]"
+            />
+
+            <input
+              type="tel"
+              name="telefono"
+              placeholder="Teléfono"
+              className="w-full border border-gray-200 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-[#D8B384]"
+            />
+
+            <textarea
+              name="mensaje"
+              rows={5}
+              defaultValue={
+                "Hola, me interesa la propiedad: " +
+                (propiedad.titulo || "esta propiedad")
+              }
+              className="w-full border border-gray-200 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-[#D8B384]"
+            />
+
+            <button
+              type="submit"
+              className="w-full bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold transition shadow-lg"
+            >
+              📲 Enviar consulta por WhatsApp
+            </button>
+
+          </form>
+
+        </div>
 
       </div>
 
-
     </main>
-
   );
-
 }

@@ -11,203 +11,164 @@ export default function PropertyGallery({
   imagenes,
   titulo,
 }: Props) {
+  const imagenesLimpias = Array.isArray(imagenes)
+    ? imagenes.filter(
+        (url): url is string =>
+          typeof url === "string" &&
+          url.trim() !== "" &&
+          url.startsWith("http")
+      )
+    : [];
 
   const [indice, setIndice] = useState(0);
 
-  if (!imagenes || imagenes.length === 0) {
-    return null;
+  if (imagenesLimpias.length === 0) {
+    return (
+      <div className="bg-gray-100 rounded-2xl h-[520px] flex items-center justify-center">
+        <p className="text-gray-500">
+          No hay imágenes disponibles.
+        </p>
+      </div>
+    );
   }
 
-  function anterior() {
-    setIndice((actual) => {
-      const nuevoIndice =
-        actual === 0
-          ? imagenes.length - 1
-          : actual - 1;
+  const indiceSeguro =
+    indice >= imagenesLimpias.length ? 0 : indice;
 
-      console.log("Índice anterior:", nuevoIndice);
+  const imagenPrincipal = imagenesLimpias[indiceSeguro];
 
-      return nuevoIndice;
-    });
-  }
+  const anterior = () => {
+    setIndice((actual) =>
+      actual === 0
+        ? imagenesLimpias.length - 1
+        : actual - 1
+    );
+  };
 
-  function siguiente() {
-    setIndice((actual) => {
-      const nuevoIndice =
-        actual === imagenes.length - 1
-          ? 0
-          : actual + 1;
-
-      console.log("Índice siguiente:", nuevoIndice);
-
-      return nuevoIndice;
-    });
-  }
-
-  const imagenPrincipal = imagenes[indice];
+  const siguiente = () => {
+    setIndice((actual) =>
+      actual === imagenesLimpias.length - 1
+        ? 0
+        : actual + 1
+    );
+  };
 
   return (
-    <section className="bg-[#F3E7D3] py-12">
+    <section className="w-full">
 
-      <div className="max-w-5xl mx-auto px-6">
+      {/* FOTO GRANDE */}
+      <div className="relative w-full h-[520px] bg-gray-100 rounded-2xl overflow-hidden">
 
-        <div className="bg-white rounded-3xl shadow-2xl p-5">
+        <img
+          src={imagenPrincipal}
+          alt={`${titulo} - imagen ${indiceSeguro + 1}`}
+          className="absolute inset-0 w-full h-full object-contain"
+        />
 
-          {/* IMAGEN PRINCIPAL */}
-
-          <div
+        {/* BOTÓN ANTERIOR */}
+        {imagenesLimpias.length > 1 && (
+          <button
+            type="button"
+            onClick={anterior}
+            aria-label="Foto anterior"
             className="
-              relative
-              bg-gray-100
-              rounded-2xl
-              overflow-hidden
+              absolute
+              left-5
+              top-1/2
+              -translate-y-1/2
+              w-14
+              h-14
+              rounded-full
+              bg-white/90
+              shadow-xl
               flex
               items-center
               justify-center
-              h-[380px]
-              md:h-[520px]
+              text-4xl
+              text-[#303C95]
+              hover:bg-white
+              hover:scale-110
+              transition
+              z-10
             "
           >
+            ‹
+          </button>
+        )}
 
-            <img
-              key={indice}
-              src={imagenPrincipal}
-              alt={titulo}
-              className="max-h-full max-w-full object-contain"
-            />
-
-            {/* BOTÓN ANTERIOR */}
-
-            {imagenes.length > 1 && (
-              <button
-                type="button"
-                onClick={anterior}
-                className="
-                  absolute
-                  left-5
-                  top-1/2
-                  -translate-y-1/2
-                  bg-white/90
-                  text-[#303C95]
-                  w-12
-                  h-12
-                  rounded-full
-                  text-3xl
-                  shadow-lg
-                  hover:scale-110
-                  transition
-                  z-10
-                "
-              >
-                ‹
-              </button>
-            )}
-
-            {/* BOTÓN SIGUIENTE */}
-
-            {imagenes.length > 1 && (
-              <button
-                type="button"
-                onClick={siguiente}
-                className="
-                  absolute
-                  right-5
-                  top-1/2
-                  -translate-y-1/2
-                  bg-white/90
-                  text-[#303C95]
-                  w-12
-                  h-12
-                  rounded-full
-                  text-3xl
-                  shadow-lg
-                  hover:scale-110
-                  transition
-                  z-10
-                "
-              >
-                ›
-              </button>
-            )}
-
-            {/* CONTADOR */}
-
-            <div
-              className="
-                absolute
-                bottom-5
-                left-1/2
-                -translate-x-1/2
-                bg-[#303C95]/90
-                text-white
-                px-5
-                py-2
-                rounded-full
-                text-sm
-                font-bold
-                backdrop-blur
-              "
-            >
-              {indice + 1} / {imagenes.length}
-            </div>
-
-          </div>
-
-          {/* MINIATURAS */}
-
-          <div
+        {/* BOTÓN SIGUIENTE */}
+        {imagenesLimpias.length > 1 && (
+          <button
+            type="button"
+            onClick={siguiente}
+            aria-label="Foto siguiente"
             className="
+              absolute
+              right-5
+              top-1/2
+              -translate-y-1/2
+              w-14
+              h-14
+              rounded-full
+              bg-white/90
+              shadow-xl
               flex
-              gap-4
-              mt-6
-              overflow-x-auto
-              pb-2
+              items-center
+              justify-center
+              text-4xl
+              text-[#303C95]
+              hover:bg-white
+              hover:scale-110
+              transition
+              z-10
             "
           >
-
-            {imagenes.map((imagen, index) => (
-
-              <button
-                type="button"
-                key={index}
-                onClick={() => {
-                  console.log("Miniatura índice:", index);
-                  setIndice(index);
-                }}
-                className={`
-                  flex-shrink-0
-                  rounded-xl
-                  overflow-hidden
-                  border-4
-                  transition
-
-                  ${
-                    indice === index
-                      ? "border-[#D8B384]"
-                      : "border-transparent"
-                  }
-                `}
-              >
-
-                <img
-                  src={imagen}
-                  alt={`${titulo} ${index + 1}`}
-                  className="
-                    w-28
-                    h-20
-                    object-cover
-                  "
-                />
-
-              </button>
-
-            ))}
-
-          </div>
-
-        </div>
+            ›
+          </button>
+        )}
 
       </div>
+
+      {/* CONTADOR */}
+      <div className="text-center mt-4 text-gray-500 font-medium">
+        Foto {indiceSeguro + 1} de {imagenesLimpias.length}
+      </div>
+
+      {/* MINIATURAS */}
+      {imagenesLimpias.length > 1 && (
+        <div className="mt-5 flex gap-3 overflow-x-auto pb-3">
+
+          {imagenesLimpias.map((url, index) => (
+            <button
+              key={`${url}-${index}`}
+              type="button"
+              onClick={() => setIndice(index)}
+              aria-label={`Ver foto ${index + 1}`}
+              className={`
+                flex-shrink-0
+                w-24
+                h-20
+                rounded-xl
+                overflow-hidden
+                border-2
+                transition
+                ${
+                  index === indiceSeguro
+                    ? "border-[#303C95] scale-105"
+                    : "border-transparent"
+                }
+              `}
+            >
+              <img
+                src={url}
+                alt={`${titulo} - miniatura ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </button>
+          ))}
+
+        </div>
+      )}
 
     </section>
   );

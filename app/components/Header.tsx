@@ -1,19 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
-
 export default function Header() {
-
-
   const [propiedadesOpen, setPropiedadesOpen] = useState(false);
   const [serviciosOpen, setServiciosOpen] = useState(false);
 
-
-
   return (
-
     <header
       className="
         fixed
@@ -31,9 +26,6 @@ export default function Header() {
         shadow-[0_10px_40px_rgba(0,0,0,0.15)]
       "
     >
-
-
-
       <div
         className="
           flex
@@ -43,25 +35,20 @@ export default function Header() {
           py-2
         "
       >
+        {/* LOGO */}
+
+        <Link href="/#inicio">
+          <Image
+            src="/images/logo.png"
+            alt="Mediterranée Servicios Inmobiliarios"
+            width={85}
+            height={45}
+            className="object-contain drop-shadow-xl"
+          />
+        </Link>
 
 
-
-        <Image
-          src="/images/logo.png"
-          alt="Mediterranée Servicios Inmobiliarios"
-          width={85}
-          height={45}
-          className="
-            object-contain
-            drop-shadow-xl
-          "
-        />
-
-
-
-
-
-
+        {/* MENÚ */}
 
         <nav
           className="
@@ -76,43 +63,52 @@ export default function Header() {
           "
         >
 
+          {/* INICIO */}
 
-
-          <a
-            href="#inicio"
+          <Link
+            href="/#inicio"
             className="hover:text-[#D8B384] transition"
           >
             Inicio
-          </a>
-
-
-
-
+          </Link>
 
 
           {/* PROPIEDADES */}
 
-
           <div
             className="relative"
-            onMouseEnter={()=>setPropiedadesOpen(true)}
-            onMouseLeave={()=>setPropiedadesOpen(false)}
+            onMouseEnter={() => setPropiedadesOpen(true)}
+            onMouseLeave={() => setPropiedadesOpen(false)}
           >
 
-            <button
-              className="
-                hover:text-[#D8B384]
-                transition
-              "
-            >
-              Propiedades ▾
-            </button>
+            <div className="flex items-center gap-1">
 
+              <Link
+                href="/propiedades"
+                className="hover:text-[#D8B384] transition"
+              >
+                Propiedades
+              </Link>
 
+              <button
+                type="button"
+                onClick={() =>
+                  setPropiedadesOpen(!propiedadesOpen)
+                }
+                className="
+                  hover:text-[#D8B384]
+                  transition
+                  cursor-pointer
+                "
+                aria-label="Abrir menú de propiedades"
+              >
+                ▾
+              </button>
+
+            </div>
 
 
             {propiedadesOpen && (
-
               <div
                 className="
                   absolute
@@ -127,89 +123,125 @@ export default function Header() {
                 "
               >
 
-                <a
+                <Link
                   href="/propiedades"
-                  className="block py-2 hover:text-[#D8B384]"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Todas
-                </a>
+                </Link>
 
-
-                <a
+                <Link
                   href="/propiedades?operacion=VENTA"
-                  className="block py-2 hover:text-[#D8B384]"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Ventas
-                </a>
+                </Link>
 
-
-                <a
+                <Link
                   href="/propiedades?operacion=ALQUILER"
-                  className="block py-2 hover:text-[#D8B384]"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Alquileres
-                </a>
+                </Link>
 
-
-                <a
+                <Link
                   href="/propiedades?tipo=Casa"
-                  className="block py-2 hover:text-[#D8B384]"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Casas
-                </a>
+                </Link>
 
-
-                <a
+                <Link
                   href="/propiedades?tipo=Apartamento"
-                  className="block py-2 hover:text-[#D8B384]"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Apartamentos
-                </a>
+                </Link>
 
-
-                <a
+                <Link
                   href="/propiedades?tipo=Terreno"
-                  className="block py-2 hover:text-[#D8B384]"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Terrenos
-                </a>
+                </Link>
 
+                <Link
+                  href="/propiedades?tipo=Chacra"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
+                >
+                  Chacras
+                </Link>
 
               </div>
-
             )}
 
           </div>
 
 
-
-
-
-
-
           {/* SERVICIOS */}
-
 
           <div
             className="relative"
-            onMouseEnter={()=>setServiciosOpen(true)}
-            onMouseLeave={()=>setServiciosOpen(false)}
+            onMouseEnter={() => setServiciosOpen(true)}
+            onMouseLeave={() => setServiciosOpen(false)}
           >
 
-            <button
-              className="
-                hover:text-[#D8B384]
-                transition
-              "
-            >
-              Servicios ▾
-            </button>
+            <div className="flex items-center gap-1">
 
+              <Link
+                href="/#servicios"
+                className="hover:text-[#D8B384] transition"
+              >
+                Servicios
+              </Link>
 
+              <button
+                type="button"
+                onClick={() =>
+                  setServiciosOpen(!serviciosOpen)
+                }
+                className="
+                  hover:text-[#D8B384]
+                  transition
+                  cursor-pointer
+                "
+                aria-label="Abrir menú de servicios"
+              >
+                ▾
+              </button>
+
+            </div>
 
 
             {serviciosOpen && (
-
               <div
                 className="
                   absolute
@@ -224,64 +256,67 @@ export default function Header() {
                 "
               >
 
-
-                <a
-                  href="#servicios"
-                  className="block py-2 hover:text-[#D8B384]"
+                <Link
+                  href="/#servicios"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Ventas
-                </a>
+                </Link>
 
-
-                <a
-                  href="#servicios"
-                  className="block py-2 hover:text-[#D8B384]"
+                <Link
+                  href="/#servicios"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Alquileres
-                </a>
+                </Link>
 
-
-                <a
-                  href="#servicios"
-                  className="block py-2 hover:text-[#D8B384]"
+                <Link
+                  href="/#servicios"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Administraciones
-                </a>
+                </Link>
 
-
-                <a
-                  href="#servicios"
-                  className="block py-2 hover:text-[#D8B384]"
+                <Link
+                  href="/#servicios"
+                  className="
+                    block
+                    py-2
+                    hover:text-[#D8B384]
+                  "
                 >
                   Tasaciones
-                </a>
-
+                </Link>
 
               </div>
-
             )}
 
           </div>
 
 
+          {/* CONTACTO */}
 
-
-
-
-
-
-          <a
-            href="#contacto"
+          <Link
+            href="/#contacto"
             className="hover:text-[#D8B384] transition"
           >
             Contacto
-          </a>
+          </Link>
 
 
-
-
-
-
+          {/* WHATSAPP */}
 
           <a
             href="https://wa.me/59894239220"
@@ -302,21 +337,9 @@ export default function Header() {
             WhatsApp
           </a>
 
-
-
-
-
         </nav>
 
-
-
-
-
       </div>
-
-
     </header>
-
   );
-
 }
