@@ -59,7 +59,6 @@ function obtenerImagen(propiedad: any): string | null {
 export default function SimilarProperties({
   actual,
 }: Props) {
-
   // Sacamos la propiedad actual
   // y mostramos hasta 3 propiedades diferentes
   const similares = propiedades
@@ -68,23 +67,19 @@ export default function SimilarProperties({
 
   return (
     <section className="mt-16">
-
       {/* TÍTULO */}
-
       <h2
         className="
           text-3xl
           font-bold
-          text-[#303C95]
+          text-[#20232A]
           mb-8
         "
       >
         🏡 Propiedades similares
       </h2>
 
-
       {/* PROPIEDADES */}
-
       <div
         className="
           grid
@@ -93,9 +88,7 @@ export default function SimilarProperties({
           gap-8
         "
       >
-
         {similares.map((propiedad) => {
-
           const imagenPrincipal =
             obtenerImagen(propiedad);
 
@@ -105,26 +98,25 @@ export default function SimilarProperties({
               className="
                 bg-white
                 rounded-3xl
-                shadow-xl
+                border
+                border-[#1300FF]/10
+                shadow-[0_10px_35px_rgba(19,0,255,0.07)]
                 overflow-hidden
                 hover:-translate-y-2
-                transition
+                hover:shadow-[0_18px_45px_rgba(19,0,255,0.13)]
+                transition-all
                 duration-300
               "
             >
-
               {/* FOTO */}
-
               <div
                 className="
                   relative
                   h-64
-                  bg-gray-100
+                  bg-[#F2F3FF]
                 "
               >
-
                 {imagenPrincipal ? (
-
                   <Image
                     src={imagenPrincipal}
                     alt={
@@ -132,16 +124,19 @@ export default function SimilarProperties({
                       "Propiedad"
                     }
                     fill
-                    className="object-cover"
+                    className="
+                      object-cover
+                      transition-transform
+                      duration-500
+                      hover:scale-105
+                    "
                     sizes="
                       (max-width: 640px) 100vw,
                       (max-width: 1024px) 50vw,
                       33vw
                     "
                   />
-
                 ) : (
-
                   <div
                     className="
                       w-full
@@ -149,64 +144,52 @@ export default function SimilarProperties({
                       flex
                       items-center
                       justify-center
-                      text-gray-400
+                      text-[#4E535B]/60
                     "
                   >
                     Sin imagen
                   </div>
-
                 )}
-
               </div>
 
-
               {/* INFORMACIÓN */}
-
               <div className="p-6 text-center">
-
                 {/* TIPO */}
-
                 <p
                   className="
                     text-sm
                     uppercase
                     tracking-wider
-                    text-[#D8B384]
+                    text-[#1300FF]
                     font-bold
                   "
                 >
                   {propiedad.tipo}
                 </p>
 
-
                 {/* TÍTULO */}
-
                 <h3
                   className="
                     text-2xl
                     font-bold
-                    text-[#303C95]
+                    text-[#20232A]
                     mt-2
                   "
                 >
                   {propiedad.titulo}
                 </h3>
 
-
                 {/* UBICACIÓN */}
-
                 <p
                   className="
-                    text-gray-500
+                    text-[#4E535B]
                     mt-2
                   "
                 >
                   📍 {propiedad.ubicacion}
                 </p>
 
-
                 {/* CARACTERÍSTICAS */}
-
                 <div
                   className="
                     grid
@@ -215,12 +198,12 @@ export default function SimilarProperties({
                     mt-5
                   "
                 >
-
                   {/* DORMITORIOS */}
-
                   <div
                     className="
-                      bg-[#F3E7D3]
+                      bg-[#F2F3FF]
+                      border
+                      border-[#1300FF]/15
                       rounded-2xl
                       p-3
                     "
@@ -232,7 +215,7 @@ export default function SimilarProperties({
                     <p
                       className="
                         font-bold
-                        text-[#303C95]
+                        text-[#20232A]
                         mt-1
                       "
                     >
@@ -242,19 +225,19 @@ export default function SimilarProperties({
                     <p
                       className="
                         text-xs
-                        text-gray-500
+                        text-[#4E535B]
                       "
                     >
                       Dorm.
                     </p>
                   </div>
 
-
                   {/* BAÑOS */}
-
                   <div
                     className="
-                      bg-[#F3E7D3]
+                      bg-[#F2F3FF]
+                      border
+                      border-[#1300FF]/15
                       rounded-2xl
                       p-3
                     "
@@ -266,7 +249,7 @@ export default function SimilarProperties({
                     <p
                       className="
                         font-bold
-                        text-[#303C95]
+                        text-[#20232A]
                         mt-1
                       "
                     >
@@ -276,19 +259,19 @@ export default function SimilarProperties({
                     <p
                       className="
                         text-xs
-                        text-gray-500
+                        text-[#4E535B]
                       "
                     >
                       Baños
                     </p>
                   </div>
 
-
                   {/* METROS */}
-
                   <div
                     className="
-                      bg-[#F3E7D3]
+                      bg-[#F2F3FF]
+                      border
+                      border-[#1300FF]/15
                       rounded-2xl
                       p-3
                     "
@@ -300,7 +283,7 @@ export default function SimilarProperties({
                     <p
                       className="
                         font-bold
-                        text-[#303C95]
+                        text-[#20232A]
                         mt-1
                       "
                     >
@@ -310,60 +293,53 @@ export default function SimilarProperties({
                     <p
                       className="
                         text-xs
-                        text-gray-500
+                        text-[#4E535B]
                       "
                     >
                       m²
                     </p>
                   </div>
-
                 </div>
 
-
                 {/* PRECIO */}
-
                 <p
                   className="
                     mt-5
                     text-2xl
                     font-bold
-                    text-[#D8B384]
+                    text-[#1300FF]
                   "
                 >
-                  {propiedad.precio ||
-                    "Consultar"}
+                  {propiedad.precio || "Consultar"}
                 </p>
 
-
                 {/* BOTÓN */}
-
                 <Link
                   href={`/propiedades/${propiedad.slug}`}
                   className="
                     block
                     w-full
                     mt-5
-                    bg-[#303C95]
-                    hover:bg-[#252F7D]
+                    bg-[#1300FF]
+                    hover:bg-[#0D00B8]
                     text-white
                     py-3
                     rounded-full
                     font-bold
-                    shadow-lg
-                    transition
+                    shadow-[0_8px_25px_rgba(19,0,255,0.25)]
+                    hover:shadow-[0_10px_30px_rgba(19,0,255,0.35)]
+                    hover:-translate-y-0.5
+                    transition-all
+                    duration-300
                   "
                 >
                   Ver propiedad
                 </Link>
-
               </div>
-
             </article>
           );
         })}
-
       </div>
-
     </section>
   );
 }

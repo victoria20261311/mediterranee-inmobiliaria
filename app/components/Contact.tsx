@@ -1,94 +1,88 @@
 export default function Contact() {
+  const servicios = [
+    "Ventas",
+    "Alquileres",
+    "Administraciones",
+    "Tasaciones",
+  ];
 
   return (
-
     <section
       id="contacto"
       className="
-        bg-gradient-to-b
-        from-white
-        via-[#FAF8F5]
-        to-[#F3E7D3]
-        py-28
-        px-6
+        scroll-mt-24
+        bg-[#FAF8F3]
+        py-20
+        sm:py-24
+        md:py-28
+        px-4
+        sm:px-6
       "
     >
-
-
-
       <div
         className="
           max-w-6xl
           mx-auto
           grid
-          md:grid-cols-2
-          gap-16
+          lg:grid-cols-2
+          gap-10
+          lg:gap-16
           items-center
         "
       >
 
-
-
-
+        {/* INFORMACIÓN */}
 
         <div>
 
-
-
-          <span
+          <p
             className="
-              text-sm
+              text-[#1300FF]
+              text-xs
+              sm:text-sm
               uppercase
-              tracking-[5px]
-              text-[#D8B384]
-              font-semibold
+              tracking-[0.28em]
+              font-bold
             "
           >
             Mediterranée
-          </span>
-
-
-
-
+          </p>
 
           <h2
             className="
-              mt-6
+              mt-3
               text-4xl
+              sm:text-5xl
               md:text-6xl
-              font-semibold
-              text-[#303C95]
+              font-bold
+              text-[#20232A]
+              leading-tight
             "
           >
             Contactanos
           </h2>
 
-
-
-
+          {/* LÍNEA AZUL */}
 
           <div
             className="
-              w-28
-              h-[3px]
-              bg-[#D8B384]
-              mt-7
+              w-24
+              h-[2px]
+              bg-[#1300FF]
+              mt-6
               rounded-full
+              shadow-[0_0_10px_rgba(19,0,255,0.25)]
             "
           />
 
-
-
-
-
-
-
           <p
             className="
-              mt-8
-              text-lg
-              text-gray-600
-              leading-relaxed
+              mt-7
+              text-base
+              sm:text-lg
+              text-[#4E535B]
+              leading-8
+              max-w-xl
             "
           >
             Estamos para ayudarte a encontrar,
@@ -96,218 +90,305 @@ export default function Contact() {
             con asesoramiento profesional.
           </p>
 
+          {/* SERVICIOS */}
 
+          <div className="mt-8 flex flex-wrap gap-2.5">
 
-
-
-
-
-
-          <div
-            className="
-              mt-8
-              flex
-              flex-wrap
-              gap-3
-            "
-          >
-
-
-            {[
-              "Ventas",
-              "Alquileres",
-              "Administraciones",
-              "Tasaciones"
-            ].map((item)=>(
-
-
+            {servicios.map((item) => (
               <span
                 key={item}
                 className="
-                  bg-white/60
-                  backdrop-blur-xl
+                  bg-white
                   border
-                  border-white
-                  shadow-md
-                  px-5
-                  py-3
+                  border-[#1300FF]/20
+                  shadow-sm
+                  px-4
+                  py-2.5
                   rounded-full
-                  text-[#303C95]
+                  text-[#1300FF]
+                  text-sm
                   font-semibold
+                  hover:bg-[#1300FF]/5
+                  hover:border-[#1300FF]/40
+                  hover:-translate-y-0.5
+                  hover:shadow-md
+                  transition
                 "
               >
                 {item}
               </span>
-
-
             ))}
 
-
-
           </div>
 
+          {/* DATOS */}
 
+          <div className="mt-9 space-y-4">
 
+            {/* WHATSAPP */}
 
+            <a
+              href="https://wa.me/59894239220"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                flex
+                items-center
+                gap-4
+                text-[#20232A]
+                hover:text-[#1300FF]
+                transition
+                group
+              "
+            >
 
+              <span
+                className="
+                  w-11
+                  h-11
+                  rounded-xl
+                  bg-white
+                  border
+                  border-[#1300FF]/20
+                  shadow-sm
+                  flex
+                  items-center
+                  justify-center
+                  text-xl
+                  group-hover:bg-[#1300FF]/5
+                  group-hover:border-[#1300FF]/40
+                  group-hover:scale-105
+                  transition
+                "
+              >
+                📱
+              </span>
 
+              <span className="font-semibold text-base sm:text-lg">
+                094 239 220
+              </span>
 
+            </a>
 
-          <div
-            className="
-              mt-10
-              space-y-4
-              text-[#303C95]
-              font-semibold
-              text-lg
-            "
-          >
+            {/* UBICACIÓN */}
 
+            <div
+              className="
+                flex
+                items-center
+                gap-4
+                text-[#20232A]
+              "
+            >
 
-            <p>
-              📱 WhatsApp: 094 239 220
-            </p>
+              <span
+                className="
+                  w-11
+                  h-11
+                  rounded-xl
+                  bg-white
+                  border
+                  border-[#1300FF]/20
+                  shadow-sm
+                  flex
+                  items-center
+                  justify-center
+                  text-xl
+                "
+              >
+                📍
+              </span>
 
+              <span className="font-semibold text-base sm:text-lg">
+                Shangrilá · Ciudad de la Costa · Montevideo
+              </span>
 
-            <p>
-              📍 Shangrilá · Ciudad de la Costa · Montevideo
-            </p>
-
+            </div>
 
           </div>
-
-
-
-
-
 
         </div>
 
-
-
-
-
-
-
-
+        {/* TARJETA */}
 
         <div
           className="
-            bg-white/50
-            backdrop-blur-3xl
-            rounded-[40px]
-            p-10
+            relative
+            bg-white
+            rounded-[2rem]
+            sm:rounded-[2.5rem]
+            p-7
+            sm:p-9
+            md:p-11
             border
-            border-white
-            shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+            border-[#1300FF]/10
+            shadow-[0_20px_60px_rgba(19,0,255,0.08)]
             text-center
+            overflow-hidden
           "
         >
 
-
-
-
+          {/* DETALLES */}
 
           <div
             className="
-              w-24
-              h-24
-              mx-auto
+              absolute
+              -top-20
+              -right-20
+              w-48
+              h-48
               rounded-full
-              bg-white/70
-              backdrop-blur-xl
-              flex
-              items-center
-              justify-center
-              text-5xl
-              shadow-lg
+              bg-[#1300FF]/7
             "
-          >
-            🏡
+          />
+
+          <div
+            className="
+              absolute
+              -bottom-24
+              -left-20
+              w-52
+              h-52
+              rounded-full
+              bg-[#1300FF]/4
+            "
+          />
+
+          <div className="relative z-10">
+
+            {/* ICONO */}
+
+            <div
+              className="
+                w-20
+                h-20
+                sm:w-24
+                sm:h-24
+                mx-auto
+                rounded-3xl
+                bg-[#F2F3FF]
+                border
+                border-[#1300FF]/15
+                flex
+                items-center
+                justify-center
+                text-4xl
+                sm:text-5xl
+                shadow-sm
+              "
+            >
+              🏡
+            </div>
+
+            <p
+              className="
+                mt-7
+                text-[#1300FF]
+                text-xs
+                uppercase
+                tracking-[0.28em]
+                font-bold
+              "
+            >
+              Estamos para ayudarte
+            </p>
+
+            <h3
+              className="
+                mt-3
+                text-3xl
+                sm:text-4xl
+                font-bold
+                text-[#20232A]
+              "
+            >
+              Hablemos de tu propiedad
+            </h3>
+
+            <p
+              className="
+                mt-5
+                text-[#4E535B]
+                text-base
+                sm:text-lg
+                leading-8
+              "
+            >
+              Contanos qué necesitás.
+              Nuestro equipo está listo para asesorarte.
+            </p>
+
+            {/* BOTÓN WHATSAPP */}
+
+            <a
+              href="https://wa.me/59894239220"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                inline-flex
+                items-center
+                justify-center
+                gap-3
+                mt-8
+                bg-[#1300FF]
+                hover:bg-[#0D00B8]
+                text-white
+                px-8
+                sm:px-10
+                py-4
+                rounded-full
+                font-bold
+                shadow-[0_8px_25px_rgba(19,0,255,0.25)]
+                hover:shadow-[0_10px_30px_rgba(19,0,255,0.35)]
+                hover:-translate-y-0.5
+                transition-all
+                duration-300
+              "
+            >
+
+              <span className="text-xl">
+                📲
+              </span>
+
+              Escribir por WhatsApp
+
+              <span>
+                →
+              </span>
+
+            </a>
+
+            {/* LÍNEA AZUL */}
+
+            <div
+              className="
+                w-24
+                h-[2px]
+                bg-[#1300FF]
+                mx-auto
+                mt-8
+                rounded-full
+              "
+            />
+
+            <p
+              className="
+                mt-3
+                text-[#1300FF]
+                text-xs
+                uppercase
+                tracking-[0.22em]
+                font-semibold
+              "
+            >
+              Mediterranée Servicios Inmobiliarios
+            </p>
+
           </div>
-
-
-
-
-
-
-
-          <h3
-            className="
-              mt-8
-              text-3xl
-              font-semibold
-              text-[#303C95]
-            "
-          >
-            Hablemos de tu propiedad
-          </h3>
-
-
-
-
-
-
-
-          <p
-            className="
-              mt-5
-              text-gray-600
-              text-lg
-              leading-relaxed
-            "
-          >
-            Contanos qué necesitás.
-            Nuestro equipo está listo para asesorarte.
-          </p>
-
-
-
-
-
-
-
-          <a
-            href="https://wa.me/59894239220"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              inline-block
-              mt-8
-              bg-[#303C95]
-              text-white
-              px-10
-              py-4
-              rounded-full
-              font-semibold
-              shadow-xl
-              hover:bg-[#252f7d]
-              hover:scale-105
-              transition
-            "
-          >
-            Escribir por WhatsApp
-          </a>
-
-
-
-
 
         </div>
 
-
-
-
-
       </div>
-
-
-
-
-
     </section>
-
-
   );
-
 }

@@ -2,344 +2,757 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Header() {
-  const [propiedadesOpen, setPropiedadesOpen] = useState(false);
-  const [serviciosOpen, setServiciosOpen] = useState(false);
+const [menuAbierto, setMenuAbierto] = useState(false);
+const [propiedadesAbierto, setPropiedadesAbierto] = useState(false);
+const [scrolled, setScrolled] = useState(false);
 
-  return (
-    <header
-      className="
-        fixed
-        top-4
-        left-1/2
-        -translate-x-1/2
-        z-50
-        w-[92%]
-        max-w-6xl
-        rounded-2xl
-        bg-black/20
-        backdrop-blur-3xl
-        border
-        border-white/10
-        shadow-[0_10px_40px_rgba(0,0,0,0.15)]
-      "
+useEffect(() => {
+function manejarScroll() {
+setScrolled(window.scrollY > 50);
+}
+
+
+window.addEventListener("scroll", manejarScroll);
+manejarScroll();
+
+return () => {
+  window.removeEventListener("scroll", manejarScroll);
+};
+
+
+}, []);
+
+function cerrarMenus() {
+setMenuAbierto(false);
+setPropiedadesAbierto(false);
+}
+
+return ( <header className="fixed top-0 left-0 right-0 z-50">
+
+  {/* =====================================================
+      VIDEO DEL HEADER
+  ===================================================== */}
+
+  <div className="absolute inset-0 -z-10 overflow-hidden">
+
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      className="absolute inset-0 h-full w-full object-cover"
     >
+      <source
+        src="/images/12345.mp4"
+        type="video/mp4"
+      />
+    </video>
+
+    <div className="absolute inset-0 bg-black/15" />
+
+  </div>
+
+  {/* =====================================================
+      BARRA VIDRIADA
+  ===================================================== */}
+
+  <div
+    className={`
+      relative
+      overflow-visible
+      bg-white/35
+      backdrop-blur-xl
+      backdrop-saturate-150
+      border-b
+      border-white/35
+      shadow-[0_8px_30px_rgba(19,0,255,0.12)]
+      transition-all
+      duration-500
+      ease-in-out
+      ${scrolled ? "py-1" : "py-2"}
+    `}
+  >
+
+    <div className="mx-auto max-w-7xl px-4 sm:px-6">
+
       <div
-        className="
+        className={`
           flex
           items-center
           justify-between
-          px-6
-          py-2
-        "
+          transition-all
+          duration-500
+          ease-in-out
+          ${scrolled ? "h-[68px]" : "h-[105px]"}
+        `}
       >
-        {/* LOGO */}
 
-        <Link href="/#inicio">
+        {/* =================================================
+            LOGO
+        ================================================= */}
+
+        <Link
+          href="/"
+          className="
+            relative
+            z-20
+            flex
+            shrink-0
+            items-center
+          "
+          onClick={cerrarMenus}
+        >
+
           <Image
-            src="/images/logo.png"
+            src="/images/333.png"
             alt="Mediterranée Servicios Inmobiliarios"
-            width={85}
-            height={45}
-            className="object-contain drop-shadow-xl"
+            width={240}
+            height={110}
+            priority
+            className={`
+              object-contain
+              transition-all
+              duration-500
+              ease-in-out
+              ${
+                scrolled
+                  ? "w-[120px] md:w-[145px] translate-y-0"
+                  : "w-[145px] md:w-[170px] translate-y-5"
+              }
+            `}
           />
+
         </Link>
 
+        {/* =================================================
+            NAVEGACIÓN DESKTOP
+        ================================================= */}
 
-        {/* MENÚ */}
-
-        <nav
-          className="
-            hidden
-            md:flex
-            items-center
-            gap-7
-            text-sm
-            font-semibold
-            text-white
-            drop-shadow-lg
-          "
-        >
+        <nav className="hidden items-center gap-8 md:flex">
 
           {/* INICIO */}
 
           <Link
-            href="/#inicio"
-            className="hover:text-[#D8B384] transition"
+            href="/"
+            onClick={cerrarMenus}
+            className="
+              text-sm
+              font-semibold
+              text-white
+              drop-shadow-md
+              transition
+              hover:text-[#1300FF]
+            "
           >
             Inicio
           </Link>
-
 
           {/* PROPIEDADES */}
 
           <div
             className="relative"
-            onMouseEnter={() => setPropiedadesOpen(true)}
-            onMouseLeave={() => setPropiedadesOpen(false)}
+            onMouseEnter={() =>
+              setPropiedadesAbierto(true)
+            }
+            onMouseLeave={() =>
+              setPropiedadesAbierto(false)
+            }
           >
 
-            <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() =>
+                setPropiedadesAbierto(
+                  !propiedadesAbierto
+                )
+              }
+              className="
+                flex
+                items-center
+                gap-2
+                text-sm
+                font-semibold
+                text-white
+                drop-shadow-md
+                transition
+                hover:text-[#1300FF]
+              "
+            >
+              Propiedades
 
-              <Link
-                href="/propiedades"
-                className="hover:text-[#D8B384] transition"
-              >
-                Propiedades
-              </Link>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setPropiedadesOpen(!propiedadesOpen)
-                }
-                className="
-                  hover:text-[#D8B384]
-                  transition
-                  cursor-pointer
-                "
-                aria-label="Abrir menú de propiedades"
+              <span
+                className={`
+                  text-xs
+                  text-[#1300FF]
+                  transition-transform
+                  duration-300
+                  ${
+                    propiedadesAbierto
+                      ? "rotate-180"
+                      : ""
+                  }
+                `}
               >
                 ▾
-              </button>
+              </span>
+            </button>
 
-            </div>
-
-
-            {propiedadesOpen && (
+            {propiedadesAbierto && (
               <div
                 className="
                   absolute
-                  top-8
-                  left-0
-                  w-52
-                  bg-white
-                  rounded-2xl
-                  shadow-2xl
-                  p-4
-                  text-[#303C95]
+                  left-1/2
+                  top-full
+                  -translate-x-1/2
+                  pt-4
                 "
               >
 
-                <Link
-                  href="/propiedades"
+                <div
                   className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
+                    w-52
+                    rounded-2xl
+                    border
+                    border-white/50
+                    bg-white/65
+                    p-2
+                    shadow-[0_15px_40px_rgba(19,0,255,0.18)]
+                    backdrop-blur-2xl
+                    backdrop-saturate-150
                   "
                 >
-                  Todas
-                </Link>
 
-                <Link
-                  href="/propiedades?operacion=VENTA"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Ventas
-                </Link>
+                  {/* ALQUILERES */}
 
-                <Link
-                  href="/propiedades?operacion=ALQUILER"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Alquileres
-                </Link>
+                  <Link
+                    href="/propiedades?operacion=ALQUILER"
+                    onClick={cerrarMenus}
+                    className="
+                      flex
+                      items-center
+                      gap-3
+                      rounded-xl
+                      px-4
+                      py-3
+                      text-sm
+                      font-semibold
+                      text-[#30343B]
+                      transition
+                      hover:bg-[#1300FF]/10
+                      hover:text-[#1300FF]
+                    "
+                  >
 
-                <Link
-                  href="/propiedades?tipo=Casa"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Casas
-                </Link>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      className="shrink-0"
+                    >
+                      <path d="M3 10.5L12 3l9 7.5" />
+                      <path d="M5.5 9.5V21h13V9.5" />
+                      <path d="M9.5 21v-6h5v6" />
+                    </svg>
 
-                <Link
-                  href="/propiedades?tipo=Apartamento"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Apartamentos
-                </Link>
+                    <span>Alquileres</span>
 
-                <Link
-                  href="/propiedades?tipo=Terreno"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Terrenos
-                </Link>
+                  </Link>
 
-                <Link
-                  href="/propiedades?tipo=Chacra"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Chacras
-                </Link>
+                  {/* VENTAS */}
+
+                  <Link
+                    href="/propiedades?operacion=VENTA"
+                    onClick={cerrarMenus}
+                    className="
+                      flex
+                      items-center
+                      gap-3
+                      rounded-xl
+                      px-4
+                      py-3
+                      text-sm
+                      font-semibold
+                      text-[#30343B]
+                      transition
+                      hover:bg-[#1300FF]/10
+                      hover:text-[#1300FF]
+                    "
+                  >
+
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      className="shrink-0"
+                    >
+                      <path d="M4 21V9l8-6 8 6v12" />
+                      <path d="M8 21v-7h8v7" />
+                      <path d="M8 10h.01" />
+                      <path d="M12 10h.01" />
+                      <path d="M16 10h.01" />
+                    </svg>
+
+                    <span>Ventas</span>
+
+                  </Link>
+
+                  {/* DESTACADAS */}
+
+                  <Link
+                    href="/propiedades?destacada=true"
+                    onClick={cerrarMenus}
+                    className="
+                      flex
+                      items-center
+                      gap-3
+                      rounded-xl
+                      px-4
+                      py-3
+                      text-sm
+                      font-semibold
+                      text-[#30343B]
+                      transition
+                      hover:bg-[#1300FF]/10
+                      hover:text-[#1300FF]
+                    "
+                  >
+
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                      className="shrink-0"
+                    >
+                      <path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.9L12 3.5z" />
+                    </svg>
+
+                    <span>Destacadas</span>
+
+                  </Link>
+
+                </div>
 
               </div>
             )}
 
           </div>
-
 
           {/* SERVICIOS */}
 
-          <div
-            className="relative"
-            onMouseEnter={() => setServiciosOpen(true)}
-            onMouseLeave={() => setServiciosOpen(false)}
+          <a
+            href="/#servicios"
+            onClick={cerrarMenus}
+            className="
+              text-sm
+              font-semibold
+              text-white
+              drop-shadow-md
+              transition
+              hover:text-[#1300FF]
+            "
           >
+            Servicios
+          </a>
 
-            <div className="flex items-center gap-1">
+          {/* NOSOTROS */}
 
-              <Link
-                href="/#servicios"
-                className="hover:text-[#D8B384] transition"
-              >
-                Servicios
-              </Link>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setServiciosOpen(!serviciosOpen)
-                }
-                className="
-                  hover:text-[#D8B384]
-                  transition
-                  cursor-pointer
-                "
-                aria-label="Abrir menú de servicios"
-              >
-                ▾
-              </button>
-
-            </div>
-
-
-            {serviciosOpen && (
-              <div
-                className="
-                  absolute
-                  top-8
-                  left-0
-                  w-56
-                  bg-white
-                  rounded-2xl
-                  shadow-2xl
-                  p-4
-                  text-[#303C95]
-                "
-              >
-
-                <Link
-                  href="/#servicios"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Ventas
-                </Link>
-
-                <Link
-                  href="/#servicios"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Alquileres
-                </Link>
-
-                <Link
-                  href="/#servicios"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Administraciones
-                </Link>
-
-                <Link
-                  href="/#servicios"
-                  className="
-                    block
-                    py-2
-                    hover:text-[#D8B384]
-                  "
-                >
-                  Tasaciones
-                </Link>
-
-              </div>
-            )}
-
-          </div>
-
+          <a
+            href="/#nosotros"
+            onClick={cerrarMenus}
+            className="
+              text-sm
+              font-semibold
+              text-white
+              drop-shadow-md
+              transition
+              hover:text-[#1300FF]
+            "
+          >
+            Nosotros
+          </a>
 
           {/* CONTACTO */}
 
-          <Link
-            href="/#contacto"
-            className="hover:text-[#D8B384] transition"
-          >
-            Contacto
-          </Link>
-
-
-          {/* WHATSAPP */}
-
           <a
-            href="https://wa.me/59894239220"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/#contacto"
+            onClick={cerrarMenus}
             className="
-              bg-[#D8B384]
-              text-white
-              px-5
-              py-2
               rounded-full
-              shadow-xl
-              hover:bg-[#c69a66]
-              hover:scale-105
-              transition
+              bg-[#1300FF]
+              px-5
+              py-2.5
+              text-sm
+              font-bold
+              text-white
+              shadow-[0_6px_20px_rgba(19,0,255,0.30)]
+              transition-all
+              duration-300
+              hover:-translate-y-0.5
+              hover:bg-[#0D00B8]
+              hover:shadow-[0_8px_25px_rgba(19,0,255,0.45)]
             "
           >
-            WhatsApp
+            Contactanos
           </a>
 
         </nav>
 
+        {/* =================================================
+            BOTÓN MOBILE
+        ================================================= */}
+
+        <button
+          type="button"
+          onClick={() =>
+            setMenuAbierto(!menuAbierto)
+          }
+          aria-label={
+            menuAbierto
+              ? "Cerrar menú"
+              : "Abrir menú"
+          }
+          className="
+            flex
+            h-11
+            w-11
+            items-center
+            justify-center
+            rounded-xl
+            border
+            border-white/60
+            bg-white/55
+            text-2xl
+            text-[#1300FF]
+            shadow-sm
+            backdrop-blur-xl
+            transition
+            hover:bg-white/75
+            md:hidden
+          "
+        >
+          {menuAbierto ? "×" : "☰"}
+        </button>
+
       </div>
-    </header>
-  );
+
+    </div>
+
+  </div>
+
+  {/* =====================================================
+      MENÚ MOBILE
+  ===================================================== */}
+
+  {menuAbierto && (
+    <div
+      className="
+        border-b
+        border-white/50
+        bg-white/60
+        shadow-xl
+        backdrop-blur-2xl
+        backdrop-saturate-150
+        md:hidden
+      "
+    >
+
+      <nav className="space-y-2 px-5 py-5">
+
+        {/* INICIO */}
+
+        <Link
+          href="/"
+          onClick={cerrarMenus}
+          className="
+            block
+            rounded-xl
+            px-4
+            py-3
+            font-semibold
+            text-[#30343B]
+            transition
+            hover:bg-[#1300FF]/10
+            hover:text-[#1300FF]
+          "
+        >
+          Inicio
+        </Link>
+
+        {/* PROPIEDADES */}
+
+        <button
+          type="button"
+          onClick={() =>
+            setPropiedadesAbierto(
+              !propiedadesAbierto
+            )
+          }
+          className="
+            flex
+            w-full
+            items-center
+            justify-between
+            rounded-xl
+            px-4
+            py-3
+            font-semibold
+            text-[#30343B]
+            transition
+            hover:bg-[#1300FF]/10
+            hover:text-[#1300FF]
+          "
+        >
+
+          <span>Propiedades</span>
+
+          <span
+            className={`
+              text-[#1300FF]
+              transition-transform
+              duration-300
+              ${
+                propiedadesAbierto
+                  ? "rotate-180"
+                  : ""
+              }
+            `}
+          >
+            ▾
+          </span>
+
+        </button>
+
+        {propiedadesAbierto && (
+          <div
+            className="
+              ml-4
+              space-y-1
+              border-l-2
+              border-[#1300FF]
+              pl-3
+            "
+          >
+
+            {/* ALQUILERES */}
+
+            <Link
+              href="/propiedades?operacion=ALQUILER"
+              onClick={cerrarMenus}
+              className="
+                flex
+                items-center
+                gap-3
+                rounded-xl
+                px-4
+                py-2.5
+                font-medium
+                text-[#30343B]
+                transition
+                hover:bg-[#1300FF]/10
+                hover:text-[#1300FF]
+              "
+            >
+
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="shrink-0"
+              >
+                <path d="M3 10.5L12 3l9 7.5" />
+                <path d="M5.5 9.5V21h13V9.5" />
+                <path d="M9.5 21v-6h5v6" />
+              </svg>
+
+              <span>Alquileres</span>
+
+            </Link>
+
+            {/* VENTAS */}
+
+            <Link
+              href="/propiedades?operacion=VENTA"
+              onClick={cerrarMenus}
+              className="
+                flex
+                items-center
+                gap-3
+                rounded-xl
+                px-4
+                py-2.5
+                font-medium
+                text-[#30343B]
+                transition
+                hover:bg-[#1300FF]/10
+                hover:text-[#1300FF]
+              "
+            >
+
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="shrink-0"
+              >
+                <path d="M4 21V9l8-6 8 6v12" />
+                <path d="M8 21v-7h8v7" />
+                <path d="M8 10h.01" />
+                <path d="M12 10h.01" />
+                <path d="M16 10h.01" />
+              </svg>
+
+              <span>Ventas</span>
+
+            </Link>
+
+            {/* DESTACADAS */}
+
+            <Link
+              href="/propiedades?destacada=true"
+              onClick={cerrarMenus}
+              className="
+                flex
+                items-center
+                gap-3
+                rounded-xl
+                px-4
+                py-2.5
+                font-medium
+                text-[#30343B]
+                transition
+                hover:bg-[#1300FF]/10
+                hover:text-[#1300FF]
+              "
+            >
+
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="shrink-0"
+              >
+                <path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.2 1 5.9-5.2 2.8-5.2-2.8 1-5.9-4.3-4.2 5.9-.9L12 3.5z" />
+              </svg>
+
+              <span>Destacadas</span>
+
+            </Link>
+
+          </div>
+        )}
+
+        {/* SERVICIOS */}
+
+        <a
+          href="/#servicios"
+          onClick={cerrarMenus}
+          className="
+            block
+            rounded-xl
+            px-4
+            py-3
+            font-semibold
+            text-[#30343B]
+            transition
+            hover:bg-[#1300FF]/10
+            hover:text-[#1300FF]
+          "
+        >
+          Servicios
+        </a>
+
+        {/* NOSOTROS */}
+
+        <a
+          href="/#nosotros"
+          onClick={cerrarMenus}
+          className="
+            block
+            rounded-xl
+            px-4
+            py-3
+            font-semibold
+            text-[#30343B]
+            transition
+            hover:bg-[#1300FF]/10
+            hover:text-[#1300FF]
+          "
+        >
+          Nosotros
+        </a>
+
+        {/* CONTACTO */}
+
+        <a
+          href="/#contacto"
+          onClick={cerrarMenus}
+          className="
+            mt-4
+            block
+            rounded-full
+            bg-[#1300FF]
+            px-5
+            py-3.5
+            text-center
+            font-bold
+            text-white
+            shadow-[0_6px_20px_rgba(19,0,255,0.25)]
+            transition-all
+            duration-300
+            hover:-translate-y-0.5
+            hover:bg-[#0D00B8]
+            hover:shadow-[0_8px_25px_rgba(19,0,255,0.35)]
+          "
+        >
+          Contactanos
+        </a>
+
+      </nav>
+
+    </div>
+  )}
+
+</header>
+
+);
 }

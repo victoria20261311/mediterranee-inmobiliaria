@@ -8,20 +8,53 @@ export default function PropertyMap({ ubicacion }: Props) {
   )}&output=embed`;
 
   return (
-    <section className="mt-12 bg-white rounded-3xl shadow-xl p-8">
+    <section
+      className="
+        mt-12
+        bg-white
+        rounded-3xl
+        shadow-[0_15px_50px_rgba(19,0,255,0.08)]
+        p-8
+        border
+        border-[#1300FF]/10
+      "
+    >
 
       {/* TÍTULO */}
-      <h2 className="text-2xl font-bold text-[#303C95] mb-5">
+
+      <h2
+        className="
+          text-2xl
+          font-bold
+          text-[#20232A]
+          mb-5
+        "
+      >
         📍 Ubicación
       </h2>
 
       {/* DIRECCIÓN */}
-      <p className="text-gray-600 mb-6 text-lg">
+
+      <p
+        className="
+          text-[#4E535B]
+          mb-6
+          text-lg
+        "
+      >
         {ubicacion}
       </p>
 
       {/* MAPA */}
-      <div className="overflow-hidden rounded-2xl border border-[#D8B384]/30">
+
+      <div
+        className="
+          overflow-hidden
+          rounded-2xl
+          border
+          border-[#1300FF]/20
+        "
+      >
 
         <iframe
           src={url}

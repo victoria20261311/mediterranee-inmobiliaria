@@ -1,4 +1,3 @@
-```tsx
 "use client";
 
 import { useState } from "react";
@@ -34,22 +33,42 @@ ${mensaje}`;
       className="
         bg-white
         rounded-3xl
-        shadow-xl
+        shadow-[0_15px_50px_rgba(19,0,255,0.08)]
         p-8
         mt-12
         border
-        border-gray-100
+        border-[#1300FF]/10
       "
     >
-      <h2 className="text-3xl font-bold text-[#303C95]">
+
+      {/* TÍTULO */}
+
+      <h2
+        className="
+          text-3xl
+          font-bold
+          text-[#20232A]
+        "
+      >
         📝 Solicitar información
       </h2>
 
-      <p className="mt-3 text-gray-600">
+      {/* DESCRIPCIÓN */}
+
+      <p
+        className="
+          mt-3
+          text-[#4E535B]
+        "
+      >
         Completá tus datos y enviá tu consulta por WhatsApp.
       </p>
 
+      {/* FORMULARIO */}
+
       <div className="mt-6 space-y-4">
+
+        {/* NOMBRE */}
 
         <input
           type="text"
@@ -58,16 +77,23 @@ ${mensaje}`;
           onChange={(e) => setNombre(e.target.value)}
           className="
             w-full
+            bg-[#F2F3FF]
             border
-            border-gray-200
+            border-[#1300FF]/15
             rounded-xl
             px-5
             py-3
+            text-[#20232A]
+            placeholder:text-[#4E535B]/55
             focus:outline-none
             focus:ring-2
-            focus:ring-[#D8B384]
+            focus:ring-[#1300FF]/30
+            focus:border-[#1300FF]
+            transition
           "
         />
+
+        {/* TELÉFONO */}
 
         <input
           type="tel"
@@ -76,16 +102,23 @@ ${mensaje}`;
           onChange={(e) => setTelefono(e.target.value)}
           className="
             w-full
+            bg-[#F2F3FF]
             border
-            border-gray-200
+            border-[#1300FF]/15
             rounded-xl
             px-5
             py-3
+            text-[#20232A]
+            placeholder:text-[#4E535B]/55
             focus:outline-none
             focus:ring-2
-            focus:ring-[#D8B384]
+            focus:ring-[#1300FF]/30
+            focus:border-[#1300FF]
+            transition
           "
         />
+
+        {/* MENSAJE */}
 
         <textarea
           value={mensaje}
@@ -93,38 +126,49 @@ ${mensaje}`;
           rows={5}
           className="
             w-full
+            bg-[#F2F3FF]
             border
-            border-gray-200
+            border-[#1300FF]/15
             rounded-xl
             px-5
             py-3
+            text-[#20232A]
+            placeholder:text-[#4E535B]/55
             focus:outline-none
             focus:ring-2
-            focus:ring-[#D8B384]
+            focus:ring-[#1300FF]/30
+            focus:border-[#1300FF]
+            transition
+            resize-none
           "
         />
+
+        {/* BOTÓN WHATSAPP */}
 
         <button
           type="button"
           onClick={enviarWhatsApp}
           className="
             w-full
-            bg-green-500
-            hover:bg-green-600
+            bg-[#1300FF]
+            hover:bg-[#0D00B8]
             text-white
             px-8
             py-4
             rounded-full
             font-bold
-            transition
-            shadow-lg
+            transition-all
+            duration-300
+            shadow-[0_8px_25px_rgba(19,0,255,0.25)]
+            hover:shadow-[0_10px_30px_rgba(19,0,255,0.35)]
+            hover:-translate-y-0.5
           "
         >
           📲 Enviar consulta por WhatsApp
         </button>
 
       </div>
+
     </section>
   );
 }
-```

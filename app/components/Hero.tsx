@@ -7,6 +7,7 @@
   "
 >
 
+  {/* VIDEO */}
 
   <video
     autoPlay
@@ -21,45 +22,37 @@
       object-cover
     "
   >
-
     <source
       src="/images/portada.mp4"
       type="video/mp4"
     />
-
   </video>
 
-
-
-
+  {/* OSCURECIDO SUAVE */}
+  {/* Mantiene los colores originales del video */}
 
   <div
     className="
       absolute
       inset-0
-      bg-black/45
+      bg-black/15
     "
   />
 
-
-
-
+  {/* DEGRADADO PARA DAR PROFUNDIDAD */}
 
   <div
     className="
       absolute
       inset-0
       bg-gradient-to-b
-      from-black/20
+      from-black/25
       via-transparent
-      to-black/70
+      to-black/65
     "
   />
 
-
-
-
-
+  {/* CONTENIDO */}
 
   <div
     className="
@@ -73,8 +66,6 @@
     "
   >
 
-
-
     <div
       className="
         text-center
@@ -82,8 +73,7 @@
       "
     >
 
-
-
+      {/* MARCA */}
 
       <h1
         className="
@@ -92,31 +82,27 @@
           tracking-[10px]
           font-semibold
           text-white
-          drop-shadow-[0_8px_30px_rgba(0,0,0,0.5)]
+          drop-shadow-[0_8px_30px_rgba(0,0,0,0.45)]
         "
       >
         MEDITERRANÉE
       </h1>
 
-
-
-
-
+      {/* LÍNEA AZUL DE MARCA */}
 
       <div
         className="
           w-32
           h-[2px]
-          bg-[#D8B384]
+          bg-[#1300FF]
           mx-auto
           mt-6
+          rounded-full
+          shadow-[0_0_12px_rgba(19,0,255,0.65)]
         "
       />
 
-
-
-
-
+      {/* SUBTÍTULO */}
 
       <p
         className="
@@ -131,10 +117,7 @@
         Servicios Inmobiliarios
       </p>
 
-
-
-
-
+      {/* SERVICIOS */}
 
       <p
         className="
@@ -143,19 +126,14 @@
           md:text-base
           tracking-[4px]
           uppercase
-          text-[#D8B384]
+          text-white
           font-semibold
         "
       >
         Ventas · Alquileres · Administraciones · Tasaciones
       </p>
 
-
-
-
-
-
-
+      {/* BOTONES */}
 
       <div
         className="
@@ -168,71 +146,59 @@
         "
       >
 
-
-
-
+        {/* VER PROPIEDADES */}
 
         <a
           href="#propiedades"
           className="
             rounded-full
-            bg-white/15
-            backdrop-blur-2xl
+            bg-[#1300FF]
             border
-            border-white/30
+            border-white/20
             px-10
             py-4
             text-white
             font-semibold
-            shadow-2xl
-            hover:bg-white/30
+            shadow-[0_8px_25px_rgba(19,0,255,0.30)]
+            hover:bg-[#0D00B8]
             hover:scale-105
-            transition
+            hover:shadow-[0_10px_30px_rgba(19,0,255,0.40)]
+            transition-all
+            duration-300
           "
         >
           Ver propiedades
         </a>
 
-
-
-
-
+        {/* CONTACTANOS */}
 
         <a
           href="#contacto"
           className="
             rounded-full
-            bg-[#D8B384]
+            bg-white/95
+            backdrop-blur-xl
+            border
+            border-white/40
             px-10
             py-4
-            text-white
+            text-[#20232A]
             font-semibold
             shadow-2xl
-            hover:bg-[#c69a66]
+            hover:bg-white
+            hover:text-[#1300FF]
             hover:scale-105
-            transition
+            transition-all
+            duration-300
           "
         >
           Contactanos
         </a>
 
-
-
-
       </div>
-
-
-
-
 
     </div>
 
-
-
-
   </div>
-
-
-
 
 </section>
