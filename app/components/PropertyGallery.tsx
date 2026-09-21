@@ -1,51 +1,199 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   imagenes: string[];
   titulo: string;
 };
 
+const SUPABASE_STORAGE =
+  "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades";
+
+/**
+ * Limpia y normaliza las URLs de las imágenes.
+ *
+ * Acepta:
+ * - URL completa de Supabase
+ * - URL externa
+ * - Ruta local comenzando con /
+ * - Ruta dentro del bucket propiedades
+ * - URLs que hayan quedado guardadas como Markdown
+ */
+function limpiarUrlImagen(url: string): string {
+  let limpia = url.trim();
+
+  if (!limpia) {
+    return "";
+  }
+
+  // ---------------------------------------------------------
+  // Si la URL quedó guardada como Markdown:
+  // [texto](https://dominio/imagen.jpg)
+  // ---------------------------------------------------------
+
+  const markdownMatch = limpia.match(
+    /^\[.*\]\((https?:\/\/[^)]+)\)$/
+  );
+
+  if (markdownMatch?.[1]) {
+    limpia = markdownMatch[1];
+  } else if (
+    limpia.startsWith("[") &&
+    limpia.includes("](")
+  ) {
+    const primerHttps = limpia.indexOf("https://");
+
+    if (primerHttps !== -1) {
+      limpia = limpia.substring(primerHttps);
+
+      const cierre = limpia.indexOf(")");
+
+      if (cierre !== -1) {
+        limpia = limpia.substring(0, cierre);
+      }
+    }
+  }
+
+  limpia = limpia.trim();
+
+  // ---------------------------------------------------------
+  // URL completa
+  // ---------------------------------------------------------
+
+  if (
+    limpia.startsWith("https://") ||
+    limpia.startsWith("http://")
+  ) {
+    return limpia;
+  }
+
+  // ---------------------------------------------------------
+  // Ruta pública del proyecto
+  // Ejemplo: /images/casa.jpg
+  // ---------------------------------------------------------
+
+  if (limpia.startsWith("/")) {
+    return limpia;
+  }
+
+  // ---------------------------------------------------------
+  // Si solamente viene el nombre/ruta del archivo,
+  // lo buscamos dentro del bucket "propiedades".
+  //
+  // Ejemplo:
+  // casa-shangrila/1.png
+  //
+  // Se transforma en:
+  // https://.../propiedades/casa-shangrila/1.png
+  // ---------------------------------------------------------
+
+  return `${SUPABASE_STORAGE}/${limpia
+    .split("/")
+    .map((parte) => encodeURIComponent(parte))
+    .join("/")}`;
+}
+
 export default function PropertyGallery({
   imagenes,
   titulo,
 }: Props) {
+  // ---------------------------------------------------------
+  // LIMPIAR IMÁGENES
+  // ---------------------------------------------------------
+
   const imagenesLimpias = Array.isArray(imagenes)
-    ? imagenes.filter(
-        (url): url is string =>
-          typeof url === "string" &&
-          url.trim() !== "" &&
-          url.startsWith("https://")
-      )
+    ? imagenes
+        .filter(
+          (url): url is string =>
+            typeof url === "string" &&
+            url.trim() !== ""
+        )
+        .map(limpiarUrlImagen)
+        .filter((url) => url !== "")
     : [];
 
   const [indice, setIndice] = useState(0);
+
+  // Si cambia la propiedad, volver a la primera imagen.
+  useEffect(() => {
+    setIndice(0);
+  }, [titulo]);
+
+  // ---------------------------------------------------------
+  // SIN IMÁGENES
+  // ---------------------------------------------------------
 
   if (imagenesLimpias.length === 0) {
     return (
       <div
         className="
-          bg-[#F2F3FF]
+          bg-[#E5EFF4]
           border
-          border-[#1300FF]/10
+          border-[#CBDCE5]
           rounded-[2rem]
           p-10
           text-center
         "
       >
-        <p className="text-[#4E535B]">
+        <div
+          className="
+            w-14
+            h-14
+            mx-auto
+            rounded-2xl
+            bg-[#F8FBFC]
+            border
+            border-[#CBDCE5]
+            flex
+            items-center
+            justify-center
+            text-[#1300FF]
+          "
+        >
+          <svg
+            width="25"
+            height="25"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="2"
+            />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <path d="m21 15-5-5L5 21" />
+          </svg>
+        </div>
+
+        <p className="mt-4 text-[#53616B]">
           No hay imágenes disponibles.
         </p>
       </div>
     );
   }
 
+  // ---------------------------------------------------------
+  // SEGURIDAD DEL ÍNDICE
+  // ---------------------------------------------------------
+
   const indiceSeguro =
     indice >= imagenesLimpias.length ? 0 : indice;
 
   const imagenPrincipal =
     imagenesLimpias[indiceSeguro];
+
+  // ---------------------------------------------------------
+  // IMAGEN ANTERIOR
+  // ---------------------------------------------------------
 
   function anterior() {
     setIndice((actual) =>
@@ -54,6 +202,10 @@ export default function PropertyGallery({
         : actual - 1
     );
   }
+
+  // ---------------------------------------------------------
+  // IMAGEN SIGUIENTE
+  // ---------------------------------------------------------
 
   function siguiente() {
     setIndice((actual) =>
@@ -66,7 +218,9 @@ export default function PropertyGallery({
   return (
     <section className="w-full">
 
-      {/* FOTO PRINCIPAL */}
+      {/* =====================================================
+          FOTO PRINCIPAL
+      ===================================================== */}
 
       <div className="relative group">
 
@@ -76,9 +230,9 @@ export default function PropertyGallery({
             h-[300px]
             sm:h-[420px]
             md:h-[560px]
-            bg-[#F2F3FF]
+            bg-[#E5EFF4]
             border
-            border-[#1300FF]/10
+            border-[#CBDCE5]
             rounded-2xl
             sm:rounded-[2rem]
             overflow-hidden
@@ -95,10 +249,14 @@ export default function PropertyGallery({
               w-full
               h-full
               object-contain
+              select-none
             "
+            draggable={false}
           />
 
-          {/* CONTADOR */}
+          {/* =================================================
+              CONTADOR
+          ================================================= */}
 
           <div
             className="
@@ -128,7 +286,9 @@ export default function PropertyGallery({
             {imagenesLimpias.length}
           </div>
 
-          {/* FLECHA IZQUIERDA */}
+          {/* =================================================
+              FLECHA IZQUIERDA
+          ================================================= */}
 
           {imagenesLimpias.length > 1 && (
             <button
@@ -141,35 +301,50 @@ export default function PropertyGallery({
                 sm:left-5
                 top-1/2
                 -translate-y-1/2
-                w-10
-                h-10
-                sm:w-12
-                sm:h-12
+                w-11
+                h-11
+                sm:w-13
+                sm:h-13
                 rounded-full
-                bg-white/95
+                bg-[#F8FBFC]/95
+                backdrop-blur-sm
                 text-[#1300FF]
                 border
-                border-[#1300FF]/20
-                shadow-lg
+                border-[#CBDCE5]
+                shadow-[0_8px_25px_rgba(48,76,95,0.16)]
                 flex
                 items-center
                 justify-center
-                text-2xl
-                sm:text-3xl
-                font-light
                 hover:bg-[#1300FF]
                 hover:text-white
                 hover:border-[#1300FF]
                 hover:scale-110
                 active:scale-95
-                transition
+                transition-all
+                duration-300
+                z-10
               "
             >
-              ‹
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M19 12H5" />
+                <path d="M11 6l-6 6 6 6" />
+              </svg>
             </button>
           )}
 
-          {/* FLECHA DERECHA */}
+          {/* =================================================
+              FLECHA DERECHA
+          ================================================= */}
 
           {imagenesLimpias.length > 1 && (
             <button
@@ -182,39 +357,53 @@ export default function PropertyGallery({
                 sm:right-5
                 top-1/2
                 -translate-y-1/2
-                w-10
-                h-10
-                sm:w-12
-                sm:h-12
+                w-11
+                h-11
+                sm:w-13
+                sm:h-13
                 rounded-full
-                bg-white/95
+                bg-[#F8FBFC]/95
+                backdrop-blur-sm
                 text-[#1300FF]
                 border
-                border-[#1300FF]/20
-                shadow-lg
+                border-[#CBDCE5]
+                shadow-[0_8px_25px_rgba(48,76,95,0.16)]
                 flex
                 items-center
                 justify-center
-                text-2xl
-                sm:text-3xl
-                font-light
                 hover:bg-[#1300FF]
                 hover:text-white
                 hover:border-[#1300FF]
                 hover:scale-110
                 active:scale-95
-                transition
+                transition-all
+                duration-300
+                z-10
               "
             >
-              ›
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14" />
+                <path d="M13 6l6 6-6 6" />
+              </svg>
             </button>
           )}
 
         </div>
-
       </div>
 
-      {/* MINIATURAS */}
+      {/* =====================================================
+          MINIATURAS
+      ===================================================== */}
 
       {imagenesLimpias.length > 1 && (
         <div className="mt-4 sm:mt-5">
@@ -234,7 +423,6 @@ export default function PropertyGallery({
           >
 
             {imagenesLimpias.map((url, index) => {
-
               const seleccionada =
                 index === indiceSeguro;
 
@@ -259,7 +447,7 @@ export default function PropertyGallery({
                     duration-200
                     ${
                       seleccionada
-                        ? "ring-2 ring-[#1300FF] ring-offset-2 ring-offset-[#FAF8F3] shadow-md scale-[1.03]"
+                        ? "ring-2 ring-[#1300FF] ring-offset-2 ring-offset-[#EEF4F7] shadow-md scale-[1.03]"
                         : "opacity-70 hover:opacity-100"
                     }
                   `}
@@ -274,7 +462,9 @@ export default function PropertyGallery({
                       w-full
                       h-full
                       object-cover
+                      select-none
                     "
+                    draggable={false}
                   />
 
                   {seleccionada && (

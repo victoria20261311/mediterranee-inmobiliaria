@@ -11,39 +11,89 @@ export default function PropertyMap({ ubicacion }: Props) {
     <section
       className="
         mt-12
-        bg-white
+        bg-[#E2EDF3]
         rounded-3xl
-        shadow-[0_15px_50px_rgba(19,0,255,0.08)]
-        p-8
+        shadow-[0_15px_50px_rgba(48,76,95,0.12)]
+        p-6
+        sm:p-8
         border
-        border-[#1300FF]/10
+        border-[#CBDCE5]
       "
     >
-
       {/* TÍTULO */}
 
-      <h2
-        className="
-          text-2xl
-          font-bold
-          text-[#20232A]
-          mb-5
-        "
-      >
-        📍 Ubicación
-      </h2>
+      <div className="flex items-center gap-4 mb-5">
+
+        <div
+          className="
+            w-12
+            h-12
+            shrink-0
+            rounded-2xl
+            bg-[#F4F9FB]
+            border
+            border-[#CBDCE5]
+            flex
+            items-center
+            justify-center
+            text-[#1300FF]
+          "
+        >
+          <svg
+            width="23"
+            height="23"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+            <circle cx="12" cy="10" r="2.5" />
+          </svg>
+        </div>
+
+        <div>
+          <h2
+            className="
+              text-2xl
+              sm:text-3xl
+              font-bold
+              text-[#20232A]
+            "
+          >
+            Ubicación
+          </h2>
+        </div>
+
+      </div>
 
       {/* DIRECCIÓN */}
 
-      <p
+      <div
         className="
-          text-[#4E535B]
+          bg-[#F8FBFC]
+          border
+          border-[#CBDCE5]
+          rounded-2xl
+          px-5
+          py-4
           mb-6
-          text-lg
         "
       >
-        {ubicacion}
-      </p>
+        <p
+          className="
+            text-[#53616B]
+            text-base
+            sm:text-lg
+            leading-relaxed
+          "
+        >
+          {ubicacion}
+        </p>
+      </div>
 
       {/* MAPA */}
 
@@ -52,10 +102,11 @@ export default function PropertyMap({ ubicacion }: Props) {
           overflow-hidden
           rounded-2xl
           border
-          border-[#1300FF]/20
+          border-[#CBDCE5]
+          shadow-[0_8px_25px_rgba(48,76,95,0.10)]
+          bg-[#E5EFF4]
         "
       >
-
         <iframe
           src={url}
           width="100%"
@@ -65,10 +116,9 @@ export default function PropertyMap({ ubicacion }: Props) {
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
           title={`Mapa de ${ubicacion}`}
+          className="block w-full"
         />
-
       </div>
-
     </section>
   );
 }

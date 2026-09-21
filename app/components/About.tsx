@@ -4,7 +4,7 @@ export default function About() {
       id="nosotros"
       className="
         scroll-mt-24
-        bg-[#F4F1EA]
+        bg-[#E8E0D2]
         py-20
         sm:py-24
         md:py-28
@@ -32,7 +32,7 @@ export default function About() {
 
           <p
             className="
-              text-[#1300FF]
+              text-[#3F5870]
               text-xs
               sm:text-sm
               uppercase
@@ -53,7 +53,7 @@ export default function About() {
               md:text-6xl
               font-bold
               leading-tight
-              text-[#292B30]
+              text-[#20232A]
             "
           >
             Todo en un mismo lugar
@@ -66,6 +66,7 @@ export default function About() {
               bg-[#1300FF]
               mt-6
               rounded-full
+              shadow-[0_0_10px_rgba(19,0,255,0.25)]
             "
           />
 
@@ -74,13 +75,13 @@ export default function About() {
               mt-7
               text-base
               sm:text-lg
-              text-[#5C5E63]
+              text-[#4E535B]
               leading-8
             "
           >
             Somos una inmobiliaria ubicada en Shangrilá,
             Ciudad de la Costa, especializada en{" "}
-            <strong className="text-[#292B30]">
+            <strong className="text-[#20232A]">
               ventas, alquileres, administraciones y tasaciones.
             </strong>
           </p>
@@ -90,12 +91,12 @@ export default function About() {
               mt-5
               text-base
               sm:text-lg
-              text-[#5C5E63]
+              text-[#4E535B]
               leading-8
             "
           >
             Acompañamos cada operación con{" "}
-            <strong className="text-[#292B30]">
+            <strong className="text-[#20232A]">
               profesionalismo, cercanía y conocimiento del mercado inmobiliario
             </strong>
             , porque sabemos que detrás de cada propiedad hay una decisión
@@ -109,14 +110,14 @@ export default function About() {
           <div
             className="
               mt-8
-              bg-[#FBF9F4]
+              bg-white
               rounded-3xl
               p-6
               sm:p-7
               border
-              border-[#D9D4C9]
-              shadow-[0_8px_30px_rgba(50,45,35,0.06)]
-              hover:shadow-[0_12px_35px_rgba(50,45,35,0.10)]
+              border-[#D6CCBC]
+              shadow-[0_8px_30px_rgba(70,60,50,0.07)]
+              hover:shadow-[0_14px_35px_rgba(70,60,50,0.12)]
               hover:-translate-y-0.5
               transition-all
               duration-300
@@ -130,13 +131,13 @@ export default function About() {
                   h-12
                   shrink-0
                   rounded-2xl
-                  bg-[#EFECE5]
+                  bg-[#F3EEE6]
                   border
-                  border-[#D9D4C9]
+                  border-[#D6CCBC]
                   flex
                   items-center
                   justify-center
-                  text-[#1300FF]
+                  text-[#3F5870]
                 "
               >
                 <svg
@@ -165,7 +166,7 @@ export default function About() {
                     text-xl
                     sm:text-2xl
                     font-bold
-                    text-[#292B30]
+                    text-[#20232A]
                   "
                 >
                   Ventas
@@ -174,7 +175,7 @@ export default function About() {
                 <p
                   className="
                     mt-2
-                    text-[#1300FF]
+                    text-[#3F5870]
                     font-semibold
                     text-sm
                     sm:text-base
@@ -186,7 +187,7 @@ export default function About() {
                 <p
                   className="
                     mt-2
-                    text-[#5C5E63]
+                    text-[#4E535B]
                     text-sm
                     sm:text-base
                     leading-7
@@ -211,14 +212,14 @@ export default function About() {
           <div
             className="
               mt-4
-              bg-[#FBF9F4]
+              bg-white
               rounded-3xl
               p-6
               sm:p-7
               border
-              border-[#D9D4C9]
-              shadow-[0_8px_30px_rgba(50,45,35,0.06)]
-              hover:shadow-[0_12px_35px_rgba(50,45,35,0.10)]
+              border-[#D6CCBC]
+              shadow-[0_8px_30px_rgba(70,60,50,0.07)]
+              hover:shadow-[0_14px_35px_rgba(70,60,50,0.12)]
               hover:-translate-y-0.5
               transition-all
               duration-300
@@ -232,13 +233,13 @@ export default function About() {
                   h-12
                   shrink-0
                   rounded-2xl
-                  bg-[#EFECE5]
+                  bg-[#F3EEE6]
                   border
-                  border-[#D9D4C9]
+                  border-[#D6CCBC]
                   flex
                   items-center
                   justify-center
-                  text-[#1300FF]
+                  text-[#3F5870]
                 "
               >
                 <svg
@@ -267,7 +268,7 @@ export default function About() {
                     text-xl
                     sm:text-2xl
                     font-bold
-                    text-[#292B30]
+                    text-[#20232A]
                   "
                 >
                   Alquileres
@@ -276,7 +277,7 @@ export default function About() {
                 <p
                   className="
                     mt-2
-                    text-[#1300FF]
+                    text-[#3F5870]
                     font-semibold
                     text-sm
                     sm:text-base
@@ -288,7 +289,7 @@ export default function About() {
                 <p
                   className="
                     mt-2
-                    text-[#5C5E63]
+                    text-[#4E535B]
                     text-sm
                     sm:text-base
                     leading-7
@@ -311,14 +312,14 @@ export default function About() {
           <div
             className="
               mt-4
-              bg-[#FBF9F4]
+              bg-white
               rounded-3xl
               p-6
               sm:p-7
               border
-              border-[#D9D4C9]
-              shadow-[0_8px_30px_rgba(50,45,35,0.06)]
-              hover:shadow-[0_12px_35px_rgba(50,45,35,0.10)]
+              border-[#D6CCBC]
+              shadow-[0_8px_30px_rgba(70,60,50,0.07)]
+              hover:shadow-[0_14px_35px_rgba(70,60,50,0.12)]
               hover:-translate-y-0.5
               transition-all
               duration-300
@@ -332,13 +333,13 @@ export default function About() {
                   h-12
                   shrink-0
                   rounded-2xl
-                  bg-[#EFECE5]
+                  bg-[#F3EEE6]
                   border
-                  border-[#D9D4C9]
+                  border-[#D6CCBC]
                   flex
                   items-center
                   justify-center
-                  text-[#1300FF]
+                  text-[#3F5870]
                 "
               >
                 <svg
@@ -369,7 +370,7 @@ export default function About() {
                     text-xl
                     sm:text-2xl
                     font-bold
-                    text-[#292B30]
+                    text-[#20232A]
                   "
                 >
                   Administraciones
@@ -378,7 +379,7 @@ export default function About() {
                 <p
                   className="
                     mt-2
-                    text-[#1300FF]
+                    text-[#3F5870]
                     font-semibold
                     text-sm
                     sm:text-base
@@ -390,7 +391,7 @@ export default function About() {
                 <p
                   className="
                     mt-2
-                    text-[#5C5E63]
+                    text-[#4E535B]
                     text-sm
                     sm:text-base
                     leading-7
@@ -416,7 +417,7 @@ export default function About() {
               flex
               items-center
               gap-3
-              text-[#292B30]
+              text-[#20232A]
             "
           >
             <span
@@ -424,14 +425,14 @@ export default function About() {
                 w-10
                 h-10
                 rounded-xl
-                bg-[#FBF9F4]
+                bg-[#F3EEE6]
                 border
-                border-[#D9D4C9]
+                border-[#D6CCBC]
                 shadow-sm
                 flex
                 items-center
                 justify-center
-                text-[#1300FF]
+                text-[#3F5870]
               "
             >
               <svg
@@ -464,15 +465,15 @@ export default function About() {
         <div
           className="
             relative
-            bg-[#E9E5DC]
+            bg-[#DDD4C6]
             rounded-[2rem]
             sm:rounded-[2.5rem]
             p-7
             sm:p-9
             md:p-11
             border
-            border-[#D5D0C5]
-            shadow-[0_18px_50px_rgba(50,45,35,0.10)]
+            border-[#C8BBA8]
+            shadow-[0_18px_50px_rgba(70,60,50,0.12)]
             overflow-hidden
           "
         >
@@ -499,7 +500,7 @@ export default function About() {
               w-44
               h-44
               rounded-full
-              bg-[#FFFFFF]/40
+              bg-white/40
             "
           />
 
@@ -523,7 +524,7 @@ export default function About() {
                 text-3xl
                 sm:text-4xl
                 font-bold
-                text-[#292B30]
+                text-[#20232A]
                 leading-tight
               "
             >
@@ -538,20 +539,21 @@ export default function About() {
                 bg-[#1300FF]
                 mt-5
                 rounded-full
+                shadow-[0_0_10px_rgba(19,0,255,0.25)]
               "
             />
 
             <p
               className="
                 mt-7
-                text-[#5C5E63]
+                text-[#4E535B]
                 text-base
                 sm:text-lg
                 leading-8
               "
             >
               Creamos relaciones basadas en{" "}
-              <strong className="text-[#292B30]">
+              <strong className="text-[#20232A]">
                 confianza, transparencia y compromiso.
               </strong>
             </p>
@@ -559,7 +561,7 @@ export default function About() {
             <p
               className="
                 mt-5
-                text-[#5C5E63]
+                text-[#4E535B]
                 text-base
                 sm:text-lg
                 leading-8
@@ -573,7 +575,7 @@ export default function About() {
             <p
               className="
                 mt-5
-                text-[#5C5E63]
+                text-[#4E535B]
                 text-base
                 sm:text-lg
                 leading-8
@@ -591,13 +593,13 @@ export default function About() {
             <div
               className="
                 mt-9
-                bg-[#F8F5EE]
+                bg-[#F3EEE6]
                 rounded-3xl
                 p-6
                 sm:p-7
                 border
-                border-[#CCC6B9]
-                shadow-[0_10px_30px_rgba(50,45,35,0.08)]
+                border-[#C8BBA8]
+                shadow-[0_10px_30px_rgba(70,60,50,0.09)]
               "
             >
 
@@ -609,11 +611,12 @@ export default function About() {
                     h-12
                     shrink-0
                     rounded-2xl
-                    bg-[#292B30]
+                    bg-[#3F5870]
                     flex
                     items-center
                     justify-center
                     text-white
+                    shadow-[0_6px_18px_rgba(63,88,112,0.20)]
                   "
                 >
                   <svg
@@ -636,7 +639,7 @@ export default function About() {
 
                   <p
                     className="
-                      text-[#292B30]
+                      text-[#20232A]
                       font-bold
                       text-lg
                       sm:text-xl
@@ -648,7 +651,7 @@ export default function About() {
                   <p
                     className="
                       mt-2
-                      text-[#5C5E63]
+                      text-[#4E535B]
                       text-sm
                       sm:text-base
                       leading-7
@@ -670,7 +673,7 @@ export default function About() {
                   mt-6
                   pt-5
                   border-t
-                  border-[#D8D2C6]
+                  border-[#C8BBA8]
                 "
               >
                 <p
@@ -687,7 +690,7 @@ export default function About() {
                 <p
                   className="
                     mt-1
-                    text-[#6A6C70]
+                    text-[#687780]
                     text-sm
                   "
                 >

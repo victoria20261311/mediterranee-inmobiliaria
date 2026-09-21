@@ -3,16 +3,19 @@
   className="
     relative
     h-screen
+    min-h-[680px]
+    w-full
     overflow-hidden
+    flex
+    items-center
+    justify-center
   "
 >
-
-  {/* VIDEO */}
-
+  {/* VIDEO DE FONDO */}
   <video
     autoPlay
-    loop
     muted
+    loop
     playsInline
     className="
       absolute
@@ -22,25 +25,13 @@
       object-cover
     "
   >
-    <source
-      src="/images/portada.mp4"
-      type="video/mp4"
-    />
+    <source src="/images/portada.mp4" type="video/mp4" />
   </video>
 
-  {/* OSCURECIDO SUAVE */}
-  {/* Mantiene los colores originales del video */}
-
-  <div
-    className="
-      absolute
-      inset-0
-      bg-black/15
-    "
-  />
+  {/* CAPA OSCURA SUAVE */}
+  <div className="absolute inset-0 bg-black/15" />
 
   {/* DEGRADADO PARA DAR PROFUNDIDAD */}
-
   <div
     className="
       absolute
@@ -53,152 +44,150 @@
   />
 
   {/* CONTENIDO */}
-
   <div
     className="
       relative
       z-10
-      h-full
+      w-full
+      max-w-6xl
+      mx-auto
+      px-6
+      text-center
       flex
+      flex-col
       items-center
       justify-center
-      px-6
+      pt-20
     "
   >
-
-    <div
+    <h1
       className="
-        text-center
-        mt-12
+        text-white
+        text-5xl
+        sm:text-6xl
+        md:text-7xl
+        lg:text-8xl
+        font-semibold
+        tracking-[0.18em]
+        drop-shadow-[0_4px_18px_rgba(0,0,0,0.35)]
       "
     >
+      MEDITERRANÉE
+    </h1>
 
-      {/* MARCA */}
+    <p
+      className="
+        mt-4
+        text-white
+        text-lg
+        sm:text-xl
+        md:text-2xl
+        font-light
+        tracking-[0.18em]
+        uppercase
+        drop-shadow-[0_3px_12px_rgba(0,0,0,0.35)]
+      "
+    >
+      Servicios Inmobiliarios
+    </p>
 
-      <h1
+    {/* LÍNEA DECORATIVA */}
+    <div
+      className="
+        mt-7
+        h-[2px]
+        w-20
+        rounded-full
+        bg-[#3F5870]
+        shadow-[0_0_14px_rgba(63,88,112,0.65)]
+      "
+    />
+
+    <p
+      className="
+        mt-7
+        text-white
+        text-sm
+        sm:text-base
+        md:text-lg
+        tracking-[0.12em]
+        uppercase
+        drop-shadow-[0_3px_12px_rgba(0,0,0,0.4)]
+      "
+    >
+      Ventas · Alquileres · Administraciones · Tasaciones
+    </p>
+
+    {/* BOTONES */}
+    <div
+      className="
+        mt-10
+        flex
+        flex-col
+        sm:flex-row
+        items-center
+        justify-center
+        gap-4
+        sm:gap-5
+      "
+    >
+      <a
+        href="/propiedades"
         className="
-          text-5xl
-          md:text-8xl
-          tracking-[10px]
-          font-semibold
-          text-white
-          drop-shadow-[0_8px_30px_rgba(0,0,0,0.45)]
-        "
-      >
-        MEDITERRANÉE
-      </h1>
-
-      {/* LÍNEA AZUL DE MARCA */}
-
-      <div
-        className="
-          w-32
-          h-[2px]
-          bg-[#1300FF]
-          mx-auto
-          mt-6
-          rounded-full
-          shadow-[0_0_12px_rgba(19,0,255,0.65)]
-        "
-      />
-
-      {/* SUBTÍTULO */}
-
-      <p
-        className="
-          mt-6
-          text-sm
-          md:text-lg
-          tracking-[7px]
-          uppercase
-          text-white/90
-        "
-      >
-        Servicios Inmobiliarios
-      </p>
-
-      {/* SERVICIOS */}
-
-      <p
-        className="
-          mt-8
-          text-sm
-          md:text-base
-          tracking-[4px]
-          uppercase
-          text-white
-          font-semibold
-        "
-      >
-        Ventas · Alquileres · Administraciones · Tasaciones
-      </p>
-
-      {/* BOTONES */}
-
-      <div
-        className="
-          mt-14
-          flex
-          flex-col
-          md:flex-row
+          inline-flex
+          items-center
           justify-center
-          gap-5
+          min-w-[190px]
+          px-7
+          py-3.5
+          rounded-full
+          border
+          border-[#3F5870]
+          bg-[#3F5870]
+          text-white
+          text-sm
+          font-semibold
+          tracking-wide
+          shadow-[0_8px_25px_rgba(63,88,112,0.28)]
+          transition-all
+          duration-300
+          hover:bg-[#31475C]
+          hover:border-[#31475C]
+          hover:-translate-y-0.5
+          hover:shadow-[0_12px_30px_rgba(63,88,112,0.35)]
         "
       >
+        Ver propiedades
+      </a>
 
-        {/* VER PROPIEDADES */}
-
-        <a
-          href="#propiedades"
-          className="
-            rounded-full
-            bg-[#1300FF]
-            border
-            border-white/20
-            px-10
-            py-4
-            text-white
-            font-semibold
-            shadow-[0_8px_25px_rgba(19,0,255,0.30)]
-            hover:bg-[#0D00B8]
-            hover:scale-105
-            hover:shadow-[0_10px_30px_rgba(19,0,255,0.40)]
-            transition-all
-            duration-300
-          "
-        >
-          Ver propiedades
-        </a>
-
-        {/* CONTACTANOS */}
-
-        <a
-          href="#contacto"
-          className="
-            rounded-full
-            bg-white/95
-            backdrop-blur-xl
-            border
-            border-white/40
-            px-10
-            py-4
-            text-[#20232A]
-            font-semibold
-            shadow-2xl
-            hover:bg-white
-            hover:text-[#1300FF]
-            hover:scale-105
-            transition-all
-            duration-300
-          "
-        >
-          Contactanos
-        </a>
-
-      </div>
-
+      <a
+        href="#contacto"
+        className="
+          inline-flex
+          items-center
+          justify-center
+          min-w-[190px]
+          px-7
+          py-3.5
+          rounded-full
+          border
+          border-[#F3EEE6]
+          bg-[#F3EEE6]/90
+          text-[#3F5870]
+          text-sm
+          font-semibold
+          tracking-wide
+          shadow-[0_8px_25px_rgba(0,0,0,0.18)]
+          backdrop-blur-sm
+          transition-all
+          duration-300
+          hover:bg-[#E8E0D2]
+          hover:border-[#E8E0D2]
+          hover:-translate-y-0.5
+        "
+      >
+        Contactanos
+      </a>
     </div>
-
   </div>
-
 </section>

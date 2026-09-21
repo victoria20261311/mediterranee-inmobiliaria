@@ -8,367 +8,347 @@ import Footer from "./components/Footer";
 import Whatsapp from "./components/Whatsapp";
 
 export default function Home() {
-return ( <main className="min-h-screen bg-[#FAF8F3] text-[#4E535B]">
+  return (
+    <main className="min-h-screen bg-[#FAF8F3] text-[#4E535B]">
 
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
 
-  {/* HEADER */}
-  <Header />
+      <Header />
 
-  {/* =========================
-      HERO
-  ========================= */}
+      {/* =====================================================
+          HERO
+      ===================================================== */}
 
-  <section
-    id="inicio"
-    className="
-      relative
-      min-h-screen
-      w-full
-      overflow-hidden
-      bg-black
-    "
-  >
-
-    {/* =========================
-        VIDEO DE PORTADA
-    ========================= */}
-
-    <video
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="auto"
-      poster="/images/logo.png"
-      className="
-        absolute
-        inset-0
-        z-0
-        w-full
-        h-full
-        object-cover
-      "
-    >
-      <source
-        src="/images/12345.mp4"
-        type="video/mp4"
-      />
-    </video>
-
-    {/* =========================
-        CAPA DE PROTECCIÓN
-    ========================= */}
-
-    <div
-      className="
-        absolute
-        inset-0
-        z-[1]
-        bg-black/10
-        pointer-events-none
-      "
-    />
-
-    {/* =========================
-        DEGRADADO SUPERIOR
-        AYUDA A INTEGRAR EL HEADER
-    ========================= */}
-
-    <div
-      className="
-        absolute
-        inset-x-0
-        top-0
-        h-48
-        z-[2]
-        bg-gradient-to-b
-        from-black/35
-        via-black/10
-        to-transparent
-        pointer-events-none
-      "
-    />
-
-    {/* =========================
-        DEGRADADO INFERIOR
-    ========================= */}
-
-    <div
-      className="
-        absolute
-        inset-x-0
-        bottom-0
-        h-64
-        z-[2]
-        bg-gradient-to-t
-        from-black/65
-        via-black/20
-        to-transparent
-        pointer-events-none
-      "
-    />
-
-    {/* =========================
-        CONTENIDO
-    ========================= */}
-
-    <div
-      className="
-        relative
-        z-[10]
-        min-h-screen
-        flex
-        items-center
-        justify-center
-        px-5
-        sm:px-6
-      "
-    >
-
-      <div
+      <section
+        id="inicio"
         className="
-          text-center
-          max-w-5xl
-          mt-16
-          sm:mt-20
+          relative
+          min-h-screen
+          w-full
+          overflow-hidden
+          bg-black
         "
       >
 
-        {/* MARCA */}
+        {/* =================================================
+            VIDEO DE PORTADA
+        ================================================= */}
 
-        <h1
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
           className="
-            text-4xl
-            sm:text-5xl
-            md:text-7xl
-            lg:text-8xl
-            tracking-[6px]
-            sm:tracking-[10px]
-            font-bold
-            text-white
-            drop-shadow-[0_4px_18px_rgba(0,0,0,0.65)]
+            absolute
+            inset-0
+            z-0
+            h-full
+            w-full
+            object-cover
           "
         >
-          MEDITERRANÉE
-        </h1>
+          <source
+            src="/images/12345.mp4"
+            type="video/mp4"
+          />
+        </video>
 
-        <p
-          className="
-            mt-4
-            text-xs
-            sm:text-sm
-            md:text-base
-            tracking-[4px]
-            sm:tracking-[6px]
-            uppercase
-            text-white/95
-            drop-shadow-lg
-          "
-        >
-          Servicios Inmobiliarios
-        </p>
-
-        {/* LÍNEA AZUL */}
+        {/* =================================================
+            CAPA SUAVE SOBRE EL VIDEO
+        ================================================= */}
 
         <div
           className="
-            w-20
-            sm:w-28
-            h-[2px]
-            bg-[#1300FF]
-            mx-auto
-            mt-7
-            sm:mt-8
-            rounded-full
-            shadow-[0_0_14px_rgba(19,0,255,0.8)]
+            pointer-events-none
+            absolute
+            inset-0
+            z-[1]
+            bg-black/10
           "
         />
 
-        <p
-          className="
-            mt-7
-            sm:mt-8
-            text-xs
-            sm:text-sm
-            md:text-lg
-            tracking-[2px]
-            sm:tracking-[4px]
-            uppercase
-            text-white
-            leading-relaxed
-            drop-shadow-lg
-          "
-        >
-          Ventas · Alquileres · Administraciones · Tasaciones
-        </p>
-
-        {/* =========================
-            BOTONES
-        ========================= */}
+        {/* =================================================
+            DEGRADADO SUPERIOR
+            INTEGRA VISUALMENTE EL HEADER CON EL HERO
+        ================================================= */}
 
         <div
           className="
-            mt-10
-            sm:mt-12
+            pointer-events-none
+            absolute
+            inset-x-0
+            top-0
+            z-[2]
+            h-48
+            bg-gradient-to-b
+            from-black/35
+            via-black/10
+            to-transparent
+          "
+        />
+
+        {/* =================================================
+            DEGRADADO INFERIOR
+        ================================================= */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-x-0
+            bottom-0
+            z-[2]
+            h-64
+            bg-gradient-to-t
+            from-black/65
+            via-black/20
+            to-transparent
+          "
+        />
+
+        {/* =================================================
+            CONTENIDO CENTRAL DEL HERO
+        ================================================= */}
+
+        <div
+          className="
+            relative
+            z-[10]
             flex
-            flex-col
-            sm:flex-row
-            gap-5
-            sm:gap-8
-            justify-center
+            min-h-screen
             items-center
+            justify-center
+            px-5
+            sm:px-6
           "
         >
 
-          {/* VER PROPIEDADES */}
-
-          <a
-            href="#propiedades"
+          <div
             className="
-              w-full
-              sm:w-auto
-              min-w-[210px]
-              px-10
-              py-4
-              rounded-full
-              bg-[#1300FF]
-              text-white
-              font-semibold
-              shadow-[0_10px_30px_rgba(19,0,255,0.35)]
-              border
-              border-white/20
-              hover:bg-[#0D00B8]
-              hover:-translate-y-1
-              hover:shadow-[0_14px_35px_rgba(19,0,255,0.45)]
-              transition-all
-              duration-300
+              mt-16
+              max-w-5xl
+              text-center
+              sm:mt-20
             "
           >
-            Ver propiedades
-          </a>
 
-          {/* CONTACTANOS */}
+            {/* =================================================
+                MARCA
+            ================================================= */}
 
-          <a
-            href="#contacto"
-            className="
-              w-full
-              sm:w-auto
-              min-w-[210px]
-              px-10
-              py-4
-              rounded-full
-              bg-white/95
-              backdrop-blur-sm
-              text-[#20232A]
-              font-semibold
-              shadow-xl
-              border
-              border-white/40
-              hover:bg-[#1300FF]
-              hover:text-white
-              hover:-translate-y-1
-              hover:shadow-[0_14px_35px_rgba(19,0,255,0.35)]
-              transition-all
-              duration-300
-            "
-          >
-            Contactanos
-          </a>
+            <h1
+              className="
+                text-4xl
+                font-bold
+                tracking-[6px]
+                text-white
+                drop-shadow-[0_4px_18px_rgba(0,0,0,0.65)]
+                sm:text-5xl
+                sm:tracking-[10px]
+                md:text-7xl
+                lg:text-8xl
+              "
+            >
+              MEDITERRANÉE
+            </h1>
+
+            {/* =================================================
+                SUBMARCA
+            ================================================= */}
+
+            <p
+              className="
+                mt-4
+                text-xs
+                uppercase
+                tracking-[4px]
+                text-white/95
+                drop-shadow-lg
+                sm:text-sm
+                sm:tracking-[6px]
+                md:text-base
+              "
+            >
+              Servicios Inmobiliarios
+            </p>
+
+            {/* =================================================
+                LÍNEA AZUL
+            ================================================= */}
+
+            <div
+              className="
+                mx-auto
+                mt-7
+                h-[2px]
+                w-20
+                rounded-full
+                bg-[#1300FF]
+                shadow-[0_0_14px_rgba(19,0,255,0.8)]
+                sm:mt-8
+                sm:w-28
+              "
+            />
+
+            {/* =================================================
+                SERVICIOS
+            ================================================= */}
+
+            <p
+              className="
+                mt-7
+                text-xs
+                uppercase
+                tracking-[2px]
+                text-white
+                leading-relaxed
+                drop-shadow-lg
+                sm:mt-8
+                sm:text-sm
+                sm:tracking-[4px]
+                md:text-lg
+              "
+            >
+              Ventas · Alquileres · Administraciones · Tasaciones
+            </p>
+
+            {/* =================================================
+                BOTONES
+            ================================================= */}
+
+            <div
+              className="
+                mt-10
+                flex
+                flex-col
+                items-center
+                justify-center
+                gap-5
+                sm:mt-12
+                sm:flex-row
+                sm:gap-8
+              "
+            >
+
+              {/* VER PROPIEDADES */}
+
+              <a
+                href="#propiedades"
+                className="
+                  w-full
+                  min-w-[210px]
+                  rounded-full
+                  border
+                  border-white/20
+                  bg-[#1300FF]
+                  px-10
+                  py-4
+                  font-semibold
+                  text-white
+                  shadow-[0_10px_30px_rgba(19,0,255,0.35)]
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-[#0D00B8]
+                  hover:shadow-[0_14px_35px_rgba(19,0,255,0.45)]
+                  sm:w-auto
+                "
+              >
+                Ver propiedades
+              </a>
+
+              {/* CONTACTANOS */}
+
+              <a
+                href="#contacto"
+                className="
+                  w-full
+                  min-w-[210px]
+                  rounded-full
+                  border
+                  border-white/40
+                  bg-white/95
+                  px-10
+                  py-4
+                  font-semibold
+                  text-[#20232A]
+                  shadow-xl
+                  backdrop-blur-sm
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-[#1300FF]
+                  hover:text-white
+                  hover:shadow-[0_14px_35px_rgba(19,0,255,0.35)]
+                  sm:w-auto
+                "
+              >
+                Contactanos
+              </a>
+
+            </div>
+
+          </div>
 
         </div>
 
-      </div>
+      </section>
 
-    </div>
+      {/* =====================================================
+          BUSCADOR
+      ===================================================== */}
 
-    {/* =========================
-        SCROLL
-    ========================= */}
+      <SearchBox />
 
-    <a
-      href="#propiedades"
-      aria-label="Desplazarse hacia abajo"
-      className="
-        absolute
-        bottom-7
-        left-1/2
-        -translate-x-1/2
-        z-[10]
-        flex
-        flex-col
-        items-center
-        gap-2
-        text-white/80
-        hover:text-white
-        transition
-        drop-shadow-lg
-      "
-    >
+      {/* =====================================================
+          SERVICIOS
+      ===================================================== */}
 
-      <span className="text-[10px] uppercase tracking-[3px]">
-        Explorar
-      </span>
+      <section id="servicios">
+        <Services />
+      </section>
 
-      <span className="text-xl animate-bounce">
-        ↓
-      </span>
+      {/* =====================================================
+          NOSOTROS
+      ===================================================== */}
 
-    </a>
+      <section id="nosotros">
+        <About />
+      </section>
 
-  </section>
+      {/* =====================================================
+          PROPIEDADES
+      ===================================================== */}
 
-  {/* =========================
-      BUSCADOR
-  ========================= */}
+      <section id="propiedades">
+        <Properties />
+      </section>
 
-  <SearchBox />
+      {/* =====================================================
+          CONTACTO
+      ===================================================== */}
 
-  {/* =========================
-      SERVICIOS
-  ========================= */}
+      <section id="contacto">
+        <Contact />
+      </section>
 
-  <section id="servicios">
-    <Services />
-  </section>
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
 
-  {/* =========================
-      NOSOTROS
-  ========================= */}
+      <Footer />
 
-  <section id="nosotros">
-    <About />
-  </section>
+      {/* =====================================================
+          WHATSAPP
+      ===================================================== */}
 
-  {/* =========================
-      PROPIEDADES
-  ========================= */}
+      <Whatsapp />
 
-  <section id="propiedades">
-    <Properties />
-  </section>
-
-  {/* =========================
-      CONTACTO
-  ========================= */}
-
-  <section id="contacto">
-    <Contact />
-  </section>
-
-  {/* =========================
-      FOOTER
-  ========================= */}
-
-  <Footer />
-
-  {/* =========================
-      WHATSAPP
-  ========================= */}
-
-  <Whatsapp />
-
-</main>
-
-);
+    </main>
+  );
 }
+ 

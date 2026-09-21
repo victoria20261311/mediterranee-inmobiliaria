@@ -40,38 +40,86 @@ export default function SearchBox() {
   }
 
   const estiloSelect =
-    "bg-white/75 backdrop-blur-xl border border-[#1300FF]/15 rounded-2xl px-4 py-3 text-[#20232A] font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-[#1300FF]/30 focus:border-[#1300FF] transition";
+    "bg-[#F3EEE6]/95 backdrop-blur-xl border border-[#D6CCBC] rounded-2xl px-4 py-3.5 text-[#20232A] font-medium shadow-[0_5px_18px_rgba(70,60,50,0.06)] focus:outline-none focus:ring-2 focus:ring-[#3F5870]/20 focus:border-[#3F5870] transition-all duration-300";
 
   return (
     <section className="relative z-20 -mt-8 px-4 sm:px-6 pb-24">
-      <div className="max-w-6xl mx-auto bg-white/75 backdrop-blur-2xl rounded-3xl shadow-[0_15px_50px_rgba(19,0,255,0.10)] p-6 md:p-8 border border-[#1300FF]/10">
+      <div
+        className="
+          max-w-6xl
+          mx-auto
+          bg-[#DDD4C6]/95
+          backdrop-blur-2xl
+          rounded-3xl
+          shadow-[0_15px_50px_rgba(70,60,50,0.12)]
+          p-6
+          md:p-8
+          border
+          border-[#C8BBA8]
+        "
+      >
+        {/* TÍTULO */}
 
-        <h2 className="text-3xl md:text-4xl font-semibold text-center text-[#20232A]">
+        <h2
+          className="
+            text-3xl
+            md:text-4xl
+            font-semibold
+            text-center
+            text-[#20232A]
+          "
+        >
           Encontrá tu próxima propiedad
         </h2>
 
-        <div className="w-24 h-[2px] bg-[#1300FF] mx-auto mt-5 rounded-full shadow-[0_0_10px_rgba(19,0,255,0.25)]" />
+        <div
+          className="
+            w-24
+            h-[2px]
+            bg-[#1300FF]
+            mx-auto
+            mt-5
+            rounded-full
+            shadow-[0_0_10px_rgba(19,0,255,0.25)]
+          "
+        />
 
-        <p className="text-center text-[#4E535B] mt-5">
+        {/* DESCRIPCIÓN */}
+
+        <p
+          className="
+            text-center
+            text-[#4E535B]
+            mt-5
+          "
+        >
           Venta · Alquiler · Administraciones · Tasaciones
         </p>
 
+        {/* FILTROS */}
+
         <div className="grid md:grid-cols-5 gap-4 mt-8">
+
+          {/* OPERACIÓN */}
 
           <select
             value={operacion}
             onChange={(e) => setOperacion(e.target.value)}
             className={estiloSelect}
+            aria-label="Seleccionar operación"
           >
             <option value="">Operación</option>
             <option value="VENTA">Venta</option>
             <option value="ALQUILER">Alquiler</option>
           </select>
 
+          {/* TIPO */}
+
           <select
             value={tipo}
             onChange={(e) => setTipo(e.target.value)}
             className={estiloSelect}
+            aria-label="Seleccionar tipo de propiedad"
           >
             <option value="">Tipo</option>
             <option value="Casa">Casa</option>
@@ -80,10 +128,13 @@ export default function SearchBox() {
             <option value="Chacra">Chacra</option>
           </select>
 
+          {/* ZONA */}
+
           <select
             value={zona}
             onChange={(e) => setZona(e.target.value)}
             className={estiloSelect}
+            aria-label="Seleccionar zona"
           >
             <option value="">Zona</option>
             <option value="Shangrilá">Shangrilá</option>
@@ -92,16 +143,21 @@ export default function SearchBox() {
             <option value="Montevideo">Montevideo</option>
           </select>
 
+          {/* DORMITORIOS */}
+
           <select
             value={dormitorios}
             onChange={(e) => setDormitorios(e.target.value)}
             className={estiloSelect}
+            aria-label="Seleccionar cantidad de dormitorios"
           >
             <option value="">Dormitorios</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3+</option>
           </select>
+
+          {/* BUSCAR */}
 
           <button
             type="button"
@@ -117,6 +173,7 @@ export default function SearchBox() {
               hover:-translate-y-0.5
               transition-all
               duration-300
+              min-h-[52px]
             "
           >
             Buscar

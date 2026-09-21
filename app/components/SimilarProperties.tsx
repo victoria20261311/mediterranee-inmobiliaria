@@ -1,6 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-import { propiedades } from "../data/propiedades";
+import { supabase } from "../../lib/supabase";
+
+type Propiedad = {
+  id?: number | string;
+  titulo?: string;
+  operacion?: string;
+  tipo?: string;
+  zona?: string;
+  precio?: string | number;
+  descripcion?: string;
+  imagen?: string | null;
+  imagenes?: string[] | string | null;
+  slug?: string;
+  categoria?: string;
+  ubicacion?: string;
+};
 
 type Props = {
   actual: string;
@@ -9,336 +24,342 @@ type Props = {
 const SUPABASE_STORAGE =
   "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades";
 
-function obtenerImagen(propiedad: any): string | null {
-  let imagen: unknown = null;
+function obtenerImagen(propiedad: Propiedad): string | null {
+  // =====================================================
+  // 1. BUSCAR PRIMERO EN imagenes
+  // =====================================================
 
-  // Primero buscamos en imagenes[]
+  if (Array.isArray(propiedad.imagenes)) {
+    const imagenValida = propiedad.imagenes.find(
+      (imagen) =>
+        typeof imagen === "string" &&
+        imagen.trim() !== "" &&
+        (imagen.startsWith("http://") ||
+          imagen.startsWith("https://") ||
+          imagen.startsWith("/"))
+    );
+
+    if (imagenValida) {
+      return imagenValida.trim();
+    }
+  }
+
+  // =====================================================
+  // 2. SI imagenes VIENE COMO STRING JSON
+  // =====================================================
+
+  if (typeof propiedad.imagenes === "string") {
+    try {
+      const imagenesParseadas = JSON.parse(propiedad.imagenes);
+
+      if (Array.isArray(imagenesParseadas)) {
+        const imagenValida = imagenesParseadas.find(
+          (imagen) =>
+            typeof imagen === "string" &&
+            imagen.trim() !== "" &&
+            (imagen.startsWith("http://") ||
+              imagen.startsWith("https://") ||
+              imagen.startsWith("/"))
+        );
+
+        if (imagenValida) {
+          return imagenValida.trim();
+        }
+      }
+    } catch {
+      // Si no es JSON válido, continuamos con imagen
+    }
+  }
+
+  // =====================================================
+  // 3. USAR imagen COMO RESPALDO
+  // =====================================================
+
   if (
-    Array.isArray(propiedad.imagenes) &&
-    propiedad.imagenes.length > 0
+    typeof propiedad.imagen === "string" &&
+    propiedad.imagen.trim() !== ""
   ) {
-    imagen = propiedad.imagenes[0];
+    const imagen = propiedad.imagen.trim();
+
+    // URL completa
+    if (imagen.startsWith("http://") || imagen.startsWith("https://")) {
+      return imagen;
+    }
+
+    // Imagen local
+    if (imagen.startsWith("/")) {
+      return imagen;
+    }
+
+    // Nombre de archivo dentro del bucket de Supabase
+    return `${SUPABASE_STORAGE}/${imagen}`;
   }
 
-  // Si no existe, usamos imagen
-  else if (propiedad.imagen) {
-    imagen = propiedad.imagen;
-  }
-
-  // Comprobamos que sea texto
-  if (typeof imagen !== "string") {
-    return null;
-  }
-
-  const valor = imagen.trim();
-
-  if (!valor) {
-    return null;
-  }
-
-  // Si ya es una URL completa
-  if (
-    valor.startsWith("http://") ||
-    valor.startsWith("https://")
-  ) {
-    return valor;
-  }
-
-  // Si es una ruta local
-  if (valor.startsWith("/")) {
-    return valor;
-  }
-
-  // Si es solamente el nombre del archivo,
-  // buscamos dentro de la carpeta de esa propiedad
-  return `${SUPABASE_STORAGE}/${propiedad.slug}/${encodeURIComponent(
-    valor
-  )}`;
+  return null;
 }
 
-export default function SimilarProperties({
+function obtenerPrecio(precio: string | number | undefined): string {
+  if (precio === undefined || precio === null || precio === "") {
+    return "Consultar";
+  }
+
+  if (typeof precio === "number") {
+    return `$ ${precio.toLocaleString("es-UY")}`;
+  }
+
+  return precio;
+}
+
+function calcularSimilitud(
+  propiedad: Propiedad,
+  actual: Propiedad
+): number {
+  let puntaje = 0;
+
+  // Misma operación
+  if (
+    propiedad.operacion &&
+    actual.operacion &&
+    propiedad.operacion.toLowerCase() === actual.operacion.toLowerCase()
+  ) {
+    puntaje += 4;
+  }
+
+  // Mismo tipo
+  if (
+    propiedad.tipo &&
+    actual.tipo &&
+    propiedad.tipo.toLowerCase() === actual.tipo.toLowerCase()
+  ) {
+    puntaje += 4;
+  }
+
+  // Misma categoría
+  if (
+    propiedad.categoria &&
+    actual.categoria &&
+    propiedad.categoria.toLowerCase() === actual.categoria.toLowerCase()
+  ) {
+    puntaje += 3;
+  }
+
+  // Misma zona
+  if (
+    propiedad.zona &&
+    actual.zona &&
+    propiedad.zona.toLowerCase() === actual.zona.toLowerCase()
+  ) {
+    puntaje += 5;
+  }
+
+  // Misma ubicación
+  if (
+    propiedad.ubicacion &&
+    actual.ubicacion &&
+    propiedad.ubicacion.toLowerCase() === actual.ubicacion.toLowerCase()
+  ) {
+    puntaje += 2;
+  }
+
+  return puntaje;
+}
+
+export default async function SimilarProperties({
   actual,
 }: Props) {
-  // Sacamos la propiedad actual
-  // y mostramos hasta 3 propiedades diferentes
-  const similares = propiedades
-    .filter((p) => p.slug !== actual)
-    .slice(0, 3);
+  // =====================================================
+  // BUSCAR LA PROPIEDAD ACTUAL
+  // =====================================================
+
+  const { data: propiedadActual, error: errorActual } = await supabase
+    .from("propiedades")
+    .select("*")
+    .eq("slug", actual)
+    .maybeSingle();
+
+  if (errorActual || !propiedadActual) {
+    return null;
+  }
+
+  // =====================================================
+  // BUSCAR LAS DEMÁS PROPIEDADES
+  // =====================================================
+
+  const { data: propiedades, error } = await supabase
+    .from("propiedades")
+    .select("*")
+    .neq("slug", actual);
+
+  if (error || !propiedades || propiedades.length === 0) {
+    return null;
+  }
+
+  // =====================================================
+  // ORDENAR POR SIMILITUD
+  // =====================================================
+
+  const similares = (propiedades as Propiedad[])
+    .map((propiedad) => ({
+      propiedad,
+      puntaje: calcularSimilitud(propiedad, propiedadActual),
+    }))
+    .sort((a, b) => b.puntaje - a.puntaje)
+    .slice(0, 3)
+    .map((item) => item.propiedad);
+
+  if (similares.length === 0) {
+    return null;
+  }
 
   return (
-    <section className="mt-16">
-      {/* TÍTULO */}
-      <h2
-        className="
-          text-3xl
-          font-bold
-          text-[#20232A]
-          mb-8
-        "
-      >
-        🏡 Propiedades similares
-      </h2>
+    <section className="w-full bg-[#FAF8F3] py-20">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
-      {/* PROPIEDADES */}
-      <div
-        className="
-          grid
-          sm:grid-cols-2
-          md:grid-cols-3
-          gap-8
-        "
-      >
-        {similares.map((propiedad) => {
-          const imagenPrincipal =
-            obtenerImagen(propiedad);
+        {/* =================================================
+            ENCABEZADO
+        ================================================= */}
 
-          return (
-            <article
-              key={propiedad.id}
-              className="
-                bg-white
-                rounded-3xl
-                border
-                border-[#1300FF]/10
-                shadow-[0_10px_35px_rgba(19,0,255,0.07)]
-                overflow-hidden
-                hover:-translate-y-2
-                hover:shadow-[0_18px_45px_rgba(19,0,255,0.13)]
-                transition-all
-                duration-300
-              "
-            >
-              {/* FOTO */}
-              <div
+        <div className="mb-10 text-center">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#1300FF]">
+            También puede interesarte
+          </p>
+
+          <h2 className="text-3xl font-semibold tracking-tight text-[#4E535B] md:text-4xl">
+            Propiedades similares
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#6B7077]">
+            Conocé otras propiedades que pueden ser de tu interés.
+          </p>
+        </div>
+
+        {/* =================================================
+            PROPIEDADES
+        ================================================= */}
+
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {similares.map((propiedad) => {
+            const imagen = obtenerImagen(propiedad);
+
+            return (
+              <Link
+                key={propiedad.id ?? propiedad.slug}
+                href={`/propiedades/${propiedad.slug}`}
                 className="
-                  relative
-                  h-64
-                  bg-[#F2F3FF]
+                  group
+                  overflow-hidden
+                  rounded-2xl
+                  bg-white
+                  shadow-sm
+                  ring-1
+                  ring-black/5
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:shadow-xl
                 "
               >
-                {imagenPrincipal ? (
-                  <Image
-                    src={imagenPrincipal}
-                    alt={
-                      propiedad.titulo ||
-                      "Propiedad"
-                    }
-                    fill
-                    className="
-                      object-cover
-                      transition-transform
-                      duration-500
-                      hover:scale-105
-                    "
-                    sizes="
-                      (max-width: 640px) 100vw,
-                      (max-width: 1024px) 50vw,
-                      33vw
-                    "
-                  />
-                ) : (
-                  <div
-                    className="
-                      w-full
-                      h-full
-                      flex
-                      items-center
-                      justify-center
-                      text-[#4E535B]/60
-                    "
-                  >
-                    Sin imagen
-                  </div>
-                )}
-              </div>
+                {/* =================================================
+                    IMAGEN
+                ================================================= */}
 
-              {/* INFORMACIÓN */}
-              <div className="p-6 text-center">
-                {/* TIPO */}
-                <p
-                  className="
-                    text-sm
-                    uppercase
-                    tracking-wider
-                    text-[#1300FF]
-                    font-bold
-                  "
-                >
-                  {propiedad.tipo}
-                </p>
-
-                {/* TÍTULO */}
-                <h3
-                  className="
-                    text-2xl
-                    font-bold
-                    text-[#20232A]
-                    mt-2
-                  "
-                >
-                  {propiedad.titulo}
-                </h3>
-
-                {/* UBICACIÓN */}
-                <p
-                  className="
-                    text-[#4E535B]
-                    mt-2
-                  "
-                >
-                  📍 {propiedad.ubicacion}
-                </p>
-
-                {/* CARACTERÍSTICAS */}
-                <div
-                  className="
-                    grid
-                    grid-cols-3
-                    gap-2
-                    mt-5
-                  "
-                >
-                  {/* DORMITORIOS */}
-                  <div
-                    className="
-                      bg-[#F2F3FF]
-                      border
-                      border-[#1300FF]/15
-                      rounded-2xl
-                      p-3
-                    "
-                  >
-                    <div className="text-xl">
-                      🛏
+                <div className="relative h-64 w-full overflow-hidden bg-[#E3E9E7]">
+                  {imagen ? (
+                    <Image
+                      src={imagen}
+                      alt={propiedad.titulo || "Propiedad"}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="
+                        object-cover
+                        transition-transform
+                        duration-500
+                        group-hover:scale-105
+                      "
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center">
+                      <span className="text-sm text-[#7891A8]">
+                        Imagen no disponible
+                      </span>
                     </div>
+                  )}
 
-                    <p
-                      className="
-                        font-bold
-                        text-[#20232A]
-                        mt-1
-                      "
-                    >
-                      {propiedad.dormitorios ?? "-"}
-                    </p>
+                  {/* =================================================
+                      OPERACIÓN
+                  ================================================= */}
 
-                    <p
+                  {propiedad.operacion && (
+                    <div
                       className="
+                        absolute
+                        left-4
+                        top-4
+                        rounded-full
+                        bg-white/95
+                        px-4
+                        py-2
                         text-xs
-                        text-[#4E535B]
+                        font-bold
+                        uppercase
+                        tracking-wide
+                        text-[#1300FF]
+                        shadow-sm
                       "
                     >
-                      Dorm.
-                    </p>
-                  </div>
-
-                  {/* BAÑOS */}
-                  <div
-                    className="
-                      bg-[#F2F3FF]
-                      border
-                      border-[#1300FF]/15
-                      rounded-2xl
-                      p-3
-                    "
-                  >
-                    <div className="text-xl">
-                      🚿
+                      {propiedad.operacion}
                     </div>
-
-                    <p
-                      className="
-                        font-bold
-                        text-[#20232A]
-                        mt-1
-                      "
-                    >
-                      {propiedad.banos ?? "-"}
-                    </p>
-
-                    <p
-                      className="
-                        text-xs
-                        text-[#4E535B]
-                      "
-                    >
-                      Baños
-                    </p>
-                  </div>
-
-                  {/* METROS */}
-                  <div
-                    className="
-                      bg-[#F2F3FF]
-                      border
-                      border-[#1300FF]/15
-                      rounded-2xl
-                      p-3
-                    "
-                  >
-                    <div className="text-xl">
-                      📐
-                    </div>
-
-                    <p
-                      className="
-                        font-bold
-                        text-[#20232A]
-                        mt-1
-                      "
-                    >
-                      {propiedad.metros ?? "-"}
-                    </p>
-
-                    <p
-                      className="
-                        text-xs
-                        text-[#4E535B]
-                      "
-                    >
-                      m²
-                    </p>
-                  </div>
+                  )}
                 </div>
 
-                {/* PRECIO */}
-                <p
-                  className="
-                    mt-5
-                    text-2xl
-                    font-bold
-                    text-[#1300FF]
-                  "
-                >
-                  {propiedad.precio || "Consultar"}
-                </p>
+                {/* =================================================
+                    INFORMACIÓN
+                ================================================= */}
 
-                {/* BOTÓN */}
-                <Link
-                  href={`/propiedades/${propiedad.slug}`}
-                  className="
-                    block
-                    w-full
-                    mt-5
-                    bg-[#1300FF]
-                    hover:bg-[#0D00B8]
-                    text-white
-                    py-3
-                    rounded-full
-                    font-bold
-                    shadow-[0_8px_25px_rgba(19,0,255,0.25)]
-                    hover:shadow-[0_10px_30px_rgba(19,0,255,0.35)]
-                    hover:-translate-y-0.5
-                    transition-all
-                    duration-300
-                  "
-                >
-                  Ver propiedad
-                </Link>
-              </div>
-            </article>
-          );
-        })}
+                <div className="p-6">
+                  <h3
+                    className="
+                      line-clamp-1
+                      text-xl
+                      font-semibold
+                      text-[#4E535B]
+                      transition-colors
+                      duration-300
+                      group-hover:text-[#1300FF]
+                    "
+                  >
+                    {propiedad.titulo || "Propiedad"}
+                  </h3>
+
+                  {propiedad.zona && (
+                    <p className="mt-2 text-sm text-[#7891A8]">
+                      {propiedad.zona}
+                    </p>
+                  )}
+
+                  <div className="mt-5 flex items-center justify-between gap-4">
+                    <span className="text-lg font-semibold text-[#4E535B]">
+                      {obtenerPrecio(propiedad.precio)}
+                    </span>
+
+                    <span
+                      className="
+                        text-sm
+                        font-semibold
+                        text-[#1300FF]
+                        transition-transform
+                        duration-300
+                        group-hover:translate-x-1
+                      "
+                    >
+                      Ver propiedad →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

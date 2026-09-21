@@ -11,7 +11,7 @@ export default function Contact() {
       id="contacto"
       className="
         scroll-mt-24
-        bg-[#FAF8F3]
+        bg-[#D5C9B8]
         py-20
         sm:py-24
         md:py-28
@@ -30,11 +30,9 @@ export default function Contact() {
           items-center
         "
       >
-
         {/* INFORMACIÓN */}
 
         <div>
-
           <p
             className="
               text-[#1300FF]
@@ -93,14 +91,13 @@ export default function Contact() {
           {/* SERVICIOS */}
 
           <div className="mt-8 flex flex-wrap gap-2.5">
-
             {servicios.map((item) => (
               <span
                 key={item}
                 className="
-                  bg-white
+                  bg-[#F3EEE6]
                   border
-                  border-[#1300FF]/20
+                  border-[#C8BBA8]
                   shadow-sm
                   px-4
                   py-2.5
@@ -108,8 +105,8 @@ export default function Contact() {
                   text-[#1300FF]
                   text-sm
                   font-semibold
-                  hover:bg-[#1300FF]/5
-                  hover:border-[#1300FF]/40
+                  hover:bg-[#E8E0D2]
+                  hover:border-[#B7A995]
                   hover:-translate-y-0.5
                   hover:shadow-md
                   transition
@@ -118,13 +115,11 @@ export default function Contact() {
                 {item}
               </span>
             ))}
-
           </div>
 
           {/* DATOS */}
 
           <div className="mt-9 space-y-4">
-
             {/* WHATSAPP */}
 
             <a
@@ -141,22 +136,21 @@ export default function Contact() {
                 group
               "
             >
-
               <span
                 className="
                   w-11
                   h-11
                   rounded-xl
-                  bg-white
+                  bg-[#F3EEE6]
                   border
-                  border-[#1300FF]/20
+                  border-[#C8BBA8]
                   shadow-sm
                   flex
                   items-center
                   justify-center
                   text-xl
-                  group-hover:bg-[#1300FF]/5
-                  group-hover:border-[#1300FF]/40
+                  group-hover:bg-[#E8E0D2]
+                  group-hover:border-[#B7A995]
                   group-hover:scale-105
                   transition
                 "
@@ -167,7 +161,6 @@ export default function Contact() {
               <span className="font-semibold text-base sm:text-lg">
                 094 239 220
               </span>
-
             </a>
 
             {/* UBICACIÓN */}
@@ -180,15 +173,14 @@ export default function Contact() {
                 text-[#20232A]
               "
             >
-
               <span
                 className="
                   w-11
                   h-11
                   rounded-xl
-                  bg-white
+                  bg-[#F3EEE6]
                   border
-                  border-[#1300FF]/20
+                  border-[#C8BBA8]
                   shadow-sm
                   flex
                   items-center
@@ -202,11 +194,8 @@ export default function Contact() {
               <span className="font-semibold text-base sm:text-lg">
                 Shangrilá · Ciudad de la Costa · Montevideo
               </span>
-
             </div>
-
           </div>
-
         </div>
 
         {/* TARJETA */}
@@ -214,20 +203,19 @@ export default function Contact() {
         <div
           className="
             relative
-            bg-white
+            bg-[#E8E0D2]
             rounded-[2rem]
             sm:rounded-[2.5rem]
             p-7
             sm:p-9
             md:p-11
             border
-            border-[#1300FF]/10
-            shadow-[0_20px_60px_rgba(19,0,255,0.08)]
+            border-[#C8BBA8]
+            shadow-[0_20px_60px_rgba(48,45,40,0.16)]
             text-center
             overflow-hidden
           "
         >
-
           {/* DETALLES */}
 
           <div
@@ -238,7 +226,7 @@ export default function Contact() {
               w-48
               h-48
               rounded-full
-              bg-[#1300FF]/7
+              bg-[#1300FF]/5
             "
           />
 
@@ -250,12 +238,11 @@ export default function Contact() {
               w-52
               h-52
               rounded-full
-              bg-[#1300FF]/4
+              bg-white/30
             "
           />
 
           <div className="relative z-10">
-
             {/* ICONO */}
 
             <div
@@ -266,9 +253,9 @@ export default function Contact() {
                 sm:h-24
                 mx-auto
                 rounded-3xl
-                bg-[#F2F3FF]
+                bg-[#F3EEE6]
                 border
-                border-[#1300FF]/15
+                border-[#C8BBA8]
                 flex
                 items-center
                 justify-center
@@ -345,7 +332,6 @@ export default function Contact() {
                 duration-300
               "
             >
-
               <span className="text-xl">
                 📲
               </span>
@@ -355,7 +341,6 @@ export default function Contact() {
               <span>
                 →
               </span>
-
             </a>
 
             {/* LÍNEA AZUL */}
@@ -383,11 +368,8 @@ export default function Contact() {
             >
               Mediterranée Servicios Inmobiliarios
             </p>
-
           </div>
-
         </div>
-
       </div>
     </section>
   );

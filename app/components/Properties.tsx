@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+
 import { supabase } from "../../lib/supabase";
 
 export default async function Properties() {
@@ -16,7 +17,7 @@ export default async function Properties() {
         id="propiedades"
         className="
           scroll-mt-32
-          bg-[#FAF8F3]
+          bg-[#E8E0D2]
           py-20
           sm:py-24
           md:py-28
@@ -25,9 +26,7 @@ export default async function Properties() {
         "
       >
         <div className="max-w-6xl mx-auto">
-
           <div className="text-center">
-
             <p
               className="
                 text-[#1300FF]
@@ -65,17 +64,10 @@ export default async function Properties() {
               "
             />
 
-            <p
-              className="
-                mt-5
-                text-[#4E535B]
-              "
-            >
+            <p className="mt-5 text-[#53616B]">
               No pudimos cargar las propiedades en este momento.
             </p>
-
           </div>
-
         </div>
       </section>
     );
@@ -86,7 +78,7 @@ export default async function Properties() {
       id="propiedades"
       className="
         scroll-mt-32
-        bg-[#FAF8F3]
+        bg-[#E8E0D2]
         py-20
         sm:py-24
         md:py-28
@@ -96,10 +88,11 @@ export default async function Properties() {
     >
       <div className="max-w-6xl mx-auto">
 
-        {/* ENCABEZADO */}
+        {/* =========================
+            ENCABEZADO
+        ========================= */}
 
         <div className="text-center max-w-3xl mx-auto">
-
           <p
             className="
               text-[#1300FF]
@@ -142,7 +135,7 @@ export default async function Properties() {
           <p
             className="
               mt-6
-              text-[#4E535B]
+              text-[#53616B]
               text-base
               sm:text-lg
               leading-relaxed
@@ -150,25 +143,25 @@ export default async function Properties() {
           >
             Encontrá tu próximo hogar o inversión.
           </p>
-
         </div>
 
-        {/* PROPIEDADES */}
+        {/* =========================
+            PROPIEDADES
+        ========================= */}
 
         {!propiedades || propiedades.length === 0 ? (
           <div
             className="
               mt-12
-              bg-white
+              bg-[#F3EEE6]
               rounded-[2rem]
               border
-              border-[#1300FF]/10
+              border-[#D6CCBC]
               p-10
               text-center
-              shadow-[0_10px_35px_rgba(19,0,255,0.07)]
+              shadow-[0_10px_35px_rgba(80,65,45,0.08)]
             "
           >
-
             <div className="text-5xl">
               ⭐
             </div>
@@ -184,15 +177,9 @@ export default async function Properties() {
               Próximamente
             </h3>
 
-            <p
-              className="
-                mt-3
-                text-[#4E535B]
-              "
-            >
+            <p className="mt-3 text-[#53616B]">
               Estamos seleccionando nuestras propiedades destacadas.
             </p>
-
           </div>
         ) : (
           <div
@@ -206,29 +193,143 @@ export default async function Properties() {
               md:mt-14
             "
           >
-
             {propiedades.map((propiedad: any) => {
+
+              /* =================================================
+                 IMÁGENES
+              ================================================= */
+
+              let imagenes: string[] = [];
+
+              if (Array.isArray(propiedad.imagenes)) {
+                imagenes = propiedad.imagenes.filter(
+                  (imagen: unknown): imagen is string =>
+                    typeof imagen === "string" &&
+                    imagen.trim() !== "" &&
+                    imagen.startsWith("http")
+                );
+              } else if (typeof propiedad.imagenes === "string") {
+                try {
+                  const imagenesParseadas = JSON.parse(
+                    propiedad.imagenes
+                  );
+
+                  if (Array.isArray(imagenesParseadas)) {
+                    imagenes = imagenesParseadas.filter(
+                      (imagen: unknown): imagen is string =>
+                        typeof imagen === "string" &&
+                        imagen.trim() !== "" &&
+                        imagen.startsWith("http")
+                    );
+                  }
+                } catch {
+                  imagenes = [];
+                }
+              }
+
+              /*
+               * Algunas propiedades antiguas pueden tener URLs
+               * incorrectas o guardadas con Markdown.
+               * Limpiamos esos casos antes de utilizarlas.
+               */
+
+              imagenes = imagenes
+                .map((imagen) => {
+                  const markdownMatch = imagen.match(
+                    /^\[.*?\]\((https?:\/\/[^)]+)\)$/
+                  );
+
+                  if (markdownMatch) {
+                    return markdownMatch[1];
+                  }
+
+                  return imagen.trim();
+                })
+                .filter((imagen) => imagen.startsWith("http"));
+
+              /*
+               * Local Comercial Shangrilá:
+               *
+               * 1.jpg
+               * 2.jpg
+               * 3.jpg
+               * 4.jpg
+               * 5.jpg
+               * 6.jpg
+               * 7.jpg
+               * 8.jpg
+               * 9.png
+               * 10.png
+               * 11.png
+               * 12.png
+               */
+
+              if (
+                propiedad.slug === "local-comercial-shangrila" ||
+                propiedad.slug === "local-comercial-shangrilá"
+              ) {
+                const base =
+                  "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades/local-comercial-shangrila";
+
+                const imagenesLocal = [
+                  `${base}/1.jpg`,
+                  `${base}/2.jpg`,
+                  `${base}/3.jpg`,
+                  `${base}/4.jpg`,
+                  `${base}/5.jpg`,
+                  `${base}/6.jpg`,
+                  `${base}/7.jpg`,
+                  `${base}/8.jpg`,
+                  `${base}/9.png`,
+                  `${base}/10.png`,
+                  `${base}/11.png`,
+                  `${base}/12.png`,
+                ];
+
+                imagenes = imagenesLocal;
+              }
 
               let imagen: string | null = null;
 
-              if (
-                Array.isArray(propiedad.imagenes) &&
-                typeof propiedad.imagenes[0] === "string"
-              ) {
-                imagen = propiedad.imagenes[0];
+              if (imagenes.length > 0) {
+                imagen = imagenes[0];
               }
 
               if (
                 !imagen &&
-                typeof propiedad.imagen === "string"
+                typeof propiedad.imagen === "string" &&
+                propiedad.imagen.trim() !== ""
               ) {
-                imagen = propiedad.imagen;
+                const imagenPrincipal =
+                  propiedad.imagen.trim();
+
+                const markdownMatch =
+                  imagenPrincipal.match(
+                    /^\[.*?\]\((https?:\/\/[^)]+)\)$/
+                  );
+
+                imagen = markdownMatch
+                  ? markdownMatch[1]
+                  : imagenPrincipal;
               }
 
-              const cantidadImagenes =
-                Array.isArray(propiedad.imagenes)
-                  ? propiedad.imagenes.length
-                  : 0;
+              /*
+               * Corrección adicional para Local Comercial Shangrilá.
+               */
+
+              if (
+                (propiedad.slug === "local-comercial-shangrila" ||
+                  propiedad.slug === "local-comercial-shangrilá") &&
+                (!imagen ||
+                  imagen.includes(
+                    "/local-comercial-shangrila/1.png"
+                  ))
+              ) {
+                imagen =
+                  "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades/local-comercial-shangrila/1.jpg";
+              }
+
+              const cantidadImagenes = imagenes.length;
 
               const tienePrecio =
                 propiedad.precio !== null &&
@@ -244,16 +345,18 @@ export default async function Properties() {
                     rounded-[1.75rem]
                     overflow-hidden
                     border
-                    border-[#1300FF]/10
-                    shadow-[0_10px_35px_rgba(19,0,255,0.07)]
-                    hover:shadow-[0_18px_45px_rgba(19,0,255,0.13)]
+                    border-[#D6CCBC]
+                    shadow-[0_10px_35px_rgba(80,65,45,0.10)]
+                    hover:shadow-[0_18px_45px_rgba(80,65,45,0.16)]
                     hover:-translate-y-1
                     transition-all
                     duration-300
                   "
                 >
 
-                  {/* IMAGEN */}
+                  {/* =========================
+                      IMAGEN
+                  ========================= */}
 
                   <div
                     className="
@@ -261,18 +364,14 @@ export default async function Properties() {
                       h-64
                       sm:h-60
                       md:h-64
-                      bg-[#F2F3FF]
+                      bg-[#F3EEE6]
                       overflow-hidden
                     "
                   >
-
-                    {imagen && imagen.startsWith("http") ? (
+                    {imagen ? (
                       <Image
                         src={imagen}
-                        alt={
-                          propiedad.titulo ||
-                          "Propiedad"
-                        }
+                        alt={propiedad.titulo || "Propiedad"}
                         fill
                         sizes="
                           (max-width: 640px) 100vw,
@@ -294,7 +393,7 @@ export default async function Properties() {
                           flex
                           items-center
                           justify-center
-                          text-[#4E535B]/60
+                          text-[#53616B]/60
                         "
                       >
                         Sin imagen
@@ -384,10 +483,11 @@ export default async function Properties() {
                         📷 {cantidadImagenes}
                       </span>
                     )}
-
                   </div>
 
-                  {/* INFORMACIÓN */}
+                  {/* =========================
+                      INFORMACIÓN
+                  ========================= */}
 
                   <div className="p-6">
 
@@ -423,21 +523,19 @@ export default async function Properties() {
                       <p
                         className="
                           mt-3
-                          text-[#4E535B]
+                          text-[#53616B]
                           text-sm
                           flex
                           items-center
                           gap-2
                         "
                       >
-
                         <span className="text-[#1300FF]">
                           📍
                         </span>
 
                         {propiedad.zona ||
                           propiedad.ubicacion}
-
                       </p>
                     )}
 
@@ -447,10 +545,9 @@ export default async function Properties() {
                           mt-5
                           pt-5
                           border-t
-                          border-[#1300FF]/10
+                          border-[#D6CCBC]
                         "
                       >
-
                         <p
                           className="
                             text-xl
@@ -460,11 +557,12 @@ export default async function Properties() {
                         >
                           {propiedad.precio}
                         </p>
-
                       </div>
                     )}
 
-                    {/* BOTÓN */}
+                    {/* =========================
+                        BOTÓN
+                    ========================= */}
 
                     <Link
                       href={`/propiedades/${propiedad.slug}`}
@@ -480,44 +578,59 @@ export default async function Properties() {
                         group/button
                       "
                     >
-
-                      <span>
+                      <span
+                        className="
+                          transition-transform
+                          duration-300
+                          group-hover/button:translate-x-0.5
+                        "
+                      >
                         Ver propiedad
                       </span>
 
+                      {/* FLECHA */}
+
                       <span
                         className="
-                          w-9
-                          h-9
-                          rounded-full
-                          bg-[#F2F3FF]
-                          border
-                          border-[#1300FF]/20
+                          relative
                           flex
                           items-center
                           justify-center
+                          w-10
+                          h-10
                           text-[#1300FF]
-                          group-hover/button:bg-[#1300FF]
-                          group-hover/button:text-white
-                          group-hover/button:border-[#1300FF]
-                          transition
+                          transition-all
+                          duration-300
+                          group-hover/button:translate-x-1
                         "
+                        aria-hidden="true"
                       >
-                        →
+                        <svg
+                          width="25"
+                          height="25"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h13" />
+                          <path d="m13 6 6 6-6 6" />
+                        </svg>
                       </span>
-
                     </Link>
 
                   </div>
-
                 </article>
               );
             })}
-
           </div>
         )}
 
-        {/* VER TODAS */}
+        {/* =========================
+            VER TODAS
+        ========================= */}
 
         {propiedades && propiedades.length > 0 && (
           <div className="mt-12 text-center">
@@ -544,10 +657,22 @@ export default async function Properties() {
             >
               Ver todas las propiedades
 
-              <span className="text-lg">
-                →
+              <span className="flex items-center">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h13" />
+                  <path d="m13 6 6 6-6 6" />
+                </svg>
               </span>
-
             </Link>
 
           </div>

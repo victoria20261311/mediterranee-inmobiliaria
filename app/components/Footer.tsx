@@ -4,8 +4,8 @@ export default function Footer() {
   return (
     <footer
       className="
-        bg-[#111318]
-        text-white
+        bg-[#CFC4B4]
+        text-[#20232A]
         py-16
         sm:py-20
         px-4
@@ -30,13 +30,14 @@ export default function Footer() {
 
           <div
             className="
-              bg-white/[0.04]
+              bg-[#E8E0D2]/80
               backdrop-blur-2xl
               rounded-[1.75rem]
               p-7
               sm:p-8
               border
-              border-white/10
+              border-[#BEB2A1]
+              shadow-[0_12px_35px_rgba(70,60,50,0.08)]
             "
           >
 
@@ -46,6 +47,7 @@ export default function Footer() {
                 sm:text-3xl
                 font-bold
                 tracking-[0.08em]
+                text-[#20232A]
               "
             >
               MEDITERRANÉE
@@ -54,7 +56,7 @@ export default function Footer() {
             <p
               className="
                 mt-3
-                text-white/60
+                text-[#4E535B]/70
                 text-xs
                 sm:text-sm
                 tracking-[0.25em]
@@ -73,7 +75,7 @@ export default function Footer() {
                 bg-[#1300FF]
                 mt-6
                 rounded-full
-                shadow-[0_0_10px_rgba(19,0,255,0.5)]
+                shadow-[0_0_10px_rgba(19,0,255,0.35)]
               "
             />
 
@@ -93,13 +95,14 @@ export default function Footer() {
 
           <div
             className="
-              bg-white/[0.04]
+              bg-[#E8E0D2]/80
               backdrop-blur-2xl
               rounded-[1.75rem]
               p-7
               sm:p-8
               border
-              border-white/10
+              border-[#BEB2A1]
+              shadow-[0_12px_35px_rgba(70,60,50,0.08)]
             "
           >
 
@@ -115,7 +118,7 @@ export default function Footer() {
               Ubicación
             </h4>
 
-            <div className="mt-5 space-y-2 text-white/80">
+            <div className="mt-5 space-y-2 text-[#4E535B]">
 
               <p>Shangrilá</p>
 
@@ -130,17 +133,48 @@ export default function Footer() {
               className="
                 inline-flex
                 items-center
-                gap-2
+                gap-3
                 mt-6
                 text-sm
                 font-semibold
-                text-white
+                text-[#20232A]
                 hover:text-[#1300FF]
                 transition
+                group
               "
             >
-              Contactanos
-              <span>→</span>
+              <span>
+                Contactanos
+              </span>
+
+              {/* FLECHA */}
+
+              <span
+                className="
+                  w-7
+                  h-7
+                  rounded-full
+                  bg-[#F3EEE6]
+                  border
+                  border-[#BEB2A1]
+                  flex
+                  items-center
+                  justify-center
+                  text-[#1300FF]
+                  text-base
+                  font-black
+                  leading-none
+                  group-hover:bg-[#1300FF]
+                  group-hover:border-[#1300FF]
+                  group-hover:text-white
+                  group-hover:translate-x-0.5
+                  transition-all
+                  duration-300
+                "
+              >
+                →
+              </span>
+
             </a>
 
           </div>
@@ -149,13 +183,14 @@ export default function Footer() {
 
           <div
             className="
-              bg-white/[0.04]
+              bg-[#E8E0D2]/80
               backdrop-blur-2xl
               rounded-[1.75rem]
               p-7
               sm:p-8
               border
-              border-white/10
+              border-[#BEB2A1]
+              shadow-[0_12px_35px_rgba(70,60,50,0.08)]
             "
           >
 
@@ -171,7 +206,7 @@ export default function Footer() {
               Servicios
             </h4>
 
-            <div className="mt-5 space-y-3 text-white/80">
+            <div className="mt-5 space-y-3 text-[#4E535B]">
 
               <p>Ventas</p>
 
@@ -196,7 +231,7 @@ export default function Footer() {
             pt-7
             sm:pt-8
             border-t
-            border-white/10
+            border-[#B7AA99]
             flex
             flex-col
             md:flex-row
@@ -210,7 +245,7 @@ export default function Footer() {
             className="
               text-xs
               sm:text-sm
-              text-white/45
+              text-[#4E535B]/70
               text-center
             "
           >
@@ -246,8 +281,11 @@ export default function Footer() {
               transition-all
             "
           >
+
             <span>📲</span>
+
             WhatsApp
+
           </a>
 
         </div>
