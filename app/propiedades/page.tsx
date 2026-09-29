@@ -12,6 +12,83 @@ type Props = {
   }>;
 };
 
+const SUPABASE_STORAGE =
+  "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades";
+
+function limpiarUrlImagen(valor: unknown): string | null {
+  if (typeof valor !== "string") {
+    return null;
+  }
+
+  let limpia = valor.trim();
+
+  if (!limpia) {
+    return null;
+  }
+
+  // Si la URL quedó guardada como Markdown:
+  // [texto](https://dominio/imagen.jpg)
+  const markdownMatch = limpia.match(
+    /^\[.*?\]\((https?:\/\/[^)]+)\)$/
+  );
+
+  if (markdownMatch?.[1]) {
+    limpia = markdownMatch[1];
+  }
+
+  // URL completa
+  if (/^https?:\/\//i.test(limpia)) {
+    return limpia;
+  }
+
+  // Ruta que comienza con /
+  // Ejemplo: /aeris-2/28.png
+  if (limpia.startsWith("/")) {
+    const rutaBucket = limpia
+      .replace(/^\/+/, "")
+      .split("/")
+      .map((parte) => encodeURIComponent(parte))
+      .join("/");
+
+    return `${SUPABASE_STORAGE}/${rutaBucket}`;
+  }
+
+  // Ruta dentro del bucket
+  // Ejemplo: aeris-2/28.png
+  if (limpia.includes("/")) {
+    const rutaBucket = limpia
+      .split("/")
+      .map((parte) => encodeURIComponent(parte))
+      .join("/");
+
+    return `${SUPABASE_STORAGE}/${rutaBucket}`;
+  }
+
+  return null;
+}
+
+function obtenerImagen(propiedad: any): string | null {
+  // Aeris II:
+  // Queremos mantener la foto 28 como portada.
+  if (propiedad.slug === "aeris-2") {
+    return `${SUPABASE_STORAGE}/aeris-2/28.png`;
+  }
+
+  // Primero buscamos en imagenes[]
+  if (Array.isArray(propiedad.imagenes)) {
+    for (const imagen of propiedad.imagenes) {
+      const url = limpiarUrlImagen(imagen);
+
+      if (url) {
+        return url;
+      }
+    }
+  }
+
+  // Después usamos la columna imagen
+  return limpiarUrlImagen(propiedad.imagen);
+}
+
 export default async function PropiedadesPage({
   searchParams,
 }: Props) {
@@ -26,7 +103,6 @@ export default async function PropiedadesPage({
     return (
       <main className="min-h-screen bg-[#FAF8F3] px-6 py-24">
         <div className="max-w-6xl mx-auto">
-
           <h1 className="text-3xl font-bold text-red-600">
             Error cargando propiedades
           </h1>
@@ -34,7 +110,6 @@ export default async function PropiedadesPage({
           <pre className="mt-6 bg-white p-6 rounded-2xl overflow-auto border border-[#1300FF]/10">
             {JSON.stringify(error, null, 2)}
           </pre>
-
         </div>
       </main>
     );
@@ -42,7 +117,6 @@ export default async function PropiedadesPage({
 
   const propiedadesFiltradas = (propiedades || []).filter(
     (propiedad: any) => {
-
       const coincideOperacion =
         !filtros.operacion ||
         String(propiedad.operacion || "").toUpperCase() ===
@@ -60,15 +134,12 @@ export default async function PropiedadesPage({
 
       const coincideDestacada =
         !filtros.destacada ||
-        (
-          filtros.destacada === "true" &&
-          propiedad.destacada === true
-        );
+        (filtros.destacada === "true" &&
+          propiedad.destacada === true);
 
       let coincideDormitorios = true;
 
       if (filtros.dormitorios) {
-
         const dormitorios =
           Number(propiedad.dormitorios || 0);
 
@@ -78,7 +149,6 @@ export default async function PropiedadesPage({
           coincideDormitorios =
             dormitorios === Number(filtros.dormitorios);
         }
-
       }
 
       return (
@@ -395,21 +465,7 @@ export default async function PropiedadesPage({
                 {propiedadesFiltradas.map(
                   (propiedad: any) => {
 
-                    let imagen: string | null = null;
-
-                    if (
-                      Array.isArray(propiedad.imagenes) &&
-                      typeof propiedad.imagenes[0] === "string"
-                    ) {
-                      imagen = propiedad.imagenes[0];
-                    }
-
-                    if (
-                      !imagen &&
-                      typeof propiedad.imagen === "string"
-                    ) {
-                      imagen = propiedad.imagen;
-                    }
+                    const imagen = obtenerImagen(propiedad);
 
                     const tienePrecio =
                       propiedad.precio !== null &&
@@ -448,8 +504,7 @@ export default async function PropiedadesPage({
                           "
                         >
 
-                          {imagen &&
-                          imagen.startsWith("http") ? (
+                          {imagen ? (
 
                             <Image
                               src={imagen}

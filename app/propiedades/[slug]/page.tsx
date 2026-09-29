@@ -44,7 +44,9 @@ function formatearPrecio(valor: unknown) {
     };
   }
 
-  const coincideMoneda = texto.match(/^(USD|U\$S|US\$|\$)\s*/i);
+  const coincideMoneda = texto.match(
+    /^(USD|U\$S|US\$|\$)\s*/i
+  );
 
   let moneda = "";
   let importe = texto;
@@ -97,7 +99,7 @@ function limpiarUrlImagen(url: string): string {
   // ---------------------------------------------------------
 
   const markdownMatch = limpia.match(
-    /^\[.*?\]\((https?:\/\/[^)]+)\)$/
+    /^\[.*\]\((https?:\/\/[^)]+)\)$/
   );
 
   if (markdownMatch?.[1]) {
@@ -133,20 +135,43 @@ function limpiarUrlImagen(url: string): string {
   }
 
   // ---------------------------------------------------------
-  // Ruta pública del proyecto
-  // Ejemplo:
-  // /images/casa.jpg
+  // Ruta que comienza con /
+  //
+  // IMPORTANTE:
+  //
+  // Las imágenes de propiedades están guardadas en Supabase
+  // con rutas como:
+  //
+  // /aeris-2/1.png
+  //
+  // /casa-shangrila/9.png
+  //
+  // /local-comercial-shangrila/4.jpg
+  //
+  // Por lo tanto NO debemos devolver simplemente la ruta.
+  // Debemos convertirla en la URL pública de Supabase.
   // ---------------------------------------------------------
 
   if (limpia.startsWith("/")) {
-    return limpia;
+    const rutaBucket = limpia
+      .replace(/^\/+/, "")
+      .split("/")
+      .map((parte) => encodeURIComponent(parte))
+      .join("/");
+
+    return `${SUPABASE_STORAGE}/${rutaBucket}`;
   }
 
   // ---------------------------------------------------------
   // Ruta dentro del bucket "propiedades"
   //
   // Ejemplo:
+  //
   // casa-shangrila/1.png
+  //
+  // Se transforma en:
+  //
+  // https://.../propiedades/casa-shangrila/1.png
   // ---------------------------------------------------------
 
   return `${SUPABASE_STORAGE}/${limpia
@@ -426,6 +451,7 @@ export default async function PropiedadPage({ params }: Props) {
               <span className="text-[#3F5870] text-xl">
                 📍
               </span>
+
               {zona}
             </p>
           )}
@@ -482,7 +508,6 @@ export default async function PropiedadPage({ params }: Props) {
               "
             >
               <div>
-
                 <p
                   className="
                     text-xs
@@ -500,7 +525,6 @@ export default async function PropiedadPage({ params }: Props) {
                   <div className="mt-3">
 
                     {precioFormateado.consultar ? (
-
                       <p
                         className="
                           text-2xl
@@ -511,9 +535,7 @@ export default async function PropiedadPage({ params }: Props) {
                       >
                         Consultar precio
                       </p>
-
                     ) : (
-
                       <div className="flex items-baseline gap-2">
 
                         {precioFormateado.moneda && (
@@ -544,12 +566,10 @@ export default async function PropiedadPage({ params }: Props) {
                         </span>
 
                       </div>
-
                     )}
 
                   </div>
                 )}
-
               </div>
 
               <a
@@ -575,7 +595,6 @@ export default async function PropiedadPage({ params }: Props) {
                 Consultar propiedad
                 <span>→</span>
               </a>
-
             </div>
 
             {/* =========================
@@ -585,7 +604,6 @@ export default async function PropiedadPage({ params }: Props) {
             {(tieneDormitorios ||
               tieneBanos ||
               tieneMetros) && (
-
               <div
                 className="
                   grid
@@ -810,7 +828,6 @@ export default async function PropiedadPage({ params }: Props) {
                 >
                   {propiedad.descripcion}
                 </p>
-
               </div>
             )}
 
@@ -1053,4 +1070,4 @@ export default async function PropiedadPage({ params }: Props) {
       </div>
     </main>
   );
-}     
+}

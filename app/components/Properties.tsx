@@ -1,7 +1,85 @@
 import Link from "next/link";
 import Image from "next/image";
-
 import { supabase } from "../../lib/supabase";
+
+const SUPABASE_STORAGE =
+  "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades";
+
+function limpiarUrlImagen(valor: unknown): string | null {
+  if (typeof valor !== "string") return null;
+
+  let limpia = valor.trim();
+
+  if (!limpia) return null;
+
+  const markdownMatch = limpia.match(
+    /^\[.*?\]\((https?:\/\/[^)]+)\)$/
+  );
+
+  if (markdownMatch) {
+    limpia = markdownMatch[1];
+  }
+
+  if (/^https?:\/\//i.test(limpia)) {
+    return limpia;
+  }
+
+  if (limpia.startsWith("/")) {
+    const rutaBucket = limpia
+      .replace(/^\/+/, "")
+      .split("/")
+      .map((parte) => encodeURIComponent(parte))
+      .join("/");
+
+    return `${SUPABASE_STORAGE}/${rutaBucket}`;
+  }
+
+  if (limpia.includes("/") && !limpia.startsWith(".")) {
+    const rutaBucket = limpia
+      .split("/")
+      .map((parte) => encodeURIComponent(parte))
+      .join("/");
+
+    return `${SUPABASE_STORAGE}/${rutaBucket}`;
+  }
+
+  return null;
+}
+
+function obtenerImagenes(propiedad: any): string[] {
+  let imagenesOriginales: unknown[] = [];
+
+  if (Array.isArray(propiedad.imagenes)) {
+    imagenesOriginales = propiedad.imagenes;
+  } else if (typeof propiedad.imagenes === "string") {
+    try {
+      const parseadas = JSON.parse(propiedad.imagenes);
+
+      if (Array.isArray(parseadas)) {
+        imagenesOriginales = parseadas;
+      }
+    } catch {
+      imagenesOriginales = [];
+    }
+  }
+
+  const imagenes = imagenesOriginales
+    .map((imagen) => limpiarUrlImagen(imagen))
+    .filter((imagen): imagen is string => Boolean(imagen));
+
+  if (
+    imagenes.length === 0 &&
+    typeof propiedad.imagen === "string"
+  ) {
+    const portada = limpiarUrlImagen(propiedad.imagen);
+
+    if (portada) {
+      imagenes.push(portada);
+    }
+  }
+
+  return imagenes;
+}
 
 export default async function Properties() {
   const { data: propiedades, error } = await supabase
@@ -14,7 +92,7 @@ export default async function Properties() {
   if (error) {
     return (
       <section
-        id="propiedades"
+        id="propiedades-prueba"
         className="
           scroll-mt-32
           bg-[#E8E0D2]
@@ -88,9 +166,7 @@ export default async function Properties() {
     >
       <div className="max-w-6xl mx-auto">
 
-        {/* =========================
-            ENCABEZADO
-        ========================= */}
+        {/* ENCABEZADO */}
 
         <div className="text-center max-w-3xl mx-auto">
           <p
@@ -145,9 +221,7 @@ export default async function Properties() {
           </p>
         </div>
 
-        {/* =========================
-            PROPIEDADES
-        ========================= */}
+        {/* PROPIEDADES */}
 
         {!propiedades || propiedades.length === 0 ? (
           <div
@@ -162,9 +236,7 @@ export default async function Properties() {
               shadow-[0_10px_35px_rgba(80,65,45,0.08)]
             "
           >
-            <div className="text-5xl">
-              ⭐
-            </div>
+            <div className="text-5xl">⭐</div>
 
             <h3
               className="
@@ -194,140 +266,14 @@ export default async function Properties() {
             "
           >
             {propiedades.map((propiedad: any) => {
+              const imagenes = obtenerImagenes(propiedad);
 
-              /* =================================================
-                 IMÁGENES
-              ================================================= */
-
-              let imagenes: string[] = [];
-
-              if (Array.isArray(propiedad.imagenes)) {
-                imagenes = propiedad.imagenes.filter(
-                  (imagen: unknown): imagen is string =>
-                    typeof imagen === "string" &&
-                    imagen.trim() !== "" &&
-                    imagen.startsWith("http")
-                );
-              } else if (typeof propiedad.imagenes === "string") {
-                try {
-                  const imagenesParseadas = JSON.parse(
-                    propiedad.imagenes
-                  );
-
-                  if (Array.isArray(imagenesParseadas)) {
-                    imagenes = imagenesParseadas.filter(
-                      (imagen: unknown): imagen is string =>
-                        typeof imagen === "string" &&
-                        imagen.trim() !== "" &&
-                        imagen.startsWith("http")
-                    );
-                  }
-                } catch {
-                  imagenes = [];
-                }
-              }
-
-              /*
-               * Algunas propiedades antiguas pueden tener URLs
-               * incorrectas o guardadas con Markdown.
-               * Limpiamos esos casos antes de utilizarlas.
-               */
-
-              imagenes = imagenes
-                .map((imagen) => {
-                  const markdownMatch = imagen.match(
-                    /^\[.*?\]\((https?:\/\/[^)]+)\)$/
-                  );
-
-                  if (markdownMatch) {
-                    return markdownMatch[1];
-                  }
-
-                  return imagen.trim();
-                })
-                .filter((imagen) => imagen.startsWith("http"));
-
-              /*
-               * Local Comercial Shangrilá:
-               *
-               * 1.jpg
-               * 2.jpg
-               * 3.jpg
-               * 4.jpg
-               * 5.jpg
-               * 6.jpg
-               * 7.jpg
-               * 8.jpg
-               * 9.png
-               * 10.png
-               * 11.png
-               * 12.png
-               */
-
-              if (
-                propiedad.slug === "local-comercial-shangrila" ||
-                propiedad.slug === "local-comercial-shangrilá"
-              ) {
-                const base =
-                  "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades/local-comercial-shangrila";
-
-                const imagenesLocal = [
-                  `${base}/1.jpg`,
-                  `${base}/2.jpg`,
-                  `${base}/3.jpg`,
-                  `${base}/4.jpg`,
-                  `${base}/5.jpg`,
-                  `${base}/6.jpg`,
-                  `${base}/7.jpg`,
-                  `${base}/8.jpg`,
-                  `${base}/9.png`,
-                  `${base}/10.png`,
-                  `${base}/11.png`,
-                  `${base}/12.png`,
-                ];
-
-                imagenes = imagenesLocal;
-              }
-
-              let imagen: string | null = null;
-
-              if (imagenes.length > 0) {
-                imagen = imagenes[0];
-              }
-
-              if (
-                !imagen &&
-                typeof propiedad.imagen === "string" &&
-                propiedad.imagen.trim() !== ""
-              ) {
-                const imagenPrincipal =
-                  propiedad.imagen.trim();
-
-                const markdownMatch =
-                  imagenPrincipal.match(
-                    /^\[.*?\]\((https?:\/\/[^)]+)\)$/
-                  );
-
-                imagen = markdownMatch
-                  ? markdownMatch[1]
-                  : imagenPrincipal;
-              }
-
-              /*
-               * Corrección adicional para Local Comercial Shangrilá.
-               */
-
-              if (
-                (propiedad.slug === "local-comercial-shangrila" ||
-                  propiedad.slug === "local-comercial-shangrilá") &&
-                (!imagen ||
-                  imagen.includes(
-                    "/local-comercial-shangrila/1.png"
-                  ))
-              ) {
-                imagen =
-                  "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades/local-comercial-shangrila/1.jpg";
-              }
+              const imagen =
+                propiedad.slug === "aeris-2"
+                  ? "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades/aeris-2/28.png"
+                  : limpiarUrlImagen(propiedad.imagen) ||
+                    imagenes[0] ||
+                    null;
 
               const cantidadImagenes = imagenes.length;
 
@@ -354,9 +300,7 @@ export default async function Properties() {
                   "
                 >
 
-                  {/* =========================
-                      IMAGEN
-                  ========================= */}
+                  {/* IMAGEN */}
 
                   <div
                     className="
@@ -369,16 +313,14 @@ export default async function Properties() {
                     "
                   >
                     {imagen ? (
-                      <Image
+                      <img
                         src={imagen}
                         alt={propiedad.titulo || "Propiedad"}
-                        fill
-                        sizes="
-                          (max-width: 640px) 100vw,
-                          (max-width: 1024px) 50vw,
-                          33vw
-                        "
                         className="
+                          absolute
+                          inset-0
+                          w-full
+                          h-full
                           object-cover
                           transition-transform
                           duration-500
@@ -485,9 +427,7 @@ export default async function Properties() {
                     )}
                   </div>
 
-                  {/* =========================
-                      INFORMACIÓN
-                  ========================= */}
+                  {/* INFORMACIÓN */}
 
                   <div className="p-6">
 
@@ -518,8 +458,7 @@ export default async function Properties() {
                       {propiedad.titulo || "Propiedad"}
                     </h3>
 
-                    {(propiedad.zona ||
-                      propiedad.ubicacion) && (
+                    {(propiedad.zona || propiedad.ubicacion) && (
                       <p
                         className="
                           mt-3
@@ -534,8 +473,7 @@ export default async function Properties() {
                           📍
                         </span>
 
-                        {propiedad.zona ||
-                          propiedad.ubicacion}
+                        {propiedad.zona || propiedad.ubicacion}
                       </p>
                     )}
 
@@ -560,9 +498,7 @@ export default async function Properties() {
                       </div>
                     )}
 
-                    {/* =========================
-                        BOTÓN
-                    ========================= */}
+                    {/* BOTÓN */}
 
                     <Link
                       href={`/propiedades/${propiedad.slug}`}
@@ -587,8 +523,6 @@ export default async function Properties() {
                       >
                         Ver propiedad
                       </span>
-
-                      {/* FLECHA */}
 
                       <span
                         className="
@@ -620,7 +554,6 @@ export default async function Properties() {
                         </svg>
                       </span>
                     </Link>
-
                   </div>
                 </article>
               );
@@ -628,13 +561,10 @@ export default async function Properties() {
           </div>
         )}
 
-        {/* =========================
-            VER TODAS
-        ========================= */}
+        {/* VER TODAS */}
 
         {propiedades && propiedades.length > 0 && (
           <div className="mt-12 text-center">
-
             <Link
               href="/propiedades"
               className="
@@ -674,10 +604,8 @@ export default async function Properties() {
                 </svg>
               </span>
             </Link>
-
           </div>
         )}
-
       </div>
     </section>
   );
