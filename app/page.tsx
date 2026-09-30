@@ -43,7 +43,7 @@ export default function Home() {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           className="
             absolute
             inset-0
