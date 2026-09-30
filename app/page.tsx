@@ -45,6 +45,11 @@ export default function Home() {
           playsInline
           preload="metadata"
           poster="/images/santo.jpeg"
+          style={{
+            backgroundImage: "url('/images/santo.jpeg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
           className="
             absolute
             inset-0
