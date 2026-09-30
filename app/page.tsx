@@ -44,6 +44,7 @@ export default function Home() {
           muted
           playsInline
           preload="metadata"
+          poster="/images/santo.jpeg"
           className="
             absolute
             inset-0
