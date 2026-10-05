@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { supabase } from "../../lib/supabase";
 
 type Props = {
@@ -74,7 +74,15 @@ function obtenerImagen(propiedad: any): string | null {
     return `${SUPABASE_STORAGE}/aeris-2/28.png`;
   }
 
-  // Primero buscamos en imagenes[]
+  // Primero usamos la columna "imagen",
+  // porque es la portada definida para cada propiedad.
+  const portada = limpiarUrlImagen(propiedad.imagen);
+
+  if (portada) {
+    return portada;
+  }
+
+  // Si no hay portada definida, buscamos en imagenes[].
   if (Array.isArray(propiedad.imagenes)) {
     for (const imagen of propiedad.imagenes) {
       const url = limpiarUrlImagen(imagen);
@@ -85,8 +93,7 @@ function obtenerImagen(propiedad: any): string | null {
     }
   }
 
-  // Después usamos la columna imagen
-  return limpiarUrlImagen(propiedad.imagen);
+  return null;
 }
 
 export default async function PropiedadesPage({
