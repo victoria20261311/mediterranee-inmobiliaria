@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Ventas, alquileres, administraciones y tasaciones en Shangrilá, Ciudad de la Costa y Montevideo.",
   icons: {
-    icon: "/images/logo.svg",
+    icon: "/images/350.svg",
   },
 };
 
