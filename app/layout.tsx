@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Mediterranée Servicios Inmobiliarios",
   description:
     "Ventas, alquileres, administraciones y tasaciones en Shangrilá, Ciudad de la Costa y Montevideo.",
+  icons: {
+    icon: "/images/logo.svg",
+  },
 };
 
 export default function RootLayout({

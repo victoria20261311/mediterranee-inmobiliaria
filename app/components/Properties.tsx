@@ -1,5 +1,7 @@
 import Link from "next/link";
+
 import Image from "next/image";
+
 import { supabase } from "../../lib/supabase";
 
 const SUPABASE_STORAGE =
@@ -265,7 +267,7 @@ export default async function Properties() {
               md:mt-14
             "
           >
-            {propiedades.map((propiedad: any) => {
+            {propiedades.map((propiedad: any, index: number) => {
               const imagenes = obtenerImagenes(propiedad);
 
               const imagen =
@@ -313,14 +315,17 @@ export default async function Properties() {
                     "
                   >
                     {imagen ? (
-                      <img
+                      <Image
                         src={imagen}
                         alt={propiedad.titulo || "Propiedad"}
+                        fill
+                        sizes="
+                          (max-width: 640px) 100vw,
+                          (max-width: 1024px) 50vw,
+                          33vw
+                        "
+                        priority={index < 3}
                         className="
-                          absolute
-                          inset-0
-                          w-full
-                          h-full
                           object-cover
                           transition-transform
                           duration-500
@@ -606,6 +611,7 @@ export default async function Properties() {
             </Link>
           </div>
         )}
+
       </div>
     </section>
   );

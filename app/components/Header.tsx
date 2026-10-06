@@ -127,7 +127,7 @@ export default function Header() {
             >
 
               <Image
-                src="/images/78.png"
+                src="/images/111.png"
                 alt="MEDITERRANÉE Servicios Inmobiliarios"
                 width={240}
                 height={110}
@@ -139,8 +139,8 @@ export default function Header() {
                   ease-in-out
                   ${
                     scrolled
-                      ? "w-[120px] md:w-[145px] translate-y-0"
-                      : "w-[145px] md:w-[170px] translate-y-5"
+                      ? "w-[120px] md:w-[140px] translate-y-0"
+                      : "w-[145px] md:w-[165px] translate-y-5"
                   }
                 `}
               />

@@ -126,6 +126,14 @@ export default function Footer() {
 
               <p>Montevideo</p>
 
+              <p>Avenida Calcagno M56 S24</p>
+
+              <p>Tel. 2682 7157</p>
+
+              <p>Cel. 094 239 220</p>
+
+              <p>Lunes a viernes · 10:00 a 18:00 hs.</p>
+
             </div>
 
             <a
