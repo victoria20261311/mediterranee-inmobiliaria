@@ -270,12 +270,14 @@ export default async function Properties() {
             {propiedades.map((propiedad: any, index: number) => {
               const imagenes = obtenerImagenes(propiedad);
 
-              const imagen =
-                propiedad.slug === "aeris-2"
-                  ? "https://axrbawejnwyqmaqmplkk.supabase.co/storage/v1/object/public/propiedades/aeris-2/28.png"
-                  : limpiarUrlImagen(propiedad.imagen) ||
-                    imagenes[0] ||
-                    null;
+             const imagen =
+               propiedad.slug === "aeris-2"
+                 ? `${SUPABASE_STORAGE}/aeris-2/28.png`
+                 : propiedad.slug === "casa-riveron-lagomar"
+                   ? `${SUPABASE_STORAGE}/riveron/21.png`
+                   : limpiarUrlImagen(propiedad.imagen) ||
+                     imagenes[0] ||
+                     null;
 
               const cantidadImagenes = imagenes.length;
 
