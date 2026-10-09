@@ -123,8 +123,6 @@ return ( <footer
 
           <p>Ciudad de la Costa</p>
 
-          <p>Montevideo</p>
-
           <p>Avenida Calcagno M56 S24</p>
 
           <p>Tel. 2682 7157</p>
