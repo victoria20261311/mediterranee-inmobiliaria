@@ -445,6 +445,23 @@ export default function Header() {
                 Nosotros
               </a>
 
+              {/* NOTICIAS */}
+
+              <Link
+                href="/noticias"
+                onClick={cerrarMenus}
+                className="
+                  text-sm
+                  font-semibold
+                  text-[#3F454B]
+                  drop-shadow-sm
+                  transition
+                  hover:text-[#3F5870]
+                "
+              >
+                Noticias
+              </Link>
+
               {/* CONTACTO */}
 
               <a
@@ -806,6 +823,26 @@ export default function Header() {
             >
               Nosotros
             </a>
+
+            {/* NOTICIAS */}
+
+            <Link
+              href="/noticias"
+              onClick={cerrarMenus}
+              className="
+                block
+                rounded-xl
+                px-4
+                py-3
+                font-semibold
+                text-[#30343B]
+                transition
+                hover:bg-[#E8E0D2]
+                hover:text-[#3F5870]
+              "
+            >
+              Noticias
+            </Link>
 
             {/* CONTACTO */}
 
