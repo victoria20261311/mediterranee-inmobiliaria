@@ -43,7 +43,7 @@ export default function ArticuloPreciosPage() {
           {/* Fotografía principal */}
           <figure className="mt-8 overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#E8E0D2] shadow-sm">
             <img
-              src="/noticias/1%20.png"
+              src="/noticias/1.png?v=2"
               alt="Propiedad destacada de Mediterranée Servicios Inmobiliarios"
               className="max-h-[460px] min-h-[240px] w-full object-cover md:min-h-[340px]"
             />
