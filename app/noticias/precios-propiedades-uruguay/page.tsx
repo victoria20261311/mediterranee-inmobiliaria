@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -25,6 +26,12 @@ export default function ArticuloPreciosPage() {
           <header className="mt-8">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1300FF]">
               Mercado inmobiliario · Mediterranée
+            </p>
+
+            <p className="mt-3 text-sm font-medium text-[#6B6B6B]">
+              <time dateTime="2026-10-15">
+                15 de octubre de 2026
+              </time>
             </p>
 
             <h1 className="mt-4 text-3xl font-semibold leading-tight text-[#1300FF] md:text-4xl">
