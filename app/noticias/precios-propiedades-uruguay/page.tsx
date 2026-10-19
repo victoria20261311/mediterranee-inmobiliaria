@@ -3,126 +3,161 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 export const metadata = {
-  title: "Noticias inmobiliarias | Mediterranée",
+  title:
+    "¿Qué está pasando con los precios de las propiedades? | Mediterranée",
   description:
-    "Noticias, consejos y actualidad del mercado inmobiliario en Shangrilá, Ciudad de la Costa y Montevideo.",
+    "Conocé los factores que influyen en el valor de una propiedad en Shangrilá, Ciudad de la Costa y Montevideo.",
 };
 
-export default function NoticiasPage() {
+export default function ArticuloPreciosPage() {
   return (
     <>
       <Header />
 
       <main className="min-h-screen bg-[#F3EEE6] text-[#20232A]">
-        {/* Encabezado */}
-        <section className="mx-auto max-w-7xl px-6 pb-12 pt-20 md:px-10 md:pt-28">
-          <p className="mb-4 text-sm uppercase tracking-[0.25em] text-[#1300FF]">
-            Mediterranée · Servicios Inmobiliarios
-          </p>
-
-          <h1 className="max-w-3xl text-4xl font-light leading-tight md:text-6xl">
-            Noticias y consejos
-            <span className="mt-2 block font-medium text-[#1300FF]">
-              para decidir mejor.
-            </span>
-          </h1>
-
-          <div className="mt-5 h-1 w-20 rounded-full bg-[#1300FF]" />
-
-          <p className="mt-6 max-w-2xl text-base leading-8 text-[#4E535B] md:text-lg">
-            Un tema nuevo cada semana sobre el mercado inmobiliario,
-            la compra y venta de propiedades y las decisiones que
-            importan a propietarios y compradores.
-          </p>
-        </section>
-
-        {/* Artículo destacado 01 */}
-        <section className="mx-auto max-w-7xl px-6 pb-24 md:px-10">
+        <article className="mx-auto max-w-4xl px-6 py-14 md:px-10 md:py-20">
           <Link
-            href="/noticias/precios-propiedades-uruguay"
-            className="group grid overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl md:grid-cols-2"
+            href="/noticias"
+            className="text-sm font-semibold text-[#1300FF] transition hover:text-[#0D00B8]"
           >
-            {/* Fotografía */}
-            <div className="relative min-h-[280px] overflow-hidden bg-[#E8E0D2] md:min-h-[460px]">
-              <img
-                src="/noticias/Diseño%20sin%20título.png"
-                alt="Propiedad destacada de Mediterranée Servicios Inmobiliarios"
-                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
-              />
+            ← Volver a noticias
+          </Link>
 
-              <div className="absolute left-5 top-5 rounded-full border border-white/60 bg-[#FAF8F3]/95 px-4 py-2 text-xs font-medium uppercase tracking-wider text-[#1300FF]">
-                Artículo destacado
-              </div>
-            </div>
+          <header className="mt-12 border-b border-[#DEDAD1] pb-10">
+            <p className="mb-4 text-sm uppercase tracking-[0.2em] text-[#1300FF]">
+              Mercado inmobiliario · Artículo 01
+            </p>
 
-            {/* Texto */}
-            <div className="flex flex-col justify-center p-7 md:p-12 lg:p-14">
-              <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
-                Mercado inmobiliario · Artículo 01
-              </p>
+            <h1 className="text-3xl font-light leading-tight md:text-5xl">
+              ¿Qué está pasando con los precios de las propiedades?
+            </h1>
 
-              <h2 className="mt-5 text-3xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-4xl">
-                ¿Qué está pasando con los precios de las propiedades?
+            <p className="mt-6 text-sm text-[#6B6B6B]">
+              Mediterranée Servicios Inmobiliarios · 16 de octubre de 2026
+            </p>
+
+            <p className="mt-6 text-lg leading-8 text-[#4E535B]">
+              Conocer el valor de una propiedad es uno de los primeros pasos
+              para tomar una buena decisión inmobiliaria. Pero ¿cómo saber
+              cuánto vale realmente una casa, un apartamento o un terreno?
+            </p>
+          </header>
+
+          <div className="space-y-10 py-10 text-base leading-8 text-[#4E535B] md:text-lg">
+            <section>
+              <h2 className="mb-4 text-2xl font-medium text-[#20232A]">
+                El precio no depende de un solo factor
               </h2>
 
-              <p className="mt-5 leading-7 text-[#4E535B]">
-                Qué factores influyen en el valor de una propiedad
-                y qué conviene analizar antes de ponerla a la venta
+              <p>
+                El valor de una propiedad está relacionado con su ubicación,
+                superficie, estado de conservación, distribución, orientación
+                y características. También influyen los servicios cercanos,
+                la conectividad, la demanda y la oferta de inmuebles similares.
+              </p>
+
+              <p className="mt-4">
+                En zonas como Shangrilá y Ciudad de la Costa, las características
+                de cada barrio y la cercanía a avenidas, comercios, centros
+                educativos y espacios verdes pueden marcar diferencias
+                importantes entre propiedades aparentemente similares.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 text-2xl font-medium text-[#20232A]">
+                ¿Cómo saber si una propiedad está bien valorada?
+              </h2>
+
+              <p>
+                Una buena referencia es comparar inmuebles con características
+                semejantes: ubicación, superficie, estado, comodidades y tipo
+                de construcción. Comparar solamente el precio total puede
+                llevar a conclusiones equivocadas.
+              </p>
+
+              <p className="mt-4">
+                También es importante distinguir entre el precio publicado y
+                el precio final de una operación. El valor anunciado expresa
+                la expectativa del vendedor, pero no garantiza que ese sea el
+                importe al que se concretará la compraventa.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 text-2xl font-medium text-[#20232A]">
+                ¿Qué pasa cuando el precio es demasiado alto?
+              </h2>
+
+              <p>
+                Una propiedad publicada por encima de los valores de referencia
+                puede recibir menos consultas, permanecer más tiempo en el
+                mercado y requerir ajustes posteriores. Esto no significa que
+                deba venderse al precio más bajo, sino que conviene establecer
+                una estrategia realista desde el comienzo.
+              </p>
+
+              <p className="mt-4">
+                Una valoración adecuada permite presentar mejor el inmueble,
+                orientar las negociaciones y evaluar las ofertas con criterios
+                claros.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="mb-4 text-2xl font-medium text-[#20232A]">
+                ¿Es un buen momento para vender?
+              </h2>
+
+              <p>
+                La respuesta depende de la propiedad, la zona, las condiciones
+                del mercado y las necesidades del propietario. No existe un
+                único momento ideal para todos los inmuebles.
+              </p>
+
+              <p className="mt-4">
+                Antes de publicar, conviene revisar la documentación, preparar
+                la propiedad para las visitas y definir un precio de salida
+                respaldado por referencias de mercado.
+              </p>
+            </section>
+
+            <section className="rounded-2xl border border-[#DEDAD1] bg-[#FAF8F3] p-6 md:p-8">
+              <h2 className="mb-4 text-2xl font-medium text-[#20232A]">
+                Una decisión informada empieza con una buena valoración
+              </h2>
+
+              <p>
+                Cada propiedad tiene características propias. Analizar su
+                situación particular permite definir mejor el precio, la
+                estrategia de publicación y los próximos pasos.
+              </p>
+
+              <p className="mt-4">
+                En Mediterranée Servicios Inmobiliarios acompañamos a
+                propietarios y compradores en sus decisiones inmobiliarias
                 en Shangrilá, Ciudad de la Costa y Montevideo.
               </p>
 
-              <span className="mt-8 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
-                Leer artículo
-                <span
-                  aria-hidden="true"
-                  className="transition-transform duration-300 group-hover:translate-x-2"
-                >
-                  →
-                </span>
-              </span>
-            </div>
-          </Link>
-
-          {/* Artículo 02 */}
-          <Link
-            href="/noticias/es-buen-momento-para-vender"
-            className="group mt-10 block rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] p-7 shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl md:p-10"
-          >
-            <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
-              Mercado inmobiliario · Artículo 02
-            </p>
-
-            <h2 className="mt-5 max-w-3xl text-2xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-3xl">
-              ¿Es un buen momento para vender una propiedad?
-            </h2>
-
-            <p className="mt-4 max-w-3xl leading-7 text-[#4E535B]">
-              Qué conviene analizar sobre el precio, la demanda, la
-              presentación del inmueble y tus objetivos antes de decidir
-              vender una propiedad en Shangrilá, Ciudad de la Costa o
-              Montevideo.
-            </p>
-
-            <span className="mt-7 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
-              Leer artículo
-              <span
-                aria-hidden="true"
-                className="transition-transform duration-300 group-hover:translate-x-2"
+              <Link
+                href="/#contacto"
+                className="mt-6 inline-flex items-center gap-3 border-b-2 border-[#1300FF] pb-2 font-semibold text-[#1300FF] transition hover:text-[#0D00B8]"
               >
-                →
-              </span>
-            </span>
-          </Link>
-
-          {/* Cierre */}
-          <div className="mt-16 border-t border-[#DEDAD1] pt-8">
-            <p className="text-sm leading-7 text-[#4E535B]">
-              Cada semana, una nueva mirada sobre el mercado
-              inmobiliario de Shangrilá, Ciudad de la Costa y
-              Montevideo.
-            </p>
+                Consultanos
+                <span aria-hidden="true">→</span>
+              </Link>
+            </section>
           </div>
-        </section>
+
+          <div className="border-t border-[#DEDAD1] pt-8">
+            <Link
+              href="/noticias"
+              className="text-sm font-semibold text-[#1300FF] transition hover:text-[#0D00B8]"
+            >
+              ← Volver a todas las noticias
+            </Link>
+          </div>
+        </article>
       </main>
 
       <Footer />
