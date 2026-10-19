@@ -33,7 +33,7 @@ export default function ArticuloPreciosPage() {
             </h1>
 
             <p className="mt-6 text-sm text-[#6B6B6B]">
-              Mediterranée Servicios Inmobiliarios · 16 de octubre de 2026
+              Mediterranée Servicios Inmobiliarios · 15 de octubre de 2026
             </p>
 
             <p className="mt-6 text-lg leading-8 text-[#4E535B]">
