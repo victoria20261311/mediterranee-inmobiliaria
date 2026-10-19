@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 export const metadata = {
   title: "Noticias inmobiliarias | Mediterranée",
   description:
-    "Noticias, consejos y actualidad del mercado inmobiliario en Shangrilá, Ciudad de la Costa y Montevideo.",
+    "Noticias, información y consejos inmobiliarios para tomar mejores decisiones en Shangrilá, Ciudad de la Costa y Montevideo.",
 };
 
 export default function NoticiasPage() {
@@ -20,7 +20,7 @@ export default function NoticiasPage() {
             Mediterranée · Servicios Inmobiliarios
           </p>
 
-          <h1 className="max-w-3xl text-4xl font-light leading-tight md:text-6xl">
+          <h1 className="max-w-3xl text-3xl font-light leading-tight md:text-5xl">
             Noticias y consejos
             <span className="mt-2 block font-medium text-[#1300FF]">
               para decidir mejor.
@@ -29,66 +29,111 @@ export default function NoticiasPage() {
 
           <div className="mt-5 h-1 w-20 rounded-full bg-[#1300FF]" />
 
-          <p className="mt-6 max-w-2xl text-base leading-8 text-[#4E535B] md:text-lg">
-            Un tema nuevo cada semana sobre el mercado inmobiliario,
-            la compra y venta de propiedades y las decisiones que
-            importan a propietarios y compradores.
+          <p className="mt-6 max-w-2xl text-base leading-7 text-[#4E535B] md:text-lg">
+            Información útil para comprender el mercado inmobiliario,
+            conocer el valor de una propiedad y tomar decisiones con
+            mayor seguridad.
           </p>
         </section>
 
-        {/* Artículo destacado */}
-        <section className="mx-auto max-w-7xl px-6 pb-24 md:px-10">
+        {/* Artículos */}
+        <section className="mx-auto max-w-7xl px-6 pb-20 md:px-10">
+          <div className="mb-8 border-b border-[#DEDAD1] pb-5">
+            <p className="text-sm uppercase tracking-[0.2em] text-[#4E535B]">
+              Nuestro espacio de actualidad
+            </p>
+          </div>
+
+          {/* Artículo 01 */}
           <Link
             href="/noticias/precios-propiedades-uruguay"
-            className="group grid overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl md:grid-cols-2"
+            className="group block overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl"
           >
-            {/* Fotografía */}
-            <div className="relative min-h-[280px] overflow-hidden bg-[#E8E0D2] md:min-h-[460px]">
-              <img
-                src="/noticias/Diseño%20sin%20título.png"
-                alt="Propiedad destacada de Mediterranée Servicios Inmobiliarios"
-                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
-              />
+            <div className="grid md:grid-cols-2">
+              <div className="relative min-h-[240px] overflow-hidden bg-[#E8E0D2] md:min-h-[360px]">
+                <img
+                  src="/noticias/Diseño%20sin%20título.png"
+                  alt="Información sobre los precios de las propiedades"
+                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
 
-              <div className="absolute left-5 top-5 rounded-full border border-white/60 bg-[#FAF8F3]/95 px-4 py-2 text-xs font-medium uppercase tracking-wider text-[#1300FF]">
-                Artículo destacado
+              <div className="flex flex-col justify-center p-7 md:p-10 lg:p-12">
+                <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
+                  Mercado inmobiliario · Artículo 01
+                </p>
+
+                <h2 className="mt-5 text-2xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-3xl">
+                  ¿Qué está pasando con los precios de las propiedades?
+                </h2>
+
+                <p className="mt-4 leading-7 text-[#4E535B]">
+                  Conocé qué factores influyen en el valor de una propiedad,
+                  cómo interpretar los precios publicados y qué tener en
+                  cuenta antes de vender o comprar.
+                </p>
+
+                <span className="mt-7 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
+                  Leer artículo
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-2"
+                  >
+                    →
+                  </span>
+                </span>
               </div>
             </div>
+          </Link>
 
-            {/* Texto */}
-            <div className="flex flex-col justify-center p-7 md:p-12 lg:p-14">
-              <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
-                Mercado inmobiliario · Artículo 01
-              </p>
+          {/* Artículo 02 */}
+          <Link
+            href="/noticias/es-buen-momento-para-vender"
+            className="group mt-8 block overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl"
+          >
+            <div className="grid md:grid-cols-2">
+              <div className="flex flex-col justify-center p-7 md:order-1 md:p-10 lg:p-12">
+                <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
+                  Mercado inmobiliario · Artículo 02
+                </p>
 
-              <h2 className="mt-5 text-3xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-4xl">
-                ¿Qué está pasando con los precios de las propiedades?
-              </h2>
+                <h2 className="mt-5 text-2xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-3xl">
+                  ¿Es un buen momento para vender una propiedad?
+                </h2>
 
-              <p className="mt-5 leading-7 text-[#4E535B]">
-                Qué factores influyen en el valor de una propiedad
-                y qué conviene analizar antes de ponerla a la venta
-                en Shangrilá, Ciudad de la Costa y Montevideo.
-              </p>
+                <p className="mt-4 leading-7 text-[#4E535B]">
+                  Qué conviene analizar sobre el precio, la demanda, la
+                  presentación del inmueble y tus objetivos antes de decidir
+                  vender una propiedad en Shangrilá, Ciudad de la Costa o
+                  Montevideo.
+                </p>
 
-              <span className="mt-8 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
-                Leer artículo
-                <span
-                  aria-hidden="true"
-                  className="transition-transform duration-300 group-hover:translate-x-2"
-                >
-                  →
+                <span className="mt-7 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
+                  Leer artículo
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-2"
+                  >
+                    →
+                  </span>
                 </span>
-              </span>
+              </div>
+
+              <div className="relative min-h-[240px] overflow-hidden bg-[#E8E0D2] md:order-2 md:min-h-[360px]">
+                <img
+                  src="/noticias/Diseño%20sin%20título.png"
+                  alt="Artículo sobre el mejor momento para vender una propiedad"
+                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
             </div>
           </Link>
 
           {/* Cierre */}
-          <div className="mt-16 border-t border-[#DEDAD1] pt-8">
-            <p className="text-sm leading-7 text-[#4E535B]">
-              Cada semana, una nueva mirada sobre el mercado
-              inmobiliario de Shangrilá, Ciudad de la Costa y
-              Montevideo.
+          <div className="mt-12 border-t border-[#DEDAD1] pt-8">
+            <p className="max-w-2xl text-base leading-7 text-[#4E535B]">
+              Cada semana compartimos un nuevo tema para ayudarte a conocer
+              mejor el mercado inmobiliario y tomar decisiones informadas.
             </p>
           </div>
         </section>
