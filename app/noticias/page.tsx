@@ -20,7 +20,7 @@ export default function NoticiasPage() {
             Mediterranée · Servicios Inmobiliarios
           </p>
 
-          <h1 className="max-w-3xl text-3xl font-light leading-tight md:text-5xl">
+          <h1 className="max-w-3xl text-2xl font-light leading-tight md:text-4xl">
             Noticias y consejos
             <span className="mt-2 block font-medium text-[#1300FF]">
               para decidir mejor.
@@ -128,6 +128,91 @@ export default function NoticiasPage() {
               </div>
             </div>
           </Link>
+
+          {/* Artículo 03 */}
+          <Link
+            href="/noticias/preparar-casa-para-vender"
+            className="group mt-8 block overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl"
+          >
+            <div className="grid md:grid-cols-2">
+              <div className="relative min-h-[240px] overflow-hidden bg-[#E8E0D2] md:min-h-[360px]">
+                <img
+                  src="/noticias/Diseño%20sin%20título.png"
+                  alt="Consejos para preparar una casa antes de venderla"
+                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+
+              <div className="flex flex-col justify-center p-7 md:p-10 lg:p-12">
+                <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
+                  Consejos para vendedores · Artículo 03
+                </p>
+
+                <h2 className="mt-5 text-2xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-3xl">
+                  7 tips para preparar tu casa antes de ponerla en venta
+                </h2>
+
+                <p className="mt-4 leading-7 text-[#4E535B]">
+                  Descubrí cómo mejorar la presentación de tu propiedad,
+                  cuidar los detalles y prepararla para recibir visitas
+                  sin gastar de más.
+                </p>
+
+                <span className="mt-7 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
+                  Leer artículo
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-2"
+                  >
+                    →
+                  </span>
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Artículo 04 */}
+          <Link
+            href="/noticias/documentos-para-vender-propiedad"
+            className="group mt-8 block overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl"
+          >
+            <div className="grid md:grid-cols-2">
+              <div className="flex flex-col justify-center p-7 md:order-1 md:p-10 lg:p-12">
+                <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
+                  Guía para vendedores · Artículo 04
+                </p>
+
+                <h2 className="mt-5 text-2xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-3xl">
+                  ¿Qué documentos necesitás para vender una propiedad en Uruguay?
+                </h2>
+
+                <p className="mt-4 leading-7 text-[#4E535B]">
+                  Conocé qué documentación conviene preparar antes de vender
+                  una casa, apartamento o terreno y cómo anticiparte a posibles
+                  demoras durante la operación.
+                </p>
+
+                <span className="mt-7 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
+                  Leer artículo
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-2"
+                  >
+                    →
+                  </span>
+                </span>
+              </div>
+
+              <div className="relative min-h-[240px] overflow-hidden bg-[#E8E0D2] md:order-2 md:min-h-[360px]">
+                <img
+                  src="/noticias/Dise%C3%B1o%20sin%20t%C3%ADtulo.png"
+                  alt="Documentación necesaria para vender una propiedad"
+                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+            </div>
+          </Link>
+
 
           {/* Cierre */}
           <div className="mt-12 border-t border-[#DEDAD1] pt-8">

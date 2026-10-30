@@ -1,6 +1,8 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { supabase } from "../../lib/supabase";
+import SharePropertyButton from "./SharePropertyButton";
 
 type Props = {
   searchParams: Promise<{
@@ -26,8 +28,6 @@ function limpiarUrlImagen(valor: unknown): string | null {
     return null;
   }
 
-  // Si la URL quedó guardada como Markdown:
-  // [texto](https://dominio/imagen.jpg)
   const markdownMatch = limpia.match(
     /^\[.*?\]\((https?:\/\/[^)]+)\)$/
   );
@@ -36,13 +36,10 @@ function limpiarUrlImagen(valor: unknown): string | null {
     limpia = markdownMatch[1];
   }
 
-  // URL completa
   if (/^https?:\/\//i.test(limpia)) {
     return limpia;
   }
 
-  // Ruta que comienza con /
-  // Ejemplo: /aeris-2/28.png
   if (limpia.startsWith("/")) {
     const rutaBucket = limpia
       .replace(/^\/+/, "")
@@ -53,8 +50,6 @@ function limpiarUrlImagen(valor: unknown): string | null {
     return `${SUPABASE_STORAGE}/${rutaBucket}`;
   }
 
-  // Ruta dentro del bucket
-  // Ejemplo: aeris-2/28.png
   if (limpia.includes("/")) {
     const rutaBucket = limpia
       .split("/")
@@ -68,21 +63,16 @@ function limpiarUrlImagen(valor: unknown): string | null {
 }
 
 function obtenerImagen(propiedad: any): string | null {
-  // Aeris II:
-  // Queremos mantener la foto 28 como portada.
   if (propiedad.slug === "aeris-2") {
     return `${SUPABASE_STORAGE}/aeris-2/28.png`;
   }
 
-  // Primero usamos la columna "imagen",
-  // porque es la portada definida para cada propiedad.
   const portada = limpiarUrlImagen(propiedad.imagen);
 
   if (portada) {
     return portada;
   }
 
-  // Si no hay portada definida, buscamos en imagenes[].
   if (Array.isArray(propiedad.imagenes)) {
     for (const imagen of propiedad.imagenes) {
       const url = limpiarUrlImagen(imagen);
@@ -124,6 +114,14 @@ export default async function PropiedadesPage({
 
   const propiedadesFiltradas = (propiedades || []).filter(
     (propiedad: any) => {
+      const estado = String(
+        propiedad.estado || "disponible"
+      ).toLowerCase();
+
+      if (estado !== "disponible") {
+        return false;
+      }
+
       const coincideOperacion =
         !filtros.operacion ||
         String(propiedad.operacion || "").toUpperCase() ===
@@ -176,7 +174,6 @@ export default async function PropiedadesPage({
       ========================= */}
 
       <section className="px-4 sm:px-6 pt-20 md:pt-28 pb-10">
-
         <div className="max-w-6xl mx-auto">
 
           <Link
@@ -191,10 +188,7 @@ export default async function PropiedadesPage({
               transition
             "
           >
-            <span className="text-xl">
-              ←
-            </span>
-
+            <span className="text-xl">←</span>
             Volver al inicio
           </Link>
 
@@ -371,12 +365,10 @@ export default async function PropiedadesPage({
                 )}
 
               </div>
-
             </div>
           )}
 
         </div>
-
       </section>
 
       {/* =========================
@@ -384,7 +376,6 @@ export default async function PropiedadesPage({
       ========================= */}
 
       <section className="px-4 sm:px-6 pb-20">
-
         <div className="max-w-6xl mx-auto">
 
           {propiedadesFiltradas.length === 0 ? (
@@ -450,9 +441,7 @@ export default async function PropiedadesPage({
               {/* CANTIDAD */}
 
               <div className="flex items-center justify-between mb-6">
-
                 <p className="text-sm text-[#4E535B]">
-
                   <span className="font-bold text-[#1300FF]">
                     {propiedadesFiltradas.length}
                   </span>{" "}
@@ -460,9 +449,7 @@ export default async function PropiedadesPage({
                   {propiedadesFiltradas.length === 1
                     ? "propiedad disponible"
                     : "propiedades disponibles"}
-
                 </p>
-
               </div>
 
               {/* GRID */}
@@ -480,9 +467,8 @@ export default async function PropiedadesPage({
                       String(propiedad.precio).trim() !== "";
 
                     return (
-                      <Link
+                      <article
                         key={propiedad.id}
-                        href={`/propiedades/${propiedad.slug}`}
                         className="
                           group
                           bg-white
@@ -498,297 +484,307 @@ export default async function PropiedadesPage({
                         "
                       >
 
-                        {/* FOTO */}
-
-                        <div
-                          className="
-                            relative
-                            h-64
-                            sm:h-60
-                            md:h-64
-                            bg-[#F2F3FF]
-                            overflow-hidden
-                          "
+                        <Link
+                          href={`/propiedades/${propiedad.slug}`}
+                          className="block"
                         >
 
-                          {imagen ? (
-
-                            <Image
-                              src={imagen}
-                              alt={
-                                propiedad.titulo ||
-                                "Propiedad"
-                              }
-                              fill
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                              className="
-                                object-cover
-                                transition-transform
-                                duration-500
-                                group-hover:scale-105
-                              "
-                            />
-
-                          ) : (
-
-                            <div
-                              className="
-                                w-full
-                                h-full
-                                flex
-                                items-center
-                                justify-center
-                                text-[#4E535B]/60
-                                bg-[#F2F3FF]
-                              "
-                            >
-                              Sin imagen
-                            </div>
-
-                          )}
-
-                          {/* DEGRADADO */}
+                          {/* FOTO */}
 
                           <div
                             className="
-                              absolute
-                              inset-x-0
-                              bottom-0
-                              h-24
-                              bg-gradient-to-t
-                              from-black/30
-                              to-transparent
-                              pointer-events-none
+                              relative
+                              h-64
+                              sm:h-60
+                              md:h-64
+                              bg-[#F2F3FF]
+                              overflow-hidden
                             "
-                          />
+                          >
 
-                          {/* OPERACIÓN */}
+                            {imagen ? (
 
-                          {propiedad.operacion && (
-                            <span
-                              className="
-                                absolute
-                                top-4
-                                left-4
-                                bg-[#1300FF]
-                                text-white
-                                px-4
-                                py-2
-                                rounded-full
-                                text-xs
-                                font-bold
-                                tracking-wider
-                                uppercase
-                                shadow-[0_6px_18px_rgba(19,0,255,0.3)]
-                              "
-                            >
-                              {propiedad.operacion}
-                            </span>
-                          )}
-
-                          {/* DESTACADA */}
-
-                          {propiedad.destacada === true && (
-                            <span
-                              className="
-                                absolute
-                                top-4
-                                right-4
-                                bg-[#1300FF]
-                                text-white
-                                px-4
-                                py-2
-                                rounded-full
-                                text-xs
-                                font-bold
-                                tracking-wider
-                                uppercase
-                                shadow-[0_6px_18px_rgba(19,0,255,0.3)]
-                              "
-                            >
-                              ⭐ Destacada
-                            </span>
-                          )}
-
-                          {/* CANTIDAD DE FOTOS */}
-
-                          {Array.isArray(propiedad.imagenes) &&
-                            propiedad.imagenes.length > 1 && (
-
-                              <span
+                              <Image
+                                src={imagen}
+                                alt={
+                                  propiedad.titulo ||
+                                  "Propiedad"
+                                }
+                                fill
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                 className="
-                                  absolute
-                                  bottom-4
-                                  right-4
-                                  bg-black/50
-                                  backdrop-blur-sm
-                                  text-white
-                                  px-3
-                                  py-1.5
-                                  rounded-full
-                                  text-xs
-                                  font-semibold
+                                  object-cover
+                                  transition-transform
+                                  duration-500
+                                  group-hover:scale-105
+                                "
+                              />
+
+                            ) : (
+
+                              <div
+                                className="
+                                  w-full
+                                  h-full
+                                  flex
+                                  items-center
+                                  justify-center
+                                  text-[#4E535B]/60
+                                  bg-[#F2F3FF]
                                 "
                               >
-                                📷 {propiedad.imagenes.length}
-                              </span>
+                                Sin imagen
+                              </div>
 
                             )}
 
-                        </div>
+                            {/* DEGRADADO */}
 
-                        {/* INFORMACIÓN */}
-
-                        <div className="p-6">
-
-                          {propiedad.tipo && (
-                            <p
-                              className="
-                                text-xs
-                                uppercase
-                                tracking-[0.18em]
-                                text-[#1300FF]
-                                font-bold
-                              "
-                            >
-                              {propiedad.tipo}
-                            </p>
-                          )}
-
-                          <h2
-                            className="
-                              mt-2
-                              text-2xl
-                              font-bold
-                              text-[#20232A]
-                              group-hover:text-[#1300FF]
-                              transition
-                            "
-                          >
-                            {propiedad.titulo ||
-                              "Propiedad"}
-                          </h2>
-
-                          {(propiedad.zona ||
-                            propiedad.ubicacion) && (
-
-                            <p
-                              className="
-                                mt-3
-                                text-[#4E535B]
-                                text-sm
-                                flex
-                                items-center
-                                gap-2
-                              "
-                            >
-                              <span className="text-[#1300FF]">
-                                📍
-                              </span>
-
-                              {propiedad.zona ||
-                                propiedad.ubicacion}
-                            </p>
-
-                          )}
-
-                          {/* PRECIO */}
-
-                          {tienePrecio && (
                             <div
                               className="
-                                mt-5
-                                pt-5
-                                border-t
-                                border-[#1300FF]/10
+                                absolute
+                                inset-x-0
+                                bottom-0
+                                h-24
+                                bg-gradient-to-t
+                                from-black/30
+                                to-transparent
+                                pointer-events-none
+                              "
+                            />
+
+                            {/* OPERACIÓN */}
+
+                            {propiedad.operacion && (
+                              <span
+                                className="
+                                  absolute
+                                  top-4
+                                  left-4
+                                  bg-[#1300FF]
+                                  text-white
+                                  px-4
+                                  py-2
+                                  rounded-full
+                                  text-xs
+                                  font-bold
+                                  tracking-wider
+                                  uppercase
+                                  shadow-[0_6px_18px_rgba(19,0,255,0.3)]
+                                "
+                              >
+                                {propiedad.operacion}
+                              </span>
+                            )}
+
+                            {/* DESTACADA */}
+
+                            {propiedad.destacada === true && (
+                              <span
+                                className="
+                                  absolute
+                                  top-4
+                                  right-4
+                                  bg-[#1300FF]
+                                  text-white
+                                  px-4
+                                  py-2
+                                  rounded-full
+                                  text-xs
+                                  font-bold
+                                  tracking-wider
+                                  uppercase
+                                  shadow-[0_6px_18px_rgba(19,0,255,0.3)]
+                                "
+                              >
+                                ⭐ Destacada
+                              </span>
+                            )}
+
+                            {/* CANTIDAD DE FOTOS */}
+
+                            {Array.isArray(propiedad.imagenes) &&
+                              propiedad.imagenes.length > 1 && (
+
+                                <span
+                                  className="
+                                    absolute
+                                    bottom-4
+                                    right-4
+                                    bg-black/50
+                                    backdrop-blur-sm
+                                    text-white
+                                    px-3
+                                    py-1.5
+                                    rounded-full
+                                    text-xs
+                                    font-semibold
+                                  "
+                                >
+                                  📷 {propiedad.imagenes.length}
+                                </span>
+
+                              )}
+
+                          </div>
+
+                          {/* INFORMACIÓN */}
+
+                          <div className="p-6">
+
+                            {propiedad.tipo && (
+                              <p
+                                className="
+                                  text-xs
+                                  uppercase
+                                  tracking-[0.18em]
+                                  text-[#1300FF]
+                                  font-bold
+                                "
+                              >
+                                {propiedad.tipo}
+                              </p>
+                            )}
+
+                            <h2
+                              className="
+                                mt-2
+                                text-2xl
+                                font-bold
+                                text-[#20232A]
+                                group-hover:text-[#1300FF]
+                                transition
                               "
                             >
+                              {propiedad.titulo || "Propiedad"}
+                            </h2>
+
+                            {(propiedad.zona ||
+                              propiedad.ubicacion) && (
 
                               <p
                                 className="
-                                  text-xl
-                                  font-bold
-                                  text-[#1300FF]
+                                  mt-3
+                                  text-[#4E535B]
+                                  text-sm
+                                  flex
+                                  items-center
+                                  gap-2
                                 "
                               >
-                                {propiedad.precio}
+                                <span className="text-[#1300FF]">
+                                  📍
+                                </span>
+
+                                {propiedad.zona ||
+                                  propiedad.ubicacion}
                               </p>
 
-                            </div>
-                          )}
+                            )}
 
-                          {/* CARACTERÍSTICAS */}
+                            {/* PRECIO */}
 
-                          {(propiedad.dormitorios !== null &&
-                            propiedad.dormitorios !== undefined) ||
-                          (propiedad.banos !== null &&
-                            propiedad.banos !== undefined) ||
-                          (propiedad.metros !== null &&
-                            propiedad.metros !== undefined) ? (
+                            {tienePrecio && (
+                              <div
+                                className="
+                                  mt-5
+                                  pt-5
+                                  border-t
+                                  border-[#1300FF]/10
+                                "
+                              >
+                                <p
+                                  className="
+                                    text-xl
+                                    font-bold
+                                    text-[#1300FF]
+                                  "
+                                >
+                                  {propiedad.precio}
+                                </p>
+                              </div>
+                            )}
 
-                            <div
-                              className="
-                                flex
-                                flex-wrap
-                                gap-x-5
-                                gap-y-2
-                                mt-5
-                                pt-5
-                                border-t
-                                border-[#1300FF]/10
-                                text-sm
-                                text-[#4E535B]
-                              "
-                            >
+                            {/* CARACTERÍSTICAS */}
 
-                              {propiedad.dormitorios !== null &&
-                                propiedad.dormitorios !== undefined && (
-                                  <span>
-                                    🛏️{" "}
-                                    {propiedad.dormitorios}
-                                  </span>
-                                )}
+                            {(propiedad.dormitorios !== null &&
+                              propiedad.dormitorios !== undefined) ||
+                            (propiedad.banos !== null &&
+                              propiedad.banos !== undefined) ||
+                            (propiedad.metros !== null &&
+                              propiedad.metros !== undefined) ? (
 
-                              {propiedad.banos !== null &&
-                                propiedad.banos !== undefined && (
-                                  <span>
-                                    🚿{" "}
-                                    {propiedad.banos}
-                                  </span>
-                                )}
+                              <div
+                                className="
+                                  flex
+                                  flex-wrap
+                                  gap-x-5
+                                  gap-y-2
+                                  mt-5
+                                  pt-5
+                                  border-t
+                                  border-[#1300FF]/10
+                                  text-sm
+                                  text-[#4E535B]
+                                "
+                              >
 
-                              {propiedad.metros !== null &&
-                                propiedad.metros !== undefined && (
-                                  <span>
-                                    📐{" "}
-                                    {propiedad.metros} m²
-                                  </span>
-                                )}
+                                {propiedad.dormitorios !== null &&
+                                  propiedad.dormitorios !== undefined && (
+                                    <span>
+                                      🛏️ {propiedad.dormitorios}
+                                    </span>
+                                  )}
 
-                            </div>
+                                {propiedad.banos !== null &&
+                                  propiedad.banos !== undefined && (
+                                    <span>
+                                      🚿 {propiedad.banos}
+                                    </span>
+                                  )}
 
-                          ) : null}
+                                {propiedad.metros !== null &&
+                                  propiedad.metros !== undefined && (
+                                    <span>
+                                      📐 {propiedad.metros} m²
+                                    </span>
+                                  )}
 
-                          {/* BOTÓN */}
+                              </div>
 
-                          <div
+                            ) : null}
+
+                          </div>
+
+                        </Link>
+
+                        {/* ACCIONES DE LA TARJETA */}
+
+                        <div
+                          className="
+                            px-6
+                            pb-6
+                            flex
+                            items-center
+                            justify-between
+                            gap-3
+                          "
+                        >
+
+                          <Link
+                            href={`/propiedades/${propiedad.slug}`}
                             className="
-                              mt-6
-                              flex
+                              inline-flex
                               items-center
-                              justify-between
+                              gap-2
+                              text-[#1300FF]
+                              font-bold
+                              text-sm
+                              hover:text-[#0D00B8]
+                              transition
                             "
                           >
-
-                            <span
-                              className="
-                                text-[#1300FF]
-                                font-bold
-                                text-sm
-                              "
-                            >
-                              Ver propiedad
-                            </span>
+                            Ver propiedad
 
                             <span
                               className="
@@ -802,20 +798,24 @@ export default async function PropiedadesPage({
                                 items-center
                                 justify-center
                                 text-[#1300FF]
-                                group-hover:bg-[#1300FF]
-                                group-hover:border-[#1300FF]
-                                group-hover:text-white
+                                hover:bg-[#1300FF]
+                                hover:border-[#1300FF]
+                                hover:text-white
                                 transition
                               "
                             >
                               →
                             </span>
+                          </Link>
 
-                          </div>
+                          <SharePropertyButton
+                            slug={propiedad.slug}
+                            titulo={propiedad.titulo || "Propiedad"}
+                          />
 
                         </div>
 
-                      </Link>
+                      </article>
                     );
                   }
                 )}
@@ -826,7 +826,6 @@ export default async function PropiedadesPage({
           )}
 
         </div>
-
       </section>
 
     </main>

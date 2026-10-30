@@ -1,3 +1,4 @@
+
 "use client";
 
 type Props = {
@@ -5,17 +6,31 @@ type Props = {
 };
 
 export default function ShareButton({ titulo }: Props) {
-  function compartir() {
-    if (navigator.share) {
-      navigator.share({
-        title: titulo,
-        text: `Mirá esta propiedad: ${titulo}`,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
+  async function compartir() {
+    const url = window.location.href;
 
-      alert("Enlace copiado");
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: titulo,
+          text: `Mirá esta propiedad de Mediterranée: ${titulo}`,
+          url,
+        });
+      } else {
+        await navigator.clipboard.writeText(url);
+        alert("¡Enlace copiado! Ya podés compartirlo.");
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") {
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(url);
+        alert("¡Enlace copiado! Ya podés compartirlo.");
+      } catch {
+        alert("No se pudo compartir el enlace. Intentá nuevamente.");
+      }
     }
   }
 

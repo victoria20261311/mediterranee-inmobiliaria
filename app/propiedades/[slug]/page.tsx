@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 
 import { supabase } from "../../../lib/supabase";
@@ -5,6 +6,8 @@ import { supabase } from "../../../lib/supabase";
 import PropertyGallery from "../../components/PropertyGallery";
 
 import SimilarProperties from "../../components/SimilarProperties";
+
+import ShareButton from "./ShareButton";
 
 type Props = {
   params: Promise<{
@@ -136,20 +139,6 @@ function limpiarUrlImagen(url: string): string {
 
   // ---------------------------------------------------------
   // Ruta que comienza con /
-  //
-  // IMPORTANTE:
-  //
-  // Las imágenes de propiedades están guardadas en Supabase
-  // con rutas como:
-  //
-  // /aeris-2/1.png
-  //
-  // /casa-shangrila/9.png
-  //
-  // /local-comercial-shangrila/4.jpg
-  //
-  // Por lo tanto NO debemos devolver simplemente la ruta.
-  // Debemos convertirla en la URL pública de Supabase.
   // ---------------------------------------------------------
 
   if (limpia.startsWith("/")) {
@@ -164,14 +153,6 @@ function limpiarUrlImagen(url: string): string {
 
   // ---------------------------------------------------------
   // Ruta dentro del bucket "propiedades"
-  //
-  // Ejemplo:
-  //
-  // casa-shangrila/1.png
-  //
-  // Se transforma en:
-  //
-  // https://.../propiedades/casa-shangrila/1.png
   // ---------------------------------------------------------
 
   return `${SUPABASE_STORAGE}/${limpia
@@ -572,29 +553,35 @@ export default async function PropiedadPage({ params }: Props) {
                 )}
               </div>
 
-              <a
-                href="#contacto"
-                className="
-                  inline-flex
-                  justify-center
-                  items-center
-                  gap-2
-                  bg-[#3F5870]
-                  hover:bg-[#31475C]
-                  text-white
-                  px-7
-                  py-3.5
-                  rounded-full
-                  font-bold
-                  transition
-                  shadow-[0_8px_25px_rgba(63,88,112,0.24)]
-                  hover:shadow-[0_10px_30px_rgba(63,88,112,0.32)]
-                  hover:-translate-y-0.5
-                "
-              >
-                Consultar propiedad
-                <span>→</span>
-              </a>
+              <div className="flex flex-wrap items-center gap-3">
+
+                <a
+                  href="#contacto"
+                  className="
+                    inline-flex
+                    justify-center
+                    items-center
+                    gap-2
+                    bg-[#3F5870]
+                    hover:bg-[#31475C]
+                    text-white
+                    px-7
+                    py-3.5
+                    rounded-full
+                    font-bold
+                    transition
+                    shadow-[0_8px_25px_rgba(63,88,112,0.24)]
+                    hover:shadow-[0_10px_30px_rgba(63,88,112,0.32)]
+                    hover:-translate-y-0.5
+                  "
+                >
+                  Consultar propiedad
+                  <span>→</span>
+                </a>
+
+                <ShareButton titulo={titulo} />
+
+              </div>
             </div>
 
             {/* =========================
