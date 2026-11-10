@@ -256,6 +256,50 @@ export default function NoticiasPage() {
           </Link>
 
           {/* Cierre */}
+
+          {/* Artículo 06 */}
+          <Link
+            href="/noticias/inquilino-propietario-responsabilidades"
+            className="group mt-8 block overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl"
+          >
+            <div className="grid md:grid-cols-2">
+              <div className="flex flex-col justify-center p-7 md:order-1 md:p-10 lg:p-12">
+                <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
+                  Guía para propietarios e inquilinos · Artículo 06
+                </p>
+
+                <h2 className="mt-5 text-2xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-3xl">
+                  ¿Qué le corresponde al inquilino y qué al propietario?
+                </h2>
+
+                <p className="mt-4 leading-7 text-[#4E535B]">
+                  Conocé quién debe hacerse cargo de las reparaciones,
+                  los gastos, el mantenimiento y las responsabilidades
+                  durante un alquiler. Una guía práctica para alquilar
+                  con mayor tranquilidad.
+                </p>
+
+                <span className="mt-7 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
+                  Leer artículo
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-2"
+                  >
+                    →
+                  </span>
+                </span>
+              </div>
+
+              <div className="relative min-h-[240px] overflow-hidden bg-[#E8E0D2] md:order-2 md:min-h-[360px]">
+                <img
+                  src="/noticias/Diseño%20sin%20título.png"
+                  alt="Responsabilidades del propietario y del inquilino en un alquiler"
+                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+            </div>
+          </Link>
+
           <div className="mt-12 border-t border-[#DEDAD1] pt-8">
             <p className="max-w-2xl text-base leading-7 text-[#4E535B]">
               Cada semana compartimos un nuevo tema para ayudarte a conocer
