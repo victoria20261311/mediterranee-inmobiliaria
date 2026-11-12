@@ -91,10 +91,7 @@ export default function Home() {
         <Services />
       </section>
 
-      {/* =====================================================
-          NUEVO VIDEO CINEMATOGRÁFICO MEDITERRANÉE
-      ===================================================== */}
-
+      {/* VIDEO CINEMATOGRÁFICO MEDITERRANÉE */}
       <section
         id="experiencia-mediterranee"
         className="relative isolate flex min-h-[440px] w-full items-center justify-center overflow-hidden bg-[#172333] sm:min-h-[500px] lg:min-h-[560px]"
@@ -111,7 +108,7 @@ export default function Home() {
           className="absolute inset-0 h-full w-full object-cover"
         >
           <source
-            src="/videos/video.mp4"
+            src="/images/12345.mp4"
             type="video/mp4"
           />
         </video>
@@ -150,7 +147,6 @@ export default function Home() {
           </a>
 
         </div>
-
       </section>
 
       {/* NOSOTROS */}
