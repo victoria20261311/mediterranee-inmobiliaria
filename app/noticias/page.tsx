@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -255,8 +256,6 @@ export default function NoticiasPage() {
             </div>
           </Link>
 
-          {/* Cierre */}
-
           {/* Artículo 06 */}
           <Link
             href="/noticias/inquilino-propietario-responsabilidades"
@@ -300,6 +299,49 @@ export default function NoticiasPage() {
             </div>
           </Link>
 
+          {/* Artículo 07 */}
+          <Link
+            href="/noticias/evitar-sorpresas-antes-de-comprar"
+            className="group mt-8 block overflow-hidden rounded-3xl border border-[#DEDAD1] bg-[#FAF8F3] shadow-sm transition duration-300 hover:border-[#1300FF]/30 hover:shadow-xl"
+          >
+            <div className="grid md:grid-cols-2">
+              <div className="relative min-h-[240px] overflow-hidden bg-[#E8E0D2] md:min-h-[360px]">
+                <img
+                  src="/noticias/Diseño%20sin%20título.png"
+                  alt="Consejos para evitar sorpresas antes de comprar una propiedad"
+                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+
+              <div className="flex flex-col justify-center p-7 md:p-10 lg:p-12">
+                <p className="text-xs uppercase tracking-[0.2em] text-[#1300FF]">
+                  Guía para compradores · Artículo 07
+                </p>
+
+                <h2 className="mt-5 text-2xl font-medium leading-snug transition-colors duration-300 group-hover:text-[#1300FF] md:text-3xl">
+                  Evitar sorpresas antes de comprar una propiedad
+                </h2>
+
+                <p className="mt-4 leading-7 text-[#4E535B]">
+                  Qué revisar, qué preguntar y qué tener en cuenta antes
+                  de comprar una casa o apartamento. Una guía para tomar
+                  una decisión informada y comprar con mayor tranquilidad.
+                </p>
+
+                <span className="mt-7 inline-flex w-fit items-center gap-3 border-b-2 border-[#1300FF] pb-2 text-sm font-semibold text-[#1300FF]">
+                  Leer artículo
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-2"
+                  >
+                    →
+                  </span>
+                </span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Cierre */}
           <div className="mt-12 border-t border-[#DEDAD1] pt-8">
             <p className="max-w-2xl text-base leading-7 text-[#4E535B]">
               Cada semana compartimos un nuevo tema para ayudarte a conocer
