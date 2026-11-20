@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -30,53 +31,24 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
 
-      {/* =====================================================
-          VIDEO DEL HEADER
-      ===================================================== */}
+      {/* VIDEO DEL HEADER */}
 
-      <div
-        className="
-          absolute
-          inset-0
-          z-0
-          overflow-hidden
-          pointer-events-none
-        "
-      >
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <video
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
-          className="
-            absolute
-            inset-0
-            w-full
-            h-full
-            object-cover
-          "
+          className="absolute inset-0 w-full h-full object-cover"
         >
-          <source
-            src="/images/12345.mp4"
-            type="video/mp4"
-          />
+          <source src="/images/12345.mp4" type="video/mp4" />
         </video>
 
-        {/* CAPA SUAVE SOBRE EL VIDEO */}
-
-        <div
-          className="
-            absolute
-            inset-0
-            bg-black/15
-          "
-        />
+        <div className="absolute inset-0 bg-black/15" />
       </div>
 
-      {/* =====================================================
-          BARRA VIDRIADA
-      ===================================================== */}
+      {/* BARRA VIDRIADA */}
 
       <div
         className={`
@@ -110,22 +82,13 @@ export default function Header() {
             `}
           >
 
-            {/* =================================================
-                LOGO
-            ================================================= */}
+            {/* LOGO */}
 
             <Link
               href="/"
-              className="
-                relative
-                z-20
-                flex
-                shrink-0
-                items-center
-              "
+              className="relative z-20 flex shrink-0 items-center"
               onClick={cerrarMenus}
             >
-
               <Image
                 src="/images/333.png"
                 alt="MEDITERRANÉE Servicios Inmobiliarios"
@@ -144,12 +107,9 @@ export default function Header() {
                   }
                 `}
               />
-
             </Link>
 
-            {/* =================================================
-                NAVEGACIÓN DESKTOP
-            ================================================= */}
+            {/* NAVEGACIÓN DESKTOP */}
 
             <nav className="hidden items-center gap-8 md:flex">
 
@@ -174,20 +134,14 @@ export default function Header() {
 
               <div
                 className="relative"
-                onMouseEnter={() =>
-                  setPropiedadesAbierto(true)
-                }
-                onMouseLeave={() =>
-                  setPropiedadesAbierto(false)
-                }
+                onMouseEnter={() => setPropiedadesAbierto(true)}
+                onMouseLeave={() => setPropiedadesAbierto(false)}
               >
 
                 <button
                   type="button"
                   onClick={() =>
-                    setPropiedadesAbierto(
-                      !propiedadesAbierto
-                    )
+                    setPropiedadesAbierto(!propiedadesAbierto)
                   }
                   className="
                     flex
@@ -201,10 +155,7 @@ export default function Header() {
                     hover:text-[#3F5870]
                   "
                 >
-
                   Propiedades
-
-                  {/* CHEVRON */}
 
                   <span
                     className={`
@@ -250,7 +201,6 @@ export default function Header() {
                       <path d="M6 9l6 6 6-6" />
                     </svg>
                   </span>
-
                 </button>
 
                 {propiedadesAbierto && (
@@ -263,7 +213,6 @@ export default function Header() {
                       pt-4
                     "
                   >
-
                     <div
                       className="
                         w-52
@@ -298,7 +247,6 @@ export default function Header() {
                           hover:text-[#3F5870]
                         "
                       >
-
                         <svg
                           width="20"
                           height="20"
@@ -317,7 +265,6 @@ export default function Header() {
                         </svg>
 
                         <span>Alquileres</span>
-
                       </Link>
 
                       {/* VENTAS */}
@@ -340,7 +287,6 @@ export default function Header() {
                           hover:text-[#3F5870]
                         "
                       >
-
                         <svg
                           width="20"
                           height="20"
@@ -361,7 +307,6 @@ export default function Header() {
                         </svg>
 
                         <span>Ventas</span>
-
                       </Link>
 
                       {/* DESTACADAS */}
@@ -384,7 +329,6 @@ export default function Header() {
                           hover:text-[#3F5870]
                         "
                       >
-
                         <svg
                           width="20"
                           height="20"
@@ -401,14 +345,51 @@ export default function Header() {
                         </svg>
 
                         <span>Destacadas</span>
+                      </Link>
 
+                      {/* ALQUILADAS */}
+
+                      <Link
+                        href="/propiedades/alquiladas"
+                        onClick={cerrarMenus}
+                        className="
+                          flex
+                          items-center
+                          gap-3
+                          rounded-xl
+                          px-4
+                          py-3
+                          text-sm
+                          font-semibold
+                          text-[#30343B]
+                          transition
+                          hover:bg-[#E8E0D2]
+                          hover:text-[#3F5870]
+                        "
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                          className="shrink-0"
+                        >
+                          <path d="M3 10.5L12 3l9 7.5" />
+                          <path d="M5.5 9.5V21h13V9.5" />
+                          <path d="M9 15l2 2 4-4" />
+                        </svg>
+
+                        <span>Alquiladas</span>
                       </Link>
 
                     </div>
-
                   </div>
                 )}
-
               </div>
 
               {/* SERVICIOS */}
@@ -488,20 +469,12 @@ export default function Header() {
 
             </nav>
 
-            {/* =================================================
-                BOTÓN MOBILE
-            ================================================= */}
+            {/* BOTÓN MOBILE */}
 
             <button
               type="button"
-              onClick={() =>
-                setMenuAbierto(!menuAbierto)
-              }
-              aria-label={
-                menuAbierto
-                  ? "Cerrar menú"
-                  : "Abrir menú"
-              }
+              onClick={() => setMenuAbierto(!menuAbierto)}
+              aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
               className="
                 flex
                 h-11
@@ -525,14 +498,10 @@ export default function Header() {
             </button>
 
           </div>
-
         </div>
-
       </div>
 
-      {/* =====================================================
-          MENÚ MOBILE
-      ===================================================== */}
+      {/* MENÚ MOBILE */}
 
       {menuAbierto && (
         <div
@@ -548,7 +517,6 @@ export default function Header() {
             md:hidden
           "
         >
-
           <nav className="space-y-2 px-5 py-5">
 
             {/* INICIO */}
@@ -576,9 +544,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() =>
-                setPropiedadesAbierto(
-                  !propiedadesAbierto
-                )
+                setPropiedadesAbierto(!propiedadesAbierto)
               }
               className="
                 flex
@@ -595,10 +561,7 @@ export default function Header() {
                 hover:text-[#3F5870]
               "
             >
-
               <span>Propiedades</span>
-
-              {/* CHEVRON MOBILE */}
 
               <span
                 className={`
@@ -644,7 +607,6 @@ export default function Header() {
                   <path d="M6 9l6 6 6-6" />
                 </svg>
               </span>
-
             </button>
 
             {propiedadesAbierto && (
@@ -677,7 +639,6 @@ export default function Header() {
                     hover:text-[#3F5870]
                   "
                 >
-
                   <svg
                     width="19"
                     height="19"
@@ -696,7 +657,6 @@ export default function Header() {
                   </svg>
 
                   <span>Alquileres</span>
-
                 </Link>
 
                 {/* VENTAS */}
@@ -718,7 +678,6 @@ export default function Header() {
                     hover:text-[#3F5870]
                   "
                 >
-
                   <svg
                     width="19"
                     height="19"
@@ -739,7 +698,6 @@ export default function Header() {
                   </svg>
 
                   <span>Ventas</span>
-
                 </Link>
 
                 {/* DESTACADAS */}
@@ -761,7 +719,6 @@ export default function Header() {
                     hover:text-[#3F5870]
                   "
                 >
-
                   <svg
                     width="19"
                     height="19"
@@ -778,7 +735,45 @@ export default function Header() {
                   </svg>
 
                   <span>Destacadas</span>
+                </Link>
 
+                {/* ALQUILADAS */}
+
+                <Link
+                  href="/propiedades/alquiladas"
+                  onClick={cerrarMenus}
+                  className="
+                    flex
+                    items-center
+                    gap-3
+                    rounded-xl
+                    px-4
+                    py-2.5
+                    font-medium
+                    text-[#30343B]
+                    transition
+                    hover:bg-[#E8E0D2]
+                    hover:text-[#3F5870]
+                  "
+                >
+                  <svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    className="shrink-0"
+                  >
+                    <path d="M3 10.5L12 3l9 7.5" />
+                    <path d="M5.5 9.5V21h13V9.5" />
+                    <path d="M9 15l2 2 4-4" />
+                  </svg>
+
+                  <span>Alquiladas</span>
                 </Link>
 
               </div>
@@ -871,7 +866,6 @@ export default function Header() {
             </a>
 
           </nav>
-
         </div>
       )}
 
