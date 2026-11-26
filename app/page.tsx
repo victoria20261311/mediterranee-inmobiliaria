@@ -86,6 +86,9 @@ export default function Home() {
       {/* BUSCADOR */}
       <SearchBox />
 
+      {/* PROPIEDADES DESTACADAS Y NUEVAS PUBLICACIONES */}
+      <Properties />
+
       {/* SERVICIOS */}
       <section id="servicios">
         <Services />
@@ -152,11 +155,6 @@ export default function Home() {
       {/* NOSOTROS */}
       <section id="nosotros">
         <About />
-      </section>
-
-      {/* PROPIEDADES */}
-      <section id="propiedades">
-        <Properties />
       </section>
 
       {/* CONTACTO */}
